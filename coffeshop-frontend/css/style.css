@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #343a40;
+}
+
+header,
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 8vh;
+  background-color: #dbba93;
+  font-family: sans-serif;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 32px;
+}
+
+.nav-bar {
+  width: 30%;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.nav-links li a:hover {
+  color: #4a4e7f;
+}
+
+main {
+  height: 92vh;
+}
+
+/* hero-section */
+
+.hero-image {
+  background-image: url("../images/hero-image-placeholder.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-info-box {
+  position: absolute;
+  margin-left: 10%;
+  margin-top: 30%;
+  min-width: 30vw;
+  min-height: 10vh;
+  padding: 10px;
+  border: 1px solid #343a40;
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+  background-color: #dbba93;
+}
+
+.hero-product-overview {
+  background-color: #ffe8cc;
+  height: 100vh;
+}
+
+.hero-footer {
+  height: 30vh;
+  background-color: #343a40;
+}
+
+.hero-footer h1 {
+  color: #fffcf8;
+}
