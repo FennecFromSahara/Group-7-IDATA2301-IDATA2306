@@ -10,11 +10,11 @@
 </head>
 
 <body>
-  <header>
+  <header id="header">
     <nav class="nav-bar">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">Product</a></li>
+        <li><a href="#landing-product-overview">Products</a></li>
       </ul>
     </nav>
     <h1 class="title">Coffe Shop</h1>
@@ -27,19 +27,61 @@
   </header>
 
   <main>
+    <!-- Hero section -->
     <div class="hero-image">
       <div class="hero-info-box">
         <p>We sell coffe'n stuff</p>
-        <button>View our product</button>
+        <form action="#landing-product-overview">
+          <input type="submit" value="View our products" />
+        </form>
       </div>
     </div>
-    <div class="hero-product-overview">
-      <h1>Product Overview</h1>
+
+    <!-- Product overview -->
+    <div class="landing-product-overview" id="landing-product-overview">
+      <h1>Products</h1>
+      <div class="product-grid-parent">
+        <div class="product">
+          <img src="images/coffe placeholder.jpg">
+          <p class="productName">NAME OF THE PRODUCT1</p>
+          <p class="productPrice">$ 00.00</p>
+        </div>
+        <div class="product">
+          <img src="images/coffe placeholder.jpg">
+          <p class="productName">NAME OF THE PRODUCT2</p>
+          <p class="productPrice">$ 00.00</p>
+        </div>
+        <div class="product">
+          <img src="images/coffe placeholder.jpg">
+          <p class="productName">NAME OF THE PRODUCT3</p>
+          <p class="productPrice">$ 00.00</p>
+        </div>
+        <div class="product">
+          <img src="images/coffe placeholder.jpg">
+          <p class="productName">NAME OF THE PRODUCT4</p>
+          <p class="productPrice">$ 00.00</p>
+        </div>
+        <div class="product">
+          <img src="images/coffe placeholder.jpg">
+          <p class="productName">NAME OF THE PRODUCT5</p>
+          <p class="productPrice">$ 00.00</p>
+        </div>
+        <div class="product">
+          <img src="images/coffe placeholder.jpg">
+          <p class="productName">NAME OF THE PRODUCT6</p>
+          <p class="productPrice">$ 00.00</p>
+        </div>
+      </div>
     </div>
-    <div class="hero-footer">
-      <h1>Footer</h1>
+
+    <!-- Footer -->
+    <div class="landing-footer">
+      <h1>Contact</h1>
     </div>
   </main>
+
+  <!-- nav bar js script that for some reason has to be at the bottom -->
+  <script type="text/javascript" src="js/navbar.js"></script>
 </body>
 
 </html>
