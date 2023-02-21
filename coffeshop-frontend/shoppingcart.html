@@ -10,6 +10,53 @@
 </head>
 
 <body>
+   <!-- Nav bar -->
+   <header id="header">
+    <nav class="nav-bar">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#landing-product-overview">Products</a></li>
+      </ul>
+    </nav>
+    <h1 class="title">Coffe Shop</h1>
+    <nav class="nav-bar">
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="shoppingcart.html">*shopping cart icon*</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Shopping cart</h1>
+
+  <form action="idk" method="post">
+    <!-- List of products, price and quantity -->
+    <ul>
+      <li>
+        <fieldset>
+          <legend>Your products</legend>
+    
+          <img src="images/coffe placeholder.jpg" alt="product">
+    
+          <div class="product-description">
+            <h2>Product name</h2>
+            <p>$ 00.00</p>
+          </div>
+    
+          <label>
+            Quantity:
+            <input name="productQuantity" type="number">
+          </label>
+    
+          <input name="removeProduct" type="button">
+        </fieldset>
+      </li>
+    </ul>
+    
+    <!-- Button to checkout page -->
+    <p>Sub total <strong>$ 00.00</strong></p>
+    <input name="checkoutButton" type="button">
+  </form>
 
 </body>
 
