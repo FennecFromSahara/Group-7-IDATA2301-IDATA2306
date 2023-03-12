@@ -1,3 +1,5 @@
+import "./css/index.css";
+
 function LandingPage() {
   return (
     <div>
