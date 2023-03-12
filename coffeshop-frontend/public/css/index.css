@@ -1,0 +1,111 @@
+/* content-section */
+
+main {
+  height: 100vh;
+}
+
+.hero-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.345), rgba(0, 0, 0, 0.245)),
+    url("../img/hero-image-full.jpg") no-repeat center / cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-info-box {
+  position: absolute;
+  margin-left: 10vw;
+  margin-top: 20vh;
+  width: 20%;
+  min-height: 20vh;
+  padding: 10px;
+  border: 1px solid #343a40;
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+  background-color: #bfc0d2;
+}
+
+/* Product overview */
+
+.landing-product-overview {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.landing-product-overview h1,
+.landing-footer h1 {
+  padding: 1rem 0 3rem 7rem;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.product-item {
+  width: calc(30% - 16px);
+  background-color: #ffe8cc;
+  max-width: 360px;
+}
+
+.product-item .product-image {
+  margin: 16px 32px 16px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-item img {
+  width: 100%;
+  display: block;
+}
+
+.product-item .product-image div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  width: 100%;
+  padding: 0.8rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.add-button {
+  width: 100%;
+  background-color: transparent;
+  border: 2px solid #343a40;
+  color: #343a40;
+  font-size: 16px;
+  padding: 0.4rem;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.product-image:hover div {
+  transform: translateY(0);
+}
+
+.product-description {
+  background-color: #ffffff;
+  padding: 0.5rem 2rem;
+}
+
+.product-name {
+  display: block;
+  font-weight: 700;
+  color: #343a40;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.2rem 0;
+}
+
+.product-price {
+  font-weight: 300;
+  opacity: 0.9;
+}

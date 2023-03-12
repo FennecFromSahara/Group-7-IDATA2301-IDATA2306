@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #343a40;
+  font-family: sans-serif;
+}
+
+#header,
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 8vh;
+  background-color: #bcd1c8;
+  z-index: 1;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 32px;
+}
+
+.nav-bar {
+  width: 30%;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.nav-links li a:hover {
+  color: #4a4e7f;
+}
+
+/* makes nav bar stick to the top */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + main {
+  padding-top: 8vh;
+}
+
+/* Footer */
+
+.landing-footer {
+  height: 30vh;
+  background-color: #ffe8cc;
+}

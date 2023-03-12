@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/checkout.css" />
+  <title>Checkout</title>
+</head>
+
+<body>
+   <!-- Nav bar -->
+   <header id="header">
+    <nav class="nav-bar">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#landing-product-overview">Products</a></li>
+      </ul>
+    </nav>
+    <h1 class="title">Coffe Shop</h1>
+    <nav class="nav-bar">
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="shoppingcart.html">*shopping cart icon*</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Checkout</h1>
+  <p>Enter the necessary details below</p>
+
+  <form action="idk" method="post" id="checkout-form">
+    <!-- Contact information form -->
+    <fieldset id="contact-information-fieldset">
+      <legend>Contact information</legend>
+      <label>
+        Your first name:
+        <input name="firstName" type="text" placeholder="Firstname">
+      </label>
+      <br>
+      <label>
+        Your last name:
+        <input name="lastName" type="text" placeholder="Lastname">
+    </label>
+      <br>
+      <label>
+        Your address:
+        <input name="address" type="text" placeholder="">
+      </label>
+      <br>
+      <label>
+        Your email:
+        <input name="email" type="email" placeholder="someone@something.stuff">
+      </label>
+      <br>
+      <label>
+        Your phone number:
+        <input name="phoneNumber" type="number" placeholder="">
+      </label>
+    </fieldset>
+
+    <!-- Shipping information form -->
+    <fieldset id="shipping-fieldset">
+      <legend>Shipping</legend>
+      <label>
+        Post code:
+        <input name="postCode" type="number">
+      </label>
+
+      <label for="shippingAddress">Delivery location:</label>
+      <select name="shippingAddress">
+        <option>Obs stormoa</option>
+        <option>Rema 1000 Gåseid</option>
+        <option>Joker kolvikbakken</option>
+      </select>
+    </fieldset>
+  </form>
+
+  <!-- Button to payment page -->
+  <input type="button" name="paymentButton">
+</body>
+
+</html>
