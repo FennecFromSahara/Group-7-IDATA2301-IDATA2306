@@ -24,22 +24,22 @@ function LandingPage() {
           <h1>Products</h1>
           <div className="product-container">
             <div className="product-item">
-              <ProductCard productName={"Prouct 1"} productPrice={"0.01"} />
+              <ProductCard productName={"Product1"} productPrice={"0.01"} />
             </div>
             <div className="product-item">
-              <ProductCard productName={"Prouct 2"} productPrice={"0.02"} />
+              <ProductCard productName={"Product2"} productPrice={"0.02"} />
             </div>
             <div className="product-item">
-              <ProductCard productName={"Prouct 3"} productPrice={"0.03"} />
+              <ProductCard productName={"Product3"} productPrice={"0.03"} />
             </div>
             <div className="product-item">
-              <ProductCard productName={"Prouct 4"} productPrice={"0.04"} />
+              <ProductCard productName={"Product4"} productPrice={"0.04"} />
             </div>
             <div className="product-item">
-              <ProductCard productName={"Prouct 5"} productPrice={"0.05"} />
+              <ProductCard productName={"Product5"} productPrice={"0.05"} />
             </div>
             <div className="product-item">
-              <ProductCard productName={"Prouct 6"} productPrice={"0.06"} />
+              <ProductCard productName={"Product6"} productPrice={"0.06"} />
             </div>
           </div>
         </div>

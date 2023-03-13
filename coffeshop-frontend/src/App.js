@@ -4,6 +4,8 @@ import { createTheme } from "@mui/material";
 import { mainTheme } from "./components/MainTheme";
 import { Route, Routes } from "react-router-dom";
 import About from "./About";
+import IndividualProduct from "./IndividualProduct";
+import ShoppingCart from "./ShoppingCart";
 
 function App() {
   const theme = createTheme(mainTheme);
@@ -26,6 +28,25 @@ function App() {
           </ThemeProvider>
         }
       />
+      <Route
+        path="/products/:productName"
+        element={
+          <ThemeProvider theme={theme}>
+            <IndividualProduct />
+          </ThemeProvider>
+        }
+      />
+      <Route
+        path="/shoppingCart"
+        element={
+          <ThemeProvider theme={theme}>
+            <ShoppingCart />
+          </ThemeProvider>
+        }
+      />
+
+      {/** TODO: IMPLEMENT NOT FOUND SITE */}
+      <Route path="*" element={<h1>404: Not Found</h1>} />
     </Routes>
   );
 }

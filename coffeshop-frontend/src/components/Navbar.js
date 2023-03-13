@@ -8,13 +8,9 @@ import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import { Link } from "react-router-dom";
 
 const pages = ["Home", "Products", "About Us"];
-const link = ["/", "/TODO", "/about"];
+const link = ["/", "/", "about"];
 
 function NavBar() {
-  const buttonClick = async (e) => {
-    console.log("Pressed: " + e.target);
-  };
-
   return (
     <AppBar position="sticky" elevation={0}>
       <Toolbar>
@@ -41,7 +37,6 @@ function NavBar() {
                 display: "block",
                 typography: { fontSize: 16 },
               }}
-              onClick={buttonClick}
             >
               <Link to={link[index]} style={{ textDecoration: "none" }}>
                 {page}
@@ -50,14 +45,15 @@ function NavBar() {
           ))}
         </Box>
 
-        <IconButton sx={{ mr: 2 }} onClick={buttonClick}>
-          <ShoppingCartIcon />
+        <IconButton sx={{ mr: 2 }}>
+          <Link to="/shoppingCart">
+            <ShoppingCartIcon />
+          </Link>
         </IconButton>
         <Button
           color="inherit"
           variant="contained"
           sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
-          onClick={buttonClick}
         >
           Login
         </Button>
