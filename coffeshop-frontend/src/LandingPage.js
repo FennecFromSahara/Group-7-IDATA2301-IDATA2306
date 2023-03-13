@@ -1,32 +1,12 @@
-import "./css/index.css";
+import NavBar from "./components/NavBar";
+import "./css/landingPage.css";
+import ProductCard from "./components/ProductCard";
 
 function LandingPage() {
   return (
     <div>
       {/* Nav bar */}
-      <header id="header">
-        <nav className="nav-bar">
-          <ul className="nav-links">
-            <li>
-              <a href="index.html">Home</a>
-            </li>
-            <li>
-              <a href="#landing-product-overview">Products</a>
-            </li>
-          </ul>
-        </nav>
-        <h1 className="title">Coffe Shop</h1>
-        <nav className="nav-bar">
-          <ul className="nav-links">
-            <li>
-              <a href="about.html">About</a>
-            </li>
-            <li>
-              <a href="shoppingcart.html">*shopping cart icon*</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <NavBar />
 
       <main>
         {/* Hero section */}
@@ -44,105 +24,22 @@ function LandingPage() {
           <h1>Products</h1>
           <div className="product-container">
             <div className="product-item">
-              <div className="product-image">
-                <a href="individual-product.html">
-                  <img src="img/coffe placeholder.jpg" alt="product" />
-                </a>
-                <div>
-                  <button type="button" className="add-button">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="product-description">
-                <p className="product-name">NAME OF THE PRODUCT</p>
-                <p className="product-price">$ 00.00</p>
-              </div>
+              <ProductCard productName={"Prouct 1"} productPrice={"0.01"} />
             </div>
-
             <div className="product-item">
-              <div className="product-image">
-                <a href="individual-product.html">
-                  <img src="img/coffe placeholder.jpg" alt="product" />
-                </a>
-                <div>
-                  <button type="button" className="add-button">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="product-description">
-                <p className="product-name">NAME OF THE PRODUCT</p>
-                <p className="product-price">$ 00.00</p>
-              </div>
+              <ProductCard productName={"Prouct 2"} productPrice={"0.02"} />
             </div>
-
             <div className="product-item">
-              <div className="product-image">
-                <a href="individual-product.html">
-                  <img src="img/coffe placeholder.jpg" alt="product" />
-                </a>
-                <div>
-                  <button type="button" className="add-button">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="product-description">
-                <p className="product-name">NAME OF THE PRODUCT</p>
-                <p className="product-price">$ 00.00</p>
-              </div>
+              <ProductCard productName={"Prouct 3"} productPrice={"0.03"} />
             </div>
-
             <div className="product-item">
-              <div className="product-image">
-                <a href="individual-product.html">
-                  <img src="img/coffe placeholder.jpg" alt="product" />
-                </a>
-                <div>
-                  <button type="button" className="add-button">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="product-description">
-                <p className="product-name">NAME OF THE PRODUCT</p>
-                <p className="product-price">$ 00.00</p>
-              </div>
+              <ProductCard productName={"Prouct 4"} productPrice={"0.04"} />
             </div>
-
             <div className="product-item">
-              <div className="product-image">
-                <a href="individual-product.html">
-                  <img src="img/coffe placeholder.jpg" alt="product" />
-                </a>
-                <div>
-                  <button type="button" className="add-button">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="product-description">
-                <p className="product-name">NAME OF THE PRODUCT</p>
-                <p className="product-price">$ 00.00</p>
-              </div>
+              <ProductCard productName={"Prouct 5"} productPrice={"0.05"} />
             </div>
-
             <div className="product-item">
-              <div className="product-image">
-                <a href="individual-product.html">
-                  <img src="img/coffe placeholder.jpg" alt="product" />
-                </a>
-                <div>
-                  <button type="button" className="add-button">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-              <div className="product-description">
-                <p className="product-name">NAME OF THE PRODUCT</p>
-                <p className="product-price">$ 00.00</p>
-              </div>
+              <ProductCard productName={"Prouct 6"} productPrice={"0.06"} />
             </div>
           </div>
         </div>
