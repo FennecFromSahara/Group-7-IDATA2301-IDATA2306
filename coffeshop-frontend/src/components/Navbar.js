@@ -8,7 +8,7 @@ import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import { Link } from "react-router-dom";
 
 const pages = ["Home", "Products", "About Us"];
-const link = ["/", "/", "about"];
+const link = ["/", "/products", "/about"];
 
 function NavBar() {
   return (
@@ -50,13 +50,15 @@ function NavBar() {
             <ShoppingCartIcon />
           </Link>
         </IconButton>
-        <Button
-          color="inherit"
-          variant="contained"
-          sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
-        >
-          Login
-        </Button>
+        <Link to="/login" style={{ textDecoration: "none" }}>
+          <Button
+            color="inherit"
+            variant="contained"
+            sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
+          >
+            Login
+          </Button>
+        </Link>
       </Toolbar>
     </AppBar>
   );

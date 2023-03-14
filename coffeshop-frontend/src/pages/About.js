@@ -1,5 +1,5 @@
-import "./css/about.css";
-import NavBar from "./components/NavBar";
+import "../css/about.css";
+import NavBar from "../components/NavBar";
 
 function About() {
   return (

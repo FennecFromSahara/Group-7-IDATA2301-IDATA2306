@@ -1,5 +1,6 @@
-import NavBar from "./components/NavBar";
-import "./css/shoppingCart.css";
+import NavBar from "../components/NavBar";
+import "../css/shoppingCart.css";
+import { Link } from "react-router-dom";
 
 function ShoppingCart() {
   return (
@@ -16,7 +17,11 @@ function ShoppingCart() {
             <fieldset>
               <legend>Your products</legend>
 
-              <img src="images/coffe placeholder.jpg" alt="product" />
+              <img
+                src="img/coffe placeholder.jpg"
+                alt="product"
+                width={"180px"}
+              />
 
               <div className="product-description">
                 <h2>Product name</h2>
@@ -28,14 +33,20 @@ function ShoppingCart() {
                 <input name="productQuantity" type="number" />
               </label>
 
-              <input name="removeProduct" type="button" />
+              <input
+                name="removeProduct"
+                type="button"
+                value="Remove product"
+              />
             </fieldset>
           </li>
         </ul>
         <p>
           Sub total <strong>$ 00.00</strong>
         </p>
-        <input name="checkoutButton" type="button" />
+        <Link to={"/checkout"}>
+          <input name="checkoutButton" type="button" value="Go to Checkout" />
+        </Link>
       </form>
     </div>
   );

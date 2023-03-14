@@ -1,5 +1,5 @@
-import "./css/individual-product.css";
-import NavBar from "./components/NavBar";
+import "../css/individual-product.css";
+import NavBar from "../components/NavBar";
 import { useParams } from "react-router-dom";
 
 function IndividualProduct() {

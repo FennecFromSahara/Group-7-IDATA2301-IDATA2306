@@ -1,49 +1,22 @@
-import { ThemeProvider } from "@emotion/react";
-import LandingPage from "./LandingPage";
-import { createTheme } from "@mui/material";
-import { mainTheme } from "./components/MainTheme";
+import LandingPage from "./pages/LandingPage";
 import { Route, Routes } from "react-router-dom";
-import About from "./About";
-import IndividualProduct from "./IndividualProduct";
-import ShoppingCart from "./ShoppingCart";
+import About from "./pages/About";
+import IndividualProduct from "./pages/IndividualProduct";
+import ShoppingCart from "./pages/ShoppingCart";
+import Checkout from "./pages/Checkout";
+import Products from "./pages/Products";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-  const theme = createTheme(mainTheme);
-
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ThemeProvider theme={theme}>
-            <LandingPage />
-          </ThemeProvider>
-        }
-      />
-      <Route
-        path="/about"
-        element={
-          <ThemeProvider theme={theme}>
-            <About />
-          </ThemeProvider>
-        }
-      />
-      <Route
-        path="/products/:productName"
-        element={
-          <ThemeProvider theme={theme}>
-            <IndividualProduct />
-          </ThemeProvider>
-        }
-      />
-      <Route
-        path="/shoppingCart"
-        element={
-          <ThemeProvider theme={theme}>
-            <ShoppingCart />
-          </ThemeProvider>
-        }
-      />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/products/:productName" element={<IndividualProduct />} />
+      <Route path="/shoppingCart" element={<ShoppingCart />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/checkout" element={<Checkout />} />
 
       {/** TODO: IMPLEMENT NOT FOUND SITE */}
       <Route path="*" element={<h1>404: Not Found</h1>} />
