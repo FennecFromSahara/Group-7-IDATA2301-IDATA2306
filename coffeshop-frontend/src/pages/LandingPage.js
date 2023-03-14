@@ -1,6 +1,7 @@
 import { Link } from "@mui/material";
 import NavBar from "../components/NavBar";
 import "../css/landingPage.css";
+import Footer from "./Footer";
 import ProductOverview from "./ProductOverview";
 
 function LandingPage() {
@@ -11,7 +12,21 @@ function LandingPage() {
 
       <main>
         {/* Hero section */}
-        <div className="hero-image">
+        <div
+          className="hero-image"
+          style={{
+            backgroundImage: `url(${
+              process.env.PUBLIC_URL + "img/hero-image-full.jpg"
+            })`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "auto",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "-64px",
+          }}
+        >
           <div className="hero-info-box">
             <p>We sell coffe'n stuff</p>
             <Link to="/products">
@@ -20,12 +35,11 @@ function LandingPage() {
           </div>
         </div>
 
+        {/* Product overview */}
         <ProductOverview />
 
         {/* Footer */}
-        <div className="landing-footer">
-          <h1>Contact</h1>
-        </div>
+        <Footer />
       </main>
     </div>
   );

@@ -3,7 +3,6 @@ import ProductCard from "../components/ProductCard";
 function ProductOverview() {
   return (
     <div>
-      {/* Product overview */}
       <div className="landing-product-overview" id="landing-product-overview">
         <h1>Products</h1>
         <div className="product-container">
