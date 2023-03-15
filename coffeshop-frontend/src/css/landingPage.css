@@ -1,0 +1,52 @@
+/* content-section */
+
+main {
+  height: 100vh;
+}
+
+.hero-info-box {
+  position: absolute;
+  margin-left: 10vw;
+  margin-top: 20vh;
+  width: 20%;
+  min-height: 20vh;
+  padding: 10px;
+  border: 1px solid #343a40;
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+  background-color: #bfc0d2;
+}
+
+/* Product overview */
+
+.landing-product-overview {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.landing-product-overview h1,
+.landing-footer h1 {
+  padding: 1rem 0 0 7rem;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  margin: 0 1rem 1rem 1rem;
+}
+
+.product-item {
+  margin: 1rem 1rem 0 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Footer */
+
+.landing-footer {
+  height: 30vh;
+  background-color: #ffe8cc;
+}
