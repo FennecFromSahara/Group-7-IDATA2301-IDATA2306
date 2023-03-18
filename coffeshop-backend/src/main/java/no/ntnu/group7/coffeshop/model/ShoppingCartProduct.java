@@ -10,7 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 /**
- * Keeps track of all products different customers have added to their cart. (?)
+ * Keeps track of all products different customers have added to their cart. (?) 
+ * TODO: maybe rename to CustomerProduct
  */
 @Entity
 public class ShoppingCartProduct {
