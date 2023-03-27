@@ -20,13 +20,27 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!-- Exclude snakeyaml to avoid security issues -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- For JPA data access -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <!-- For Apache Derby embedded database -->
         <dependency>
             <groupId>org.apache.derby</groupId>
@@ -36,6 +50,25 @@
             https://stackoverflow.com/questions/66844429/where-is-the-derby-embedded-driver -->
             <version>10.14.2.0</version>
         </dependency>
+
+        <!-- For JSON Web Token generation -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <!-- This is also needed for token handling (JSON parsing) Since Spring Boot 3.0 -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.4.0-b180830.0359</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
 		<!-- For testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

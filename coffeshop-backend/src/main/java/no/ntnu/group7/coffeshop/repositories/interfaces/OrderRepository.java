@@ -1,4 +1,4 @@
-package no.ntnu.group7.coffeshop.repositories;
+package no.ntnu.group7.coffeshop.repositories.interfaces;
 
 import org.springframework.data.repository.CrudRepository;
 import no.ntnu.group7.coffeshop.model.Order;
@@ -8,5 +8,5 @@ import no.ntnu.group7.coffeshop.model.Order;
  * Spring will auto-generate necessary methods.
  */
 public interface OrderRepository extends CrudRepository<Order, Integer> {
-    
+
 }
