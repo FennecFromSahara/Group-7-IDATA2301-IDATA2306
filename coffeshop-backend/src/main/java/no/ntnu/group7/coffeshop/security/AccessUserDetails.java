@@ -4,8 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import no.ntnu.group7.coffeshop.model.certs.Role;
-import no.ntnu.group7.coffeshop.model.certs.User;
+import no.ntnu.group7.coffeshop.model.security.Role;
+import no.ntnu.group7.coffeshop.model.security.User;
 
 import java.util.*;
 

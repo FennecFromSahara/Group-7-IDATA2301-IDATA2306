@@ -3,10 +3,12 @@ package no.ntnu.group7.coffeshop.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
@@ -20,6 +22,8 @@ public class Product {
     private int id;
     private String name;
     private double price;
+    @Lob
+    @Column(length = 100000)
     private String description;
 
     @ManyToMany(mappedBy = "products")
@@ -30,6 +34,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
+
+    public Product() {
+    }
 
     /**
      * Create a product

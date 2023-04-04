@@ -1,4 +1,4 @@
-package no.ntnu.group7.coffeshop.repositories.interfaces;
+package no.ntnu.group7.coffeshop.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import no.ntnu.group7.coffeshop.model.ShoppingCartProduct;

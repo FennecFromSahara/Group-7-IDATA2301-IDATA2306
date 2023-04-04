@@ -1,4 +1,4 @@
-package no.ntnu.group7.coffeshop.controllers;
+package no.ntnu.group7.coffeshop.controllers.security;
 
 import no.ntnu.group7.coffeshop.dto.AuthenticationRequest;
 import no.ntnu.group7.coffeshop.dto.AuthenticationResponse;

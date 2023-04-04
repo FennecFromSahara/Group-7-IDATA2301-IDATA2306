@@ -1,4 +1,4 @@
-package no.ntnu.group7.coffeshop.model.certs;
+package no.ntnu.group7.coffeshop.model.security;
 
 import jakarta.persistence.*;
 import java.util.LinkedHashSet;
