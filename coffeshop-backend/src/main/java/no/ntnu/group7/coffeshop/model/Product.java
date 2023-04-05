@@ -31,6 +31,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
 
+    /**
+     * Empty constructor needed for JPA
+     */
     public Product() {
     }
 

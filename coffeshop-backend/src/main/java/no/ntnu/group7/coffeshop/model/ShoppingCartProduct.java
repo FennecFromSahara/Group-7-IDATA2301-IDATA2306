@@ -25,8 +25,10 @@ public class ShoppingCartProduct {
     private Product product;
     private int quantity;
 
+    /**
+     * Empty constructor needed for JPA
+     */
     public ShoppingCartProduct() {
-        // default constructor
     }
 
     public ShoppingCartProduct(User customer, Product product, int quantity) {

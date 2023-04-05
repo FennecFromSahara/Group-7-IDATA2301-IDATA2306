@@ -27,8 +27,10 @@ public class OrderProduct {
     private double price;
     private int quantity;
 
+    /**
+     * Empty constructor needed for JPA
+     */
     public OrderProduct() {
-        // default constructor
     }
 
     public OrderProduct(Order order, Product product, double price, int quantity) {
