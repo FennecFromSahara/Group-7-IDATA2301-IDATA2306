@@ -11,6 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 import no.ntnu.group7.coffeshop.model.Product;
 import no.ntnu.group7.coffeshop.repositories.ProductRepository;
 
+/**
+ * Controller responsible for the products.
+ */
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
