@@ -8,5 +8,5 @@ import no.ntnu.group7.coffeshop.model.Order;
  * Spring will auto-generate necessary methods.
  */
 public interface OrderRepository extends CrudRepository<Order, Integer> {
-    
+
 }

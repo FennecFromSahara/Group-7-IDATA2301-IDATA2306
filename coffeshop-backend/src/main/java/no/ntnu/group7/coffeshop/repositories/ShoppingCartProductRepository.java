@@ -8,5 +8,5 @@ import no.ntnu.group7.coffeshop.model.ShoppingCartProduct;
  * Spring will auto-generate necessary methods.
  */
 public interface ShoppingCartProductRepository extends CrudRepository<ShoppingCartProduct, Integer> {
-    
+
 }

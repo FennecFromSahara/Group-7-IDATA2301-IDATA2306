@@ -8,5 +8,5 @@ import no.ntnu.group7.coffeshop.model.Customer;
  * Spring will auto-generate necessary methods.
  */
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
-    
+
 }
