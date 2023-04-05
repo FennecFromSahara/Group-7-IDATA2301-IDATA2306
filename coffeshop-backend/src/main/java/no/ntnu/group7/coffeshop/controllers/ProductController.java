@@ -21,11 +21,13 @@ public class ProductController {
   @Autowired
   private ProductRepository productRepository;
 
+  // GET all products
   @GetMapping("")
   public List<Product> getAllProducts() {
     return productRepository.findAll();
   }
 
+  // GET product by ID
   @GetMapping("/{id}")
   public ResponseEntity<Product> getProductById(@PathVariable int id) {
     Product product = productRepository.findById(id)
@@ -33,12 +35,14 @@ public class ProductController {
     return new ResponseEntity<Product>(product, HttpStatus.OK);
   }
 
+  // CREATE product
   @PostMapping("")
   public ResponseEntity<Product> createProduct(@RequestBody Product product) {
     Product newProduct = productRepository.save(product);
     return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
   }
 
+  // UPDATE product
   @PutMapping("/{id}")
   public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product product) {
     if (!productRepository.existsById(id)) {
@@ -49,6 +53,7 @@ public class ProductController {
     return new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);
   }
 
+  // DELETE product by ID
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
     if (!productRepository.existsById(id)) {
