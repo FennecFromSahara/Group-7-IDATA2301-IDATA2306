@@ -26,17 +26,13 @@ public class User {
   private String address;
   private boolean active = true;
 
-  // The user's roles are stored in a Set of Role objects
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new LinkedHashSet<>();
 
-  // The orders made by the user - stored in a Set of Order objects
   @OneToMany(mappedBy = "customer")
   private Set<Order> orders = new HashSet<>();
 
-  // The products in the user's shopping cart - stored in a Set of
-  // ShoppingCartProduct objects
   @OneToMany(mappedBy = "customer")
   private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
 
