@@ -55,7 +55,8 @@ public class AuthenticationController {
    */
   @PostMapping("/api/signup")
   public ResponseEntity<String> signupProcess(@RequestBody SignupDto signupData) {
-    String errorMessage = userService.tryCreateNewUser(signupData.getUsername(), signupData.getPassword());
+    String errorMessage = userService.tryCreateNewUser(signupData.getUsername(), signupData.getPassword(),
+        signupData.getFirstName(), signupData.getLastName(), signupData.getEmail(), signupData.getAddress());
     ResponseEntity<String> response;
     if (errorMessage == null) {
       response = new ResponseEntity<>(HttpStatus.OK);

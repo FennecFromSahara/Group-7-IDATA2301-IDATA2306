@@ -1,25 +1,44 @@
 package no.ntnu.group7.coffeshop.model.security;
 
 import jakarta.persistence.*;
+import no.ntnu.group7.coffeshop.model.Order;
+import no.ntnu.group7.coffeshop.model.ShoppingCartProduct;
+
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * User stored in the database.
+ * User model class that represents a user in the coffee shop system
  */
 @Entity(name = "users")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String username;
   private String password;
-  private String bio;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String address;
   private boolean active = true;
+
+  // The user's roles are stored in a Set of Role objects
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new LinkedHashSet<>();
+
+  // The orders made by the user - stored in a Set of Order objects
+  @OneToMany(mappedBy = "customer")
+  private Set<Order> orders = new HashSet<>();
+
+  // The products in the user's shopping cart - stored in a Set of
+  // ShoppingCartProduct objects
+  @OneToMany(mappedBy = "customer")
+  private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
 
   /**
    * Empty constructor needed for JPA
@@ -27,15 +46,23 @@ public class User {
   public User() {
   }
 
-  public User(String username, String password) {
+  /**
+   * Constructor for the user
+   *
+   * @param username  Username of the user
+   * @param password  Password of the user
+   * @param firstName First name of the user
+   * @param lastName  Last name of the user
+   * @param email     Email of the user
+   * @param address   Address of the user
+   */
+  public User(String username, String password, String firstName, String lastName, String email, String address) {
     this.username = username;
     this.password = password;
-  }
-
-  public User(String username, String password, String bio) {
-    this.username = username;
-    this.password = password;
-    this.bio = bio;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.address = address;
   }
 
   public void setRoles(Set<Role> roles) {
@@ -100,7 +127,7 @@ public class User {
    * Check if the user has a specified role
    *
    * @param roleName Name of the role
-   * @return True if hte user has the role, false otherwise.
+   * @return True if the user has the role, false otherwise.
    */
   public boolean hasRole(String roleName) {
     boolean found = false;
@@ -114,11 +141,35 @@ public class User {
     return found;
   }
 
-  public String getBio() {
-    return bio;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setBio(String bio) {
-    this.bio = bio;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import no.ntnu.group7.coffeshop.model.security.User;
 
 /**
  * Keeps track of all products different customers have added to their cart. (?)
@@ -18,7 +19,7 @@ public class ShoppingCartProduct {
     private int id;
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private User customer;
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
@@ -28,7 +29,7 @@ public class ShoppingCartProduct {
         // default constructor
     }
 
-    public ShoppingCartProduct(Customer customer, Product product, int quantity) {
+    public ShoppingCartProduct(User customer, Product product, int quantity) {
         this.customer = customer;
         this.product = product;
         this.quantity = quantity;
@@ -42,11 +43,11 @@ public class ShoppingCartProduct {
         this.id = id;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
 

@@ -70,11 +70,16 @@ public class AccessUserService implements UserDetailsService {
   /**
    * Try to create a new user.
    *
-   * @param username Username of the new user
-   * @param password Plaintext password of the new user
+   * @param username  Username of the new user
+   * @param password  Plaintext password of the new user
+   * @param firstName First name of the user
+   * @param lastName  Last name of the user
+   * @param email     Email of the user
+   * @param address   Address of the use
    * @return null when user created, error message on error
    */
-  public String tryCreateNewUser(String username, String password) {
+  public String tryCreateNewUser(String username, String password, String firstName, String lastName, String email,
+      String address) {
     String errorMessage;
     if ("".equals(username)) {
       errorMessage = "Username can't be empty";
@@ -83,7 +88,7 @@ public class AccessUserService implements UserDetailsService {
     } else {
       errorMessage = checkPasswordRequirements(password);
       if (errorMessage == null) {
-        createUser(username, password);
+        createUser(username, password, firstName, lastName, email, address);
       }
     }
     return errorMessage;
@@ -108,13 +113,18 @@ public class AccessUserService implements UserDetailsService {
   /**
    * Create a new user in the database.
    *
-   * @param username Username of the new user
-   * @param password Plaintext password of the new user
+   * @param username  Username of the new user
+   * @param password  Plaintext password of the new user
+   * @param firstName First name of the user
+   * @param lastName  Last name of the user
+   * @param email     Email of the user
+   * @param address   Address of the use
    */
-  private void createUser(String username, String password) {
+  private void createUser(String username, String password, String firstName, String lastName, String email,
+      String address) {
     Role userRole = roleRepository.findOneByName("ROLE_USER");
     if (userRole != null) {
-      User user = new User(username, createHash(password));
+      User user = new User(username, createHash(password), firstName, lastName, email, address);
       user.addRole(userRole);
       userRepository.save(user);
     }
@@ -138,7 +148,10 @@ public class AccessUserService implements UserDetailsService {
    * @return True on success, false otherwise
    */
   public boolean updateProfile(User user, UserProfileDto profileData) {
-    user.setBio(profileData.getBio());
+    user.setFirstName(profileData.getFirstName());
+    user.setLastName(profileData.getLastName());
+    user.setEmail(profileData.getEmail());
+    user.setAddress(profileData.getAddress());
     userRepository.save(user);
     return true;
   }

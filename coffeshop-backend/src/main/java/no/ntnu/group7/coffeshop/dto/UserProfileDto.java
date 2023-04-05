@@ -4,20 +4,47 @@ package no.ntnu.group7.coffeshop.dto;
  * Data transfer object (DTO) for submitting changes to user profile data.
  */
 public class UserProfileDto {
-  private String bio;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String address;
 
-  public UserProfileDto(String bio) {
-    this.bio = bio;
+  public UserProfileDto(String firstName, String lastName, String email, String address) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.address = address;
   }
 
-  public UserProfileDto() {
+  public String getFirstName() {
+    return firstName;
   }
 
-  public String getBio() {
-    return bio;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public void setBio(String bio) {
-    this.bio = bio;
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
 }

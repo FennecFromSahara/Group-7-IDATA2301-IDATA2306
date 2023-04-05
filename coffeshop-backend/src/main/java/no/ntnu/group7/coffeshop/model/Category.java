@@ -23,13 +23,21 @@ public class Category {
     private int id;
     private String name;
     @ManyToMany
-    @JoinTable(name = "product_category",
-        joinColumns = @JoinColumn(name = "category_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
+    /**
+     * Empty constructor needed for JPA
+     */
+    public Category() {
+    }
+
+    /**
+     * Constructor with name as parameter
+     * 
+     * @param name name of category
+     */
     public Category(String name) {
         this.name = name;
     }

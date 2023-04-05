@@ -43,10 +43,10 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       logger.info("Importing test users...");
 
       /* The passwords are hashed using bcrypt */
-      User testUser = new User("testUser", "$2a$12$AIbp1s0f5REEJ1Ck7jNlGOcfiApTge164eT9mCxREtjHoNbnv6B2u",
-          "test bio");
-      User adminUser = new User("admin", "$2a$12$j7zoEDLcKGeNfF/V8eVVVuDV6gYJBsSVmREZfyUN7jErSQV.Ic1Ba",
-          "admin man");
+      User testUser = new User("testUser", "$2a$12$AIbp1s0f5REEJ1Ck7jNlGOcfiApTge164eT9mCxREtjHoNbnv6B2u", "FirstName",
+          "LastName", "email@email.com", "Test station");
+      User adminUser = new User("admin", "$2a$12$j7zoEDLcKGeNfF/V8eVVVuDV6gYJBsSVmREZfyUN7jErSQV.Ic1Ba", "Admin",
+          "King", "admin@mail.com", "Heaven");
 
       Role user = new Role("ROLE_USER");
       Role admin = new Role("ROLE_ADMIN");
