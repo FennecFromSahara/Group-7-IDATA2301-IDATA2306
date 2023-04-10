@@ -11,7 +11,7 @@ function IndividualProduct({}) {
 
   useEffect(() => {
     loadProduct();
-  }, [product]);
+  }, [id]);
 
   if (errorMessage) {
     return (
@@ -80,7 +80,6 @@ function IndividualProduct({}) {
       })
       .then((responseJson) => {
         setProduct(responseJson);
-        console.log(id);
       })
       .catch((e) => {
         onProductLoadError(e);
