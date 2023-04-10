@@ -1,11 +1,11 @@
 import LandingPage from "./pages/LandingPage";
 import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
-import IndividualProduct from "./pages/IndividualProduct";
 import ShoppingCart from "./pages/ShoppingCart";
 import Checkout from "./pages/Checkout";
 import Products from "./pages/Products";
 import LoginPage from "./pages/LoginPage";
+import IndividualProduct from "./pages/IndividualProduct";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/products" element={<Products />} />
-      <Route path="/products/:productName" element={<IndividualProduct />} />
+      <Route path="/products/:id" element={<IndividualProduct />} />
       <Route path="/shoppingCart" element={<ShoppingCart />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/checkout" element={<Checkout />} />

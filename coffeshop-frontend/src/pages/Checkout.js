@@ -4,7 +4,6 @@ import "../css/checkout.css";
 function Checkout() {
   return (
     <div>
-      {/* Nav bar */}
       <NavBar />
 
       <h1>Checkout</h1>
