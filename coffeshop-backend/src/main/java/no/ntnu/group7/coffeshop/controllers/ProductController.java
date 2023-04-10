@@ -15,6 +15,7 @@ import no.ntnu.group7.coffeshop.repositories.ProductRepository;
  * Controller responsible for the products.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/products")
 public class ProductController {
 

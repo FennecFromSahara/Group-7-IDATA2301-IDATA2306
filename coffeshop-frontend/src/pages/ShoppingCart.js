@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 function ShoppingCart() {
   return (
     <div>
-      {/* Nav bar */}
       <NavBar />
 
       <h1>Shopping cart</h1>

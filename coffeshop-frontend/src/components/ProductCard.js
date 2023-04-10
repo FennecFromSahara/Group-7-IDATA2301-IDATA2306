@@ -6,11 +6,17 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export default function ProductCard({ productName, productPrice }) {
+/**
+ * A component representing a product card
+ * @param product the product to be displayed
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export default function ProductCard(props) {
   return (
     <Card sx={{ maxWidth: 270 }} elevation={0}>
       <CardActionArea>
-        <Link to={"products/" + productName}>
+        <Link to={`/products/${props.product.id}`}>
           <CardMedia
             component="img"
             image="./img/coffe placeholder.jpg"
@@ -20,10 +26,10 @@ export default function ProductCard({ productName, productPrice }) {
       </CardActionArea>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {productName}
+          {props.product.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          $ {productPrice}
+          $ {props.product.price}
         </Typography>
       </CardContent>
 

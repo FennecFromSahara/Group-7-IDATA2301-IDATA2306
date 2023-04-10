@@ -16,6 +16,7 @@ import no.ntnu.group7.coffeshop.repositories.CategoryRepository;
  * Controller responsible for the categories.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/categories")
 public class CategoryController {
   @Autowired

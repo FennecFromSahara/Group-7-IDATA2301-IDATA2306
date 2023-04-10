@@ -1,10 +1,10 @@
 import "../css/about.css";
 import NavBar from "../components/NavBar";
+import Footer from "./Footer";
 
 function About() {
   return (
     <div>
-      {/* Nav bar */}
       <NavBar />
 
       <h1>About us</h1>
@@ -32,6 +32,8 @@ function About() {
         believe in creating a calm, modern, and tasty space for our guests to
         enjoy.
       </p>
+
+      <Footer />
     </div>
   );
 }
