@@ -1,11 +1,12 @@
 import NavBar from "../components/NavBar";
+import LoginForm from "../components/LoginForm";
 
 function LoginPage() {
   return (
     <div>
       <NavBar />
 
-      <h1>Not yet implemented</h1>
+      <LoginForm />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Checkout from "./pages/Checkout";
 import Products from "./pages/Products";
 import LoginPage from "./pages/LoginPage";
 import IndividualProduct from "./pages/IndividualProduct";
+import CreateUser from "./pages/CreateUser";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/shoppingCart" element={<ShoppingCart />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/createUser" element={<CreateUser />} />
 
       {/** TODO: IMPLEMENT NOT FOUND SITE */}
       <Route path="*" element={<h1>404: Not Found</h1>} />
