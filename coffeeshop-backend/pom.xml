@@ -10,9 +10,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>no.ntnu.group7</groupId>
-	<artifactId>coffeshop</artifactId>
+	<artifactId>coffeeshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>coffeshop</name>
+	<name>coffeeshop</name>
 	<description>Group project for IDATA2301 and IDATA2306</description>
     <properties>
         <java.version>17</java.version>
