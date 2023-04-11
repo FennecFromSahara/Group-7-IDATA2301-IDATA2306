@@ -1,5 +1,5 @@
-import NavBar from "../components/NavBar";
-import "../css/checkout.css";
+import NavBar from "../../components/NavBar";
+import "./checkout.css";
 
 function Checkout() {
   return (

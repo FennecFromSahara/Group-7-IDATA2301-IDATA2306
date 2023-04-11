@@ -1,8 +1,8 @@
-import HeroSection from "../components/HeroSection";
-import NavBar from "../components/NavBar";
-import "../css/landingPage.css";
-import Footer from "./Footer";
-import ProductOverview from "../components/ProductOverview";
+import HeroSection from "./HeroSection";
+import NavBar from "../../components/NavBar";
+import "./landingPage.css";
+import Footer from "../../components/Footer";
+import ProductOverview from "../../components/ProductOverview";
 
 /**
  *

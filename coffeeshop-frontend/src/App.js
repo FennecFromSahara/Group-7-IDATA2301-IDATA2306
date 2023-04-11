@@ -1,12 +1,12 @@
-import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import ShoppingCart from "./pages/ShoppingCart";
-import Checkout from "./pages/Checkout";
-import Products from "./pages/Products";
-import LoginPage from "./pages/LoginPage";
-import IndividualProduct from "./pages/IndividualProduct";
-import CreateUser from "./pages/CreateUser";
+import Checkout from "./pages/Checkout/Checkout";
+import Products from "./pages/Products/Products";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import IndividualProduct from "./pages/IndividualProduct/IndividualProduct";
+import CreateUser from "./pages/CreateUser/CreateUser";
 
 function App() {
   return (

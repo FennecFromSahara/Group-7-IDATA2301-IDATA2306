@@ -1,5 +1,4 @@
 import NavBar from "../components/NavBar";
-import "../css/shoppingCart.css";
 import { Link } from "react-router-dom";
 
 function ShoppingCart() {

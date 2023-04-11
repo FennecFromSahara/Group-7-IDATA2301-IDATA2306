@@ -1,6 +1,6 @@
-import "../css/individual-product.css";
-import NavBar from "../components/NavBar";
-import Footer from "./Footer";
+import "./individual-product.css";
+import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
