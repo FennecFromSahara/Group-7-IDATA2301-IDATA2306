@@ -12,7 +12,7 @@ const link = ["/", "/products", "/about"];
 
 function NavBar() {
   return (
-    <AppBar position="sticky" elevation={0}>
+    <AppBar position="sticky" elevation={0} sx={{ height: "8vh" }}>
       <Toolbar>
         <Link to="/">
           <LocalCafeIcon sx={{ mr: 1, mt: 1 }} />

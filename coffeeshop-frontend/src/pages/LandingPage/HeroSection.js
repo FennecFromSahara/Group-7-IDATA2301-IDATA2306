@@ -11,10 +11,9 @@ function HeroSection() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "auto",
-        height: "100%",
+        height: "92vh",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "-64px",
       }}
     >
       <div className="hero-info-box">
