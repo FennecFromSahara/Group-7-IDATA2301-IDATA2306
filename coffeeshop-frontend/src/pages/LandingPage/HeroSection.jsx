@@ -1,4 +1,4 @@
-import { Link } from "@mui/material";
+import { Button } from "@mui/material";
 
 function HeroSection() {
   return (
@@ -18,9 +18,14 @@ function HeroSection() {
     >
       <div className="hero-info-box">
         <p>We sell coffe'n stuff</p>
-        <Link to="/products">
-          <input type="submit" value="View our products" />
-        </Link>
+        <Button
+          href="/products"
+          size="small"
+          variant="contained"
+          color="primary"
+        >
+          Shop now
+        </Button>
       </div>
     </div>
   );
