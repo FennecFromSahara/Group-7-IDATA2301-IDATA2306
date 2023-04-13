@@ -1,9 +1,8 @@
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 function HeroSection() {
   return (
-    <div
-      className="hero-image"
+    <Box
       style={{
         backgroundImage: `url(${
           process.env.PUBLIC_URL + "img/hero-image-full.jpg"
@@ -16,8 +15,22 @@ function HeroSection() {
         alignItems: "center",
       }}
     >
-      <div className="hero-info-box">
-        <p>We sell coffe'n stuff</p>
+      <Box
+        sx={{
+          position: "absolute",
+          ml: 10,
+          mt: 2,
+          width: "20%",
+          minHeight: "20vh",
+          p: "10px",
+          border: "1px solid #343a40",
+          backgroundColor: "#bfc0d2",
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "column",
+        }}
+      >
+        <Typography>We sell coffe'n stuff</Typography>
         <Button
           href="/products"
           size="small"
@@ -26,8 +39,8 @@ function HeroSection() {
         >
           Shop now
         </Button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

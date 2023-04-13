@@ -29,7 +29,7 @@ export default function ProductCard(props) {
           {props.product.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          $ {props.product.price}
+          {props.product.price} Kr
         </Typography>
       </CardContent>
 

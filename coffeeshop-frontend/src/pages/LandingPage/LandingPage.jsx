@@ -1,26 +1,20 @@
 import HeroSection from "./HeroSection";
 import NavBar from "../../components/NavBar";
-import "./landingPage.css";
 import Footer from "../../components/Footer";
 import ProductOverview from "../../components/ProductOverview";
+import { Box } from "@mui/material";
 
-/**
- *
- * @returns
- */
 function LandingPage() {
   return (
-    <div>
+    <Box>
       <NavBar />
 
-      <main>
-        <HeroSection />
+      <HeroSection />
 
-        <ProductOverview />
+      <ProductOverview />
 
-        <Footer />
-      </main>
-    </div>
+      <Footer />
+    </Box>
   );
 }
 

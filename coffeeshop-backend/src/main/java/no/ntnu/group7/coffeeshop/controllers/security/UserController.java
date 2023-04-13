@@ -29,9 +29,6 @@ public class UserController {
     if (sessionUser != null && sessionUser.getUsername().equals(username)) {
       UserProfileDto profile = new UserProfileDto(sessionUser.getFirstName(), sessionUser.getLastName(),
           sessionUser.getEmail(), sessionUser.getAddress());
-
-      // TODO: Figure out if this is necessary
-      Thread.sleep(2000); // Simulate sleep
       return new ResponseEntity<>(profile, HttpStatus.OK);
     } else if (sessionUser == null) {
       return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
@@ -54,9 +51,6 @@ public class UserController {
     if (sessionUser != null && sessionUser.getUsername().equals(username)) {
       if (profileData != null) {
         if (userService.updateProfile(sessionUser, profileData)) {
-
-          // TODO: Figure out if this is necessary
-          Thread.sleep(2000); // Simulate long operation
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Could not update Profile data", HttpStatus.INTERNAL_SERVER_ERROR);

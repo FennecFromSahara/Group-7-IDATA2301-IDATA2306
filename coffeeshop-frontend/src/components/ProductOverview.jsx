@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard";
 import { useFetch } from "../hooks/useFetch";
+import { Box, Typography } from "@mui/material";
 
 function ProductOverview() {
   const { data, error } = useFetch("http://localhost:8042/api/products");
@@ -8,35 +9,49 @@ function ProductOverview() {
     if (error) {
       console.log(error);
 
-      return (
-        <div className="product-container">
-          <p className="error">Something went wrong...</p>
-        </div>
-      );
+      return <Typography>Something went wrong...</Typography>;
     } else if (data.length > 0) {
       return (
-        <div className="product-container">
+        <>
           {data.map((product) => (
-            <div className="product-item" key={product.id}>
+            <Box
+              sx={{
+                m: "1rem 1rem 0 1rem",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
               <ProductCard product={product} key={product.id} />
-            </div>
+            </Box>
           ))}
-        </div>
+        </>
       );
     } else {
-      return (
-        <div className="product-container">
-          <p className="loading">Loading...</p>
-        </div>
-      );
+      return <Typography>Loading...</Typography>;
     }
   };
 
   return (
-    <div className="landing-product-overview" id="landing-product-overview">
-      <h1>Products</h1>
-      {renderProducts()}
-    </div>
+    <Box
+      className="landing-product-overview"
+      sx={{
+        minHeight: "100vh",
+        p: "1rem 3rem 3rem 3rem",
+      }}
+    >
+      <Typography variant="h1">Products</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "stretch",
+          justifyContent: "center",
+          m: "0 1rem 1rem 1rem",
+        }}
+      >
+        {renderProducts()}
+      </Box>
+    </Box>
   );
 }
 
