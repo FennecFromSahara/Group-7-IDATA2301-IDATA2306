@@ -7,7 +7,7 @@ function Products() {
     <div>
       <NavBar />
 
-      <ProductOverview />
+      <ProductOverview maxIndex={12} />
 
       <Footer />
     </div>

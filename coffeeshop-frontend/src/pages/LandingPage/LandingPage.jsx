@@ -11,7 +11,7 @@ function LandingPage() {
 
       <HeroSection />
 
-      <ProductOverview />
+      <ProductOverview maxIndex={6} />
 
       <Footer />
     </Box>

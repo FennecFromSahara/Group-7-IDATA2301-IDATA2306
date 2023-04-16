@@ -1,8 +1,8 @@
 import ProductCard from "./ProductCard";
 import { useFetch } from "../hooks/useFetch";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
-function ProductOverview() {
+function ProductOverview(props) {
   const { data, error } = useFetch("http://localhost:8042/api/products");
 
   const renderProducts = () => {
@@ -13,17 +13,16 @@ function ProductOverview() {
     } else if (data.length > 0) {
       return (
         <>
-          {data.map((product) => (
-            <Box
-              sx={{
-                m: "1rem 1rem 0 1rem",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <ProductCard product={product} key={product.id} />
-            </Box>
-          ))}
+          {data.map((product, index) => {
+            if (index < props.maxIndex) {
+              return (
+                <Grid item xs={2} sm={4} md={4} key={product.id}>
+                  <ProductCard product={product} />
+                </Grid>
+              );
+            }
+            return null;
+          })}
         </>
       );
     } else {
@@ -33,7 +32,6 @@ function ProductOverview() {
 
   return (
     <Box
-      className="landing-product-overview"
       sx={{
         minHeight: "100vh",
         p: "1rem 3rem 3rem 3rem",
@@ -41,6 +39,12 @@ function ProductOverview() {
     >
       <Typography variant="h1">Products</Typography>
       <Box
+        className="landing-product-overview"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {/* <Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
@@ -48,8 +52,23 @@ function ProductOverview() {
           justifyContent: "center",
           m: "0 1rem 1rem 1rem",
         }}
-      >
-        {renderProducts()}
+      > */}
+        {/* </Box> */}
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ width: 900 }}
+        >
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+            sx={{ width: "25%" }}
+          >
+            {renderProducts()}
+          </Grid>
+        </Box>
       </Box>
     </Box>
   );
