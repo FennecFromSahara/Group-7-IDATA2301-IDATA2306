@@ -2,6 +2,11 @@ import ProductCard from "./ProductCard";
 import { useFetch } from "../hooks/useFetch";
 import { Box, Grid, Typography } from "@mui/material";
 
+/**
+ * Productoverview displays a cusom number of ProductCard Objects in a grid.
+ *
+ * @returns {JSX.Element} A grid of ProductCard objects.
+ */
 function ProductOverview(props) {
   const { data, error } = useFetch("http://localhost:8042/api/products");
 

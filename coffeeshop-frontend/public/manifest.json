@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "React app",
+  "short_name": "Cafe React App",
+  "name": "Mocha Nooka Cafe - React app",
   "start_url": ".",
   "display": "standalone"
 }

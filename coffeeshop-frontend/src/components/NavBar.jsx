@@ -84,7 +84,7 @@ function NavBar() {
                     onKeyDown={handleListKeyDown}
                   >
                     {pages.map((page, index) => (
-                      <MenuItem>
+                      <MenuItem key={index}>
                         <Link
                           to={link[index]}
                           style={{ textDecoration: "none" }}
