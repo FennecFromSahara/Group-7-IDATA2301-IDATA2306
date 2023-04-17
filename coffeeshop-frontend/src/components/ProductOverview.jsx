@@ -49,16 +49,6 @@ function ProductOverview(props) {
         justifyContent="center"
         alignItems="center"
       >
-        {/* <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "stretch",
-          justifyContent: "center",
-          m: "0 1rem 1rem 1rem",
-        }}
-      > */}
-        {/* </Box> */}
         <Box
           display="flex"
           justifyContent="center"
