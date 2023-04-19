@@ -1,9 +1,10 @@
-package no.ntnu.group7.coffeeshop.model.security;
+package no.ntnu.group7.coffeeshop.model;
 
 import jakarta.persistence.*;
-import no.ntnu.group7.coffeeshop.model.Order;
-import no.ntnu.group7.coffeeshop.model.ShoppingCartProduct;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -12,19 +13,36 @@ import java.util.Set;
 /**
  * User model class that represents a user in the coffee shop system
  */
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private long id;
 
+  @Column(unique = true, nullable = false)
   private String username;
+
+  @Column(nullable = false)
   private String password;
+
+  @Column(nullable = false)
   private String firstName;
+
+  @Column(nullable = false)
   private String lastName;
+
+  @Column(unique = true, nullable = false)
   private String email;
+
+  @Column(nullable = false)
   private String address;
+
   private boolean active = true;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "created_at")
+  private Date createdAt;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -59,14 +77,7 @@ public class User {
     this.lastName = lastName;
     this.email = email;
     this.address = address;
-  }
-
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
-  }
-
-  public Set<Role> getRoles() {
-    return roles;
+    this.createdAt = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
   }
 
   public Long getId() {
@@ -93,12 +104,76 @@ public class User {
     this.password = password;
   }
 
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
   public boolean isActive() {
     return active;
   }
 
   public void setActive(boolean active) {
     this.active = active;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Set<Role> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Set<Role> roles) {
+    this.roles = roles;
+  }
+
+  public Set<Order> getOrders() {
+    return orders;
+  }
+
+  public void setOrders(Set<Order> orders) {
+    this.orders = orders;
+  }
+
+  public Set<ShoppingCartProduct> getShoppingCartProducts() {
+    return shoppingCartProducts;
+  }
+
+  public void setShoppingCartProducts(Set<ShoppingCartProduct> shoppingCartProducts) {
+    this.shoppingCartProducts = shoppingCartProducts;
   }
 
   /**
@@ -135,37 +210,5 @@ public class User {
       }
     }
     return found;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
   }
 }

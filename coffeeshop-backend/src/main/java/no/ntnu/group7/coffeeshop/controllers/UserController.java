@@ -1,7 +1,7 @@
 package no.ntnu.group7.coffeeshop.controllers;
 
 import no.ntnu.group7.coffeeshop.dto.UserProfileDto;
-import no.ntnu.group7.coffeeshop.model.security.User;
+import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.services.AccessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

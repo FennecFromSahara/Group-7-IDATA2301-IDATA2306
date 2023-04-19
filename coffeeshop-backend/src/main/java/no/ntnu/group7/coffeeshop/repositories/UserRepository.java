@@ -1,8 +1,8 @@
-package no.ntnu.group7.coffeeshop.repositories.security;
+package no.ntnu.group7.coffeeshop.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import no.ntnu.group7.coffeeshop.model.security.User;
+import no.ntnu.group7.coffeeshop.model.User;
 
 import java.util.Optional;
 

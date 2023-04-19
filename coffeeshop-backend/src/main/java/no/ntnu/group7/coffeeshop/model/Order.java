@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import no.ntnu.group7.coffeeshop.model.security.User;
 import jakarta.persistence.JoinColumn;
 
 /**

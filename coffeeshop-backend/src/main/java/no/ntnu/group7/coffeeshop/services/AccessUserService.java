@@ -11,10 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import no.ntnu.group7.coffeeshop.dto.UserProfileDto;
-import no.ntnu.group7.coffeeshop.model.security.Role;
-import no.ntnu.group7.coffeeshop.model.security.User;
-import no.ntnu.group7.coffeeshop.repositories.security.RoleRepository;
-import no.ntnu.group7.coffeeshop.repositories.security.UserRepository;
+import no.ntnu.group7.coffeeshop.model.Role;
+import no.ntnu.group7.coffeeshop.model.User;
+import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
+import no.ntnu.group7.coffeeshop.repositories.UserRepository;
 import no.ntnu.group7.coffeeshop.security.AccessUserDetails;
 
 import java.util.Optional;

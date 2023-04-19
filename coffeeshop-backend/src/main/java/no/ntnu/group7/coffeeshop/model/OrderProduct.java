@@ -1,5 +1,8 @@
 package no.ntnu.group7.coffeeshop.model;
 
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +27,10 @@ public class OrderProduct {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    private double price;
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
     private int quantity;
 
     /**
@@ -33,7 +39,7 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, double price, int quantity) {
+    public OrderProduct(Order order, Product product, BigDecimal price, int quantity) {
         this.order = order;
         this.product = product;
         this.price = price;
@@ -64,11 +70,11 @@ public class OrderProduct {
         this.product = product;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

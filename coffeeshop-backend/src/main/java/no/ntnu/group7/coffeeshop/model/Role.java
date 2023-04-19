@@ -1,4 +1,4 @@
-package no.ntnu.group7.coffeeshop.model.security;
+package no.ntnu.group7.coffeeshop.model;
 
 import jakarta.persistence.*;
 import java.util.LinkedHashSet;
@@ -7,11 +7,14 @@ import java.util.Set;
 /**
  * User role (admin, regular user, etc).
  */
-@Entity(name = "roles")
+@Entity
+@Table(name = "roles")
 public class Role {
   @Id
   @GeneratedValue
   private Long id;
+
+  @Column(unique = true, nullable = false)
   private String name;
 
   @ManyToMany(mappedBy = "roles")

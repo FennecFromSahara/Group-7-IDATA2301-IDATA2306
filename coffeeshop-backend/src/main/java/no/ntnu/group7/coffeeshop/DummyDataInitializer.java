@@ -6,11 +6,14 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import no.ntnu.group7.coffeeshop.model.Product;
-import no.ntnu.group7.coffeeshop.model.security.Role;
-import no.ntnu.group7.coffeeshop.model.security.User;
+import no.ntnu.group7.coffeeshop.model.Role;
+import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
-import no.ntnu.group7.coffeeshop.repositories.security.RoleRepository;
-import no.ntnu.group7.coffeeshop.repositories.security.UserRepository;
+import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
+import no.ntnu.group7.coffeeshop.repositories.UserRepository;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,15 +53,20 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
           "$2a$12$j7zoEDLcKGeNfF/V8eVVVuDV6gYJBsSVmREZfyUN7jErSQV.Ic1Ba", "Admin",
           "King", "admin@mail.com", "Heaven");
 
-      Role user = new Role("ROLE_USER");
-      Role admin = new Role("ROLE_ADMIN");
+      Role userRole = new Role("ROLE_USER");
+      Role adminRole = new Role("ROLE_ADMIN");
+      Role guestRole = new Role("ROLE_GUEST");
 
-      testUser.addRole(user);
-      adminUser.addRole(user);
-      adminUser.addRole(admin);
+      Set<Role> userRoles = new LinkedHashSet<>();
+      userRoles.add(userRole);
+      userRoles.add(guestRole);
 
-      roleRepository.save(user);
-      roleRepository.save(admin);
+      testUser.setRoles(userRoles);
+      adminUser.setRoles(userRoles);
+      adminUser.addRole(adminRole);
+
+      roleRepository.saveAll(userRoles);
+      roleRepository.save(adminRole);
 
       userRepository.save(adminUser);
       userRepository.save(testUser);

@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import no.ntnu.group7.coffeeshop.model.security.User;
 
 /**
  * Keeps track of all products different customers have added to their cart. (?)
