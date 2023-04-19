@@ -1,73 +1,91 @@
-import NavBar from "../../components/NavBar";
-import "./checkout.css";
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import AddressForm from './AddressForm';
+import PaymentForm from './PaymentForm';
+import Review from './Review';
 
-function Checkout() {
+const steps = ['Shipping address', 'Payment details', 'Review your order'];
+
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <AddressForm />;
+    case 1:
+      return <PaymentForm />;
+    case 2:
+      return <Review />;
+    default:
+      throw new Error('Unknown step');
+  }
+}
+
+export default function Checkout() {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
   return (
     <div>
-      <NavBar />
+      <CssBaseline />
+      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === steps.length ? (
+            <React.Fragment>
+              <Typography variant="h5" gutterBottom>
+                Thank you for your order.
+              </Typography>
+              <Typography variant="subtitle1">
+                Your order number is #2001539. We have emailed your order
+                confirmation, and will send you an update when your order has
+                shipped.
+              </Typography>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                {activeStep !== 0 && (
+                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    Back
+                  </Button>
+                )}
 
-      <h1>Checkout</h1>
-      <p>Enter the necessary details below</p>
-
-      <form action="idk" method="post" id="checkout-form">
-        {/* Contact information form */}
-        <fieldset id="contact-information-fieldset">
-          <legend>Contact information</legend>
-          <label>
-            Your first name:
-            <input name="firstName" type="text" placeholder="Firstname" />
-          </label>
-          <br />
-          <label>
-            Your last name:
-            <input name="lastName" type="text" placeholder="Lastname" />
-          </label>
-          <br />
-          <label>
-            Your address:
-            <input name="address" type="text" placeholder="" />
-          </label>
-          <br />
-          <label>
-            Your email:
-            <input
-              name="email"
-              type="email"
-              placeholder="someone@something.stuff"
-            />
-          </label>
-          <br />
-          <label>
-            Your phone number:
-            <input
-              name="phoneNumber"
-              type="number"
-              placeholder="8921839"
-            ></input>
-          </label>
-        </fieldset>
-
-        {/* Shipping information form */}
-        <fieldset id="shipping-fieldset">
-          <legend>Shipping</legend>
-          <label>
-            Post code:
-            <input name="postCode" type="number" />
-          </label>
-
-          <label for="shippingAddress">Delivery location:</label>
-          <select name="shippingAddress">
-            <option>Obs stormoa</option>
-            <option>Rema 1000 Gåseid</option>
-            <option>Joker kolvikbakken</option>
-          </select>
-        </fieldset>
-      </form>
-
-      {/* Button to payment page */}
-      <input type="button" name="paymentButton"></input>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                </Button>
+              </Box>
+            </React.Fragment>
+          )}
+        </Paper>
+      </Container>
     </div>
   );
 }
-
-export default Checkout;

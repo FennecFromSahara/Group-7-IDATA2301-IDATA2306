@@ -1,8 +1,8 @@
 import LandingPage from "./pages/LandingPage/LandingPage";
 import { Route, Routes } from "react-router-dom";
 import About from "./pages/About";
-import ShoppingCart from "./pages/ShoppingCart";
-import Checkout from "./pages/Checkout/Checkout";
+import ShoppingCartPage from "./pages/ShoppingCart/ShoppingCartPage";
+import CheckoutPage from "./pages/Checkout/CheckoutPage";
 import Products from "./pages/Products/Products";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import IndividualProduct from "./pages/IndividualProduct/IndividualProduct";
@@ -16,9 +16,9 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/:id" element={<IndividualProduct />} />
-      <Route path="/shoppingCart" element={<ShoppingCart />} />
+      <Route path="/shoppingCart" element={<ShoppingCartPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/createUser" element={<CreateUser />} />
       <Route path="/veryRealURL" element={<Secret />} />
 
