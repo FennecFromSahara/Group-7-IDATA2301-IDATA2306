@@ -45,14 +45,14 @@ public class User {
   private Date createdAt;
 
   @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new LinkedHashSet<>();
 
-  @OneToMany(mappedBy = "customer")
-  private Set<Order> orders = new HashSet<>();
+  // @OneToMany(mappedBy = "customer")
+  // private Set<Order> orders = new HashSet<>();
 
-  @OneToMany(mappedBy = "customer")
-  private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
+  // @OneToMany(mappedBy = "customer")
+  // private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
 
   /**
    * Empty constructor needed for JPA
@@ -160,21 +160,22 @@ public class User {
     this.roles = roles;
   }
 
-  public Set<Order> getOrders() {
-    return orders;
-  }
+  // public Set<Order> getOrders() {
+  // return orders;
+  // }
 
-  public void setOrders(Set<Order> orders) {
-    this.orders = orders;
-  }
+  // public void setOrders(Set<Order> orders) {
+  // this.orders = orders;
+  // }
 
-  public Set<ShoppingCartProduct> getShoppingCartProducts() {
-    return shoppingCartProducts;
-  }
+  // public Set<ShoppingCartProduct> getShoppingCartProducts() {
+  // return shoppingCartProducts;
+  // }
 
-  public void setShoppingCartProducts(Set<ShoppingCartProduct> shoppingCartProducts) {
-    this.shoppingCartProducts = shoppingCartProducts;
-  }
+  // public void setShoppingCartProducts(Set<ShoppingCartProduct>
+  // shoppingCartProducts) {
+  // this.shoppingCartProducts = shoppingCartProducts;
+  // }
 
   /**
    * Add a role to the user

@@ -1,35 +1,50 @@
 package no.ntnu.group7.coffeeshop.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Represents a product
  */
 @Entity
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String name;
-    private double price;
+
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column
     private String description;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Category> categories = new HashSet<>();
+    @Column
+    private String image;
 
-    @OneToMany(mappedBy = "product")
-    private Set<OrderProduct> orderProducts = new HashSet<>();
+    // @ManyToMany(mappedBy = "products")
+    // private Set<Category> categories = new HashSet<>();
 
-    @OneToMany(mappedBy = "product")
-    private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
+    // @OneToMany(mappedBy = "product")
+    // private Set<OrderProduct> orderProducts = new HashSet<>();
+
+    // @OneToMany(mappedBy = "product")
+    // private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     /**
      * Empty constructor needed for JPA
@@ -44,7 +59,7 @@ public class Product {
      * @param price       Price of the product
      * @param description Product description
      */
-    public Product(String name, long price, String description) {
+    public Product(String name, BigDecimal price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -66,11 +81,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

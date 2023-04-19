@@ -1,30 +1,33 @@
 package no.ntnu.group7.coffeeshop.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Keeps track of all products different customers have added to their cart. (?)
- * TODO: maybe rename to CustomerProduct
  */
 @Entity
+@Table(name = "shopping_cart")
 public class ShoppingCartProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private User customer;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Column(nullable = false)
     private int quantity;
 
     /**
@@ -33,8 +36,8 @@ public class ShoppingCartProduct {
     public ShoppingCartProduct() {
     }
 
-    public ShoppingCartProduct(User customer, Product product, int quantity) {
-        this.customer = customer;
+    public ShoppingCartProduct(User user, Product product, int quantity) {
+        this.user = user;
         this.product = product;
         this.quantity = quantity;
     }
@@ -47,12 +50,12 @@ public class ShoppingCartProduct {
         this.id = id;
     }
 
-    public User getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Product getProduct() {

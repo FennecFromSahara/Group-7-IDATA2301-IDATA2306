@@ -12,6 +12,7 @@ import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
 import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
 import no.ntnu.group7.coffeeshop.repositories.UserRepository;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -49,6 +50,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       User testUser = new User("testUser",
           "$2a$12$AIbp1s0f5REEJ1Ck7jNlGOcfiApTge164eT9mCxREtjHoNbnv6B2u", "FirstName",
           "LastName", "email@email.com", "Test station");
+
       User adminUser = new User("admin",
           "$2a$12$j7zoEDLcKGeNfF/V8eVVVuDV6gYJBsSVmREZfyUN7jErSQV.Ic1Ba", "Admin",
           "King", "admin@mail.com", "Heaven");
@@ -78,9 +80,9 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
     if (productRepository.count() == 0) {
       logger.info("Importing test products...");
 
-      Product brazilianCoffee = new Product("Brazilian coffee", 80, "ground, 500 grams");
-      Product greenTea = new Product("Green tea", 50, "200 grams");
-      Product peruCoffeeBeans = new Product("Peru coffee beans", 120, "500 grams");
+      Product brazilianCoffee = new Product("Brazilian coffee", new BigDecimal(80), "ground, 500 grams");
+      Product greenTea = new Product("Green tea", new BigDecimal(50), "200 grams");
+      Product peruCoffeeBeans = new Product("Peru coffee beans", new BigDecimal(120), "500 grams");
 
       productRepository.save(brazilianCoffee);
       productRepository.save(greenTea);

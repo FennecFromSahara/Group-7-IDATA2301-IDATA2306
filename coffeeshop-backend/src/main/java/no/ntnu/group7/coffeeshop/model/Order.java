@@ -1,16 +1,21 @@
 package no.ntnu.group7.coffeeshop.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.JoinColumn;
 
 /**
@@ -25,13 +30,64 @@ public class Order {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private User customer;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    private Date orderDate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status", nullable = false)
+    private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderProduct> orderProducts = new HashSet<>();
+    @Column(nullable = false)
+    private BigDecimal total;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    // Enum for order status
+    public enum OrderStatus {
+        PENDING,
+        PROCESSING,
+        SHIPPED,
+        DELIVERED,
+        CANCELED
+    }
+
+    /**
+     * Empty constructor needed for JPA
+     */
+    public Order() {
+    }
+
+    /**
+     * Constructor for creating an order with the current timestamp as the createdAt
+     * value.
+     * 
+     * @param user        The user who placed the order
+     * @param orderStatus The status of the order
+     * @param total       The total cost of the order
+     */
+    public Order(User user, OrderStatus orderStatus, BigDecimal total) {
+        this.user = user;
+        this.orderStatus = orderStatus;
+        this.total = total;
+        this.createdAt = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Constructor for creating an order with a specified createdAt timestamp.
+     * 
+     * @param user        The user who placed the order
+     * @param orderStatus The status of the order
+     * @param total       The total cost of the order
+     * @param createdAt   The timestamp at which the order was created
+     */
+    public Order(User user, OrderStatus orderStatus, BigDecimal total, Date createdAt) {
+        this.user = user;
+        this.orderStatus = orderStatus;
+        this.total = total;
+        this.createdAt = createdAt;
+    }
 
     public int getId() {
         return id;
@@ -41,27 +97,35 @@ public class Order {
         this.id = id;
     }
 
-    public User getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Set<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setOrderProducts(Set<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
