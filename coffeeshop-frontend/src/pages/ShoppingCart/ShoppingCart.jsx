@@ -8,9 +8,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from '@mui/icons-material/Remove';
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -21,13 +21,18 @@ export default function ShoppingCart() {
         <Stack spacing={2}>
           {cards.map((card) => (
             <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "row", alignItems: "center"}}
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
             >
               <CardMedia
                 component="img"
                 image="./img/coffe placeholder.jpg"
                 alt="random"
-                sx={{ maxWidth: 420 }}
+                sx={{ maxWidth: 100 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
@@ -45,7 +50,9 @@ export default function ShoppingCart() {
                       <RemoveIcon />
                     </Button>
                   </Grid>
-                  <Grid item xs={4}>"count"</Grid>
+                  <Grid item xs={4}>
+                    "count"
+                  </Grid>
                   <Grid item xs={4}>
                     <Button size="small">
                       <AddIcon />
@@ -58,6 +65,17 @@ export default function ShoppingCart() {
               </CardActions>
             </Card>
           ))}
+          <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+            <Typography mr={2}>
+              Sub total: $"amount" 
+            </Typography>
+            <Button
+              variant="contained"
+              href="/checkout"
+            >
+              Checkout
+            </Button>
+          </Box>
         </Stack>
       </Container>
     </div>
