@@ -33,6 +33,9 @@ public class Product {
     @Column
     private String image;
 
+    @Column
+    private int inventoryAmount;
+
     // @ManyToMany(mappedBy = "products")
     // private Set<Category> categories = new HashSet<>();
 
@@ -95,5 +98,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getInventoryAmount() {
+        return inventoryAmount;
+    }
+
+    public void setInventoryAmount(int inventoryAmount) {
+        this.inventoryAmount = inventoryAmount;
     }
 }
