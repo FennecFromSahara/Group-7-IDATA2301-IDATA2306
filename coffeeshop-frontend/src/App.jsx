@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import IndividualProduct from "./pages/IndividualProduct/IndividualProduct";
 import CreateUser from "./pages/CreateUser/CreateUser";
 import Secret from "./pages/Secret/Secret";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/createUser" element={<CreateUser />} />
       <Route path="/veryRealURL" element={<Secret />} />
+      <Route path="/admin" element={<AdminPage />} />
 
       {/** TODO: IMPLEMENT NOT FOUND SITE */}
       <Route path="*" element={<h1>404: Not Found</h1>} />

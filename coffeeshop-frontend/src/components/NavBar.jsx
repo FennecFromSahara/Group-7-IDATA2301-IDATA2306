@@ -12,16 +12,19 @@ import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
+import { isAdmin } from "../tools/authentication";
 
 const pages = ["Home", "Products", "About Us"];
 const link = ["/", "/products", "/about"];
 
 /**
  * A responsive nav bar that includes a menu button for smaller resolutions.
+ * @param props Properties, contains user
  *
  * @returns {JSX.Element} The JSX code for a nav bar for the coffeeshop
  */
-function NavBar() {
+function NavBar(props) {
+  const user = props.user;
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -43,6 +46,16 @@ function NavBar() {
       setOpen(false);
     } else if (event.key === "Escape") {
       setOpen(false);
+    }
+  }
+
+  // check if user is admin, if so add admin page to navigation
+  // adds it twice we dont check if the page is already there 
+  //(cuz it refreshes the component when state changes or something)
+  if (user) {
+    if (isAdmin(user) && !pages.includes("Administration")) {
+      pages.push("Administration");
+      link.push("/admin");
     }
   }
 
