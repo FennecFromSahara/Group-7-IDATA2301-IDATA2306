@@ -6,7 +6,7 @@ import jakarta.transaction.Transactional;
 import no.ntnu.group7.coffeeshop.model.Product;
 
 /**
- * Responsible for managing the inventory of the coffeeshop.
+ * Provides service for managing the inventory of the coffeeshop.
  */
 public class InventoryService {
 

@@ -10,6 +10,9 @@ import no.ntnu.group7.coffeeshop.model.Product;
 import no.ntnu.group7.coffeeshop.model.ShoppingCartProduct;
 import no.ntnu.group7.coffeeshop.model.User;
 
+/**
+ * Provides service for managing a shopping cart
+ */
 public class ShoppingCartService {
 
   @PersistenceContext
