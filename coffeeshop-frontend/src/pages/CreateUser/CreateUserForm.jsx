@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import {asyncApiRequest} from "../../tools/requests";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Code adapted from 
@@ -18,13 +20,18 @@ import Container from "@mui/material/Container";
  */
 
 export default function CreateUserForm() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    //test stuff
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    asyncApiRequest("POST", "/signup", data, true)
+    .then(onSignupSuccess)
   };
 
   return (
@@ -71,10 +78,30 @@ export default function CreateUserForm() {
               <TextField
                 required
                 fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="address"
+                label="Address"
+                name="address"
+                autoComplete="address"
               />
             </Grid>
             <Grid item xs={12}>
@@ -108,4 +135,11 @@ export default function CreateUserForm() {
       </Box>
     </Container>
   );
+
+  /**
+   * This function is called when signup was successful
+   */
+  function onSignupSuccess() {
+    navigate("/");
+  }
 }
