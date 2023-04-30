@@ -80,9 +80,9 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
     if (productRepository.count() == 0) {
       logger.info("Importing test products...");
 
-      Product brazilianCoffee = new Product("Brazilian coffee", new BigDecimal(80), "ground, 500 grams");
-      Product greenTea = new Product("Green tea", new BigDecimal(50), "200 grams");
-      Product peruCoffeeBeans = new Product("Peru coffee beans", new BigDecimal(120), "500 grams");
+      Product brazilianCoffee = new Product("Brazilian coffee", new BigDecimal(80), "ground, 500 grams", "", 15);
+      Product greenTea = new Product("Green tea", new BigDecimal(50), "200 grams", "", 10);
+      Product peruCoffeeBeans = new Product("Peru coffee beans", new BigDecimal(120), "500 grams", "", 1);
 
       productRepository.save(brazilianCoffee);
       productRepository.save(greenTea);

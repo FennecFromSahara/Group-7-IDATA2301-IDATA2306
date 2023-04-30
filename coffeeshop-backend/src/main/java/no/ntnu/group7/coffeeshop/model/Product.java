@@ -58,14 +58,18 @@ public class Product {
     /**
      * Create a product
      * 
-     * @param name        Name of the product
-     * @param price       Price of the product
-     * @param description Product description
+     * @param name            Name of the product
+     * @param price           Price of the product
+     * @param description     Product description
+     * @param image           string to locate image
+     * @param inventoryAmount amount of product in inventory
      */
-    public Product(String name, BigDecimal price, String description) {
+    public Product(String name, BigDecimal price, String description, String image, int inventoryAmount) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.image = image;
+        this.inventoryAmount = inventoryAmount;
     }
 
     public int getId() {
@@ -106,5 +110,13 @@ public class Product {
 
     public void setInventoryAmount(int inventoryAmount) {
         this.inventoryAmount = inventoryAmount;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
