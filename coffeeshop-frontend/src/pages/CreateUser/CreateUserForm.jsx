@@ -9,14 +9,14 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import {asyncApiRequest} from "../../tools/requests";
+import { asyncApiRequest } from "../../tools/requests";
 import { useNavigate } from "react-router-dom";
 
 /**
- * Code adapted from 
+ * Code adapted from
  * https://github.com/mui/material-ui/blob/v5.11.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
- * 
- * @returns 
+ *
+ * @returns
  */
 
 export default function CreateUserForm() {
@@ -30,8 +30,7 @@ export default function CreateUserForm() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    asyncApiRequest("POST", "/signup", data, true)
-    .then(onSignupSuccess)
+    asyncApiRequest("POST", "api/signup", data, true).then(onSignupSuccess);
   };
 
   return (

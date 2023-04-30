@@ -1,10 +1,10 @@
 // All code for sending requests to backend is stored in this file
 
 // The base path where the API is running, loaded from the REACT_BASE_URL environment variable
-import {getCookie} from "./cookies";
-import {HttpResponseError} from "./HttpResponseError";
+import { getCookie } from "./cookies";
+import { HttpResponseError } from "./HttpResponseError";
 
-const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 /**
  * Send and asynchronous request to the remote API.
@@ -16,7 +16,12 @@ const API_BASE_URL = process.env.REACT_APP_BASE_URL;
  * @return @return {Promise<JSON>} The response body, parsed as a JSON
  * @throws {HttpResponseError} Error code and message from the response body
  */
-export function asyncApiRequest(method, url, requestBody = null, returnPlainText = false) {
+export function asyncApiRequest(
+  method,
+  url,
+  requestBody = null,
+  returnPlainText = false
+) {
   const fullUrl = API_BASE_URL + url;
   let body = null;
   let headers = {};
@@ -36,7 +41,7 @@ export function asyncApiRequest(method, url, requestBody = null, returnPlainText
     body: body,
   })
     .then(handleErrors)
-    .then((response) => returnPlainText ? response : response.json());
+    .then((response) => (returnPlainText ? response : response.json()));
 }
 
 /**
