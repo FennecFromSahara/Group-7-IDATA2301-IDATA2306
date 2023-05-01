@@ -1,11 +1,13 @@
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 
-function AdminPage() {
+function AdminPage(props) {
+  const user = props.user;
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
       <Typography>You are admin</Typography>
 

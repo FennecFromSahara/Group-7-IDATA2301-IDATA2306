@@ -1,10 +1,12 @@
 import CreateUserForm from "./CreateUserForm";
 import NavBar from "../../components/NavBar";
 
-function CreateUser() {
+function CreateUser(props) {
+  const user = props.user;
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
       <CreateUserForm />
     </div>

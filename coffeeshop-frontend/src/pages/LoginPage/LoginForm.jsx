@@ -11,22 +11,55 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { sendAuthenticationRequest } from "../../tools/authentication";
 
 /**
- * Code adapted from 
+ * Code adapted from
  * https://github.com/mui/material-ui/blob/v5.11.16/docs/data/material/getting-started/templates/sign-in/SignIn.js
- * 
- * @returns 
+ *
+ * @returns
  */
-export default function LoginForm() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+export default function LoginForm(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+    console.log("Submitting form");
+    console.log("Username: " + username);
+    console.log("Password: " + password);
+    sendAuthenticationRequest(
+      username,
+      password,
+      onLoginSuccess,
+      (errorMessage) => setError(errorMessage)
+    );
+  }
+
+  /**
+   * This function is called when login is successful
+   */
+  function onLoginSuccess(userData) {
+    props.setUser(userData);
+    navigate("/");
+  }
+
+  let errorMessage = null;
+  if (error) {
+    errorMessage = { error };
+  }
+
+  function handleUsernameChange(event) {
+    setUsername(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,16 +78,17 @@ export default function LoginForm() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
+            onChange={handleUsernameChange}
           />
           <TextField
             margin="normal"
@@ -65,11 +99,13 @@ export default function LoginForm() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handlePasswordChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+          {errorMessage}
           <Button
             type="submit"
             fullWidth

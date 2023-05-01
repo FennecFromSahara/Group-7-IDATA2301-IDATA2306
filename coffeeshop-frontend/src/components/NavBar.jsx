@@ -50,7 +50,7 @@ function NavBar(props) {
   }
 
   // check if user is admin, if so add admin page to navigation
-  // adds it twice we dont check if the page is already there 
+  // adds it twice we dont check if the page is already there
   //(cuz it refreshes the component when state changes or something)
   if (user) {
     if (isAdmin(user) && !pages.includes("Administration")) {

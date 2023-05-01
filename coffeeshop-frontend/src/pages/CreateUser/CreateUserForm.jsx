@@ -30,7 +30,7 @@ export default function CreateUserForm() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    asyncApiRequest("POST", "api/signup", data, true).then(onSignupSuccess);
+    asyncApiRequest("POST", "/signup", data, true).then(onSignupSuccess);
   };
 
   return (

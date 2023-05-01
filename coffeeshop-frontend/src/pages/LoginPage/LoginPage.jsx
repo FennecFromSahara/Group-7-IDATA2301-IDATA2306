@@ -1,12 +1,15 @@
 import NavBar from "../../components/NavBar";
 import LoginForm from "./LoginForm";
 
-function LoginPage() {
+function LoginPage(props) {
+  const user = props.user;
+  const setUser = props.setUser;
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
-      <LoginForm />
+      <LoginForm setUser={setUser} />
     </div>
   );
 }
