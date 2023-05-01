@@ -30,8 +30,6 @@ export default function LoginForm(props) {
   function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
     console.log("Submitting form");
-    console.log("Username: " + username);
-    console.log("Password: " + password);
     sendAuthenticationRequest(
       username,
       password,
@@ -44,6 +42,7 @@ export default function LoginForm(props) {
    * This function is called when login is successful
    */
   function onLoginSuccess(userData) {
+    console.log("onLoginSuccess called with userData:", userData);
     props.setUser(userData);
     navigate("/");
   }

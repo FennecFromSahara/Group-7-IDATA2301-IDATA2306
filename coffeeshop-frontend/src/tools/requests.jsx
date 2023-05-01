@@ -44,10 +44,7 @@ export function asyncApiRequest(
     body: body,
   })
     .then(handleErrors)
-    .then((response) => {
-      console.log("Server response:", response);
-      return handleErrors(response);
-    });
+    .then((response) => (returnPlainText ? response.text() : response.json()));
 }
 
 /**

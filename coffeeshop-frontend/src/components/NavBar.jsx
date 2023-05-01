@@ -13,9 +13,15 @@ import Paper from "@mui/material/Paper";
 import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
 import { isAdmin } from "../tools/authentication";
+import { deleteAuthorizationCookies } from "../tools/authentication";
 
 const pages = ["Home", "Products", "About Us"];
 const link = ["/", "/products", "/about"];
+
+function handleLogout() {
+  deleteAuthorizationCookies();
+  window.location.reload();
+}
 
 /**
  * A responsive nav bar that includes a menu button for smaller resolutions.
@@ -49,9 +55,6 @@ function NavBar(props) {
     }
   }
 
-  // check if user is admin, if so add admin page to navigation
-  // adds it twice we dont check if the page is already there
-  //(cuz it refreshes the component when state changes or something)
   if (user) {
     if (isAdmin(user) && !pages.includes("Administration")) {
       pages.push("Administration");
@@ -145,15 +148,26 @@ function NavBar(props) {
             <ShoppingCartIcon />
           </Link>
         </IconButton>
-        <Link to="/login" style={{ textDecoration: "none" }}>
+        {user ? (
           <Button
             color="inherit"
             variant="contained"
             sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
+            onClick={handleLogout}
           >
-            Login
+            Logout
           </Button>
-        </Link>
+        ) : (
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <Button
+              color="inherit"
+              variant="contained"
+              sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
+            >
+              Login
+            </Button>
+          </Link>
+        )}
       </Toolbar>
     </AppBar>
   );

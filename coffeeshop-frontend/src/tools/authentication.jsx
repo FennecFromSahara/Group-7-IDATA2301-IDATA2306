@@ -1,7 +1,7 @@
 // Authentication stuff
 
-import {deleteCookie, getCookie, setCookie} from "./cookies";
-import {asyncApiRequest} from "./requests";
+import { deleteCookie, getCookie, setCookie } from "./cookies";
+import { asyncApiRequest } from "./requests";
 
 /**
  * Get the currently authenticated user
@@ -48,7 +48,12 @@ export async function sendAuthenticationRequest(
     password: password,
   };
   try {
-    const jwtResponse = await asyncApiRequest("POST", "/authenticate", postData);
+    const jwtResponse = await asyncApiRequest(
+      "POST",
+      "/authenticate",
+      postData
+    );
+    console.log("jwtResponse:", jwtResponse);
     if (jwtResponse && jwtResponse.jwt) {
       setCookie("jwt", jwtResponse.jwt);
       const userData = parseJwtUser(jwtResponse.jwt);
