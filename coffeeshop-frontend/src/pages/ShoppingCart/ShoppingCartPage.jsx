@@ -1,10 +1,12 @@
 import NavBar from "../../components/NavBar";
 import ShoppingCart from "./ShoppingCart";
 
-function ShoppingCartPage() {
+function ShoppingCartPage(props) {
+  const user = props.user;
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
       <ShoppingCart />
     </div>

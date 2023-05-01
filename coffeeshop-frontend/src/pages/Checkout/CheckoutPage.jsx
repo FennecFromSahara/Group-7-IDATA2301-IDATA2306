@@ -1,10 +1,12 @@
 import NavBar from "../../components/NavBar";
 import Checkout from "./Checkout";
 
-function CheckoutPage() {
+function CheckoutPage(props) {
+  const user = props.user;
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
       <Checkout />
     </div>

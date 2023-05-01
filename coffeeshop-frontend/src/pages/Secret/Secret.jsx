@@ -2,10 +2,13 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { Box, Typography } from "@mui/material";
 
-function Secret() {
+function Secret(props) {
+  const user = props.user;
+
   return (
     <Box>
-      <NavBar />
+      <NavBar user={user} />
+
       <Box minHeight="92vh" display="flex" flexDirection="column">
         <Box
           display="flex"
@@ -19,8 +22,9 @@ function Secret() {
             Shh... pretend like this is the link you wanted.
           </Typography>
         </Box>
-        <Footer />
       </Box>
+
+      <Footer />
     </Box>
   );
 }

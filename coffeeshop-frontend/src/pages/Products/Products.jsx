@@ -2,12 +2,14 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import ProductOverview from "../../components/ProductOverview";
 
-function Products() {
+function Products(props) {
+  const user = props.user;
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
-      <ProductOverview maxIndex={12} />
+      <ProductOverview maxIndex={12} user={user} />
 
       <Footer />
     </div>
