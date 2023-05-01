@@ -31,8 +31,11 @@ export function asyncApiRequest(
   }
   const jwtToken = getCookie("jwt");
   if (jwtToken) {
+    console.log(jwtToken);
     headers["Authorization"] = "Bearer " + jwtToken;
   }
+
+  console.log(body);
 
   return fetch(fullUrl, {
     method: method,
@@ -41,7 +44,10 @@ export function asyncApiRequest(
     body: body,
   })
     .then(handleErrors)
-    .then((response) => (returnPlainText ? response : response.json()));
+    .then((response) => {
+      console.log("Server response:", response);
+      return handleErrors(response);
+    });
 }
 
 /**

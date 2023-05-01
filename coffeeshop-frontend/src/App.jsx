@@ -56,6 +56,7 @@ function App() {
       if (loggedInUser) {
         console.log("User session found in cookies, restoring");
         setUser(loggedInUser);
+        console.log(loggedInUser.id);
       }
     }
   }

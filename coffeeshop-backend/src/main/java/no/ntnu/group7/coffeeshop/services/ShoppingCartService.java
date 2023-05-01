@@ -2,6 +2,8 @@ package no.ntnu.group7.coffeeshop.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -13,6 +15,7 @@ import no.ntnu.group7.coffeeshop.model.User;
 /**
  * Provides service for managing a shopping cart
  */
+@Service
 public class ShoppingCartService {
 
   @PersistenceContext
@@ -76,7 +79,8 @@ public class ShoppingCartService {
    * @return a list of items in a users shoppingcart
    */
   public List<ShoppingCartProduct> getCartProducts(User user) {
-    return entityManager.createQuery("SELECT c FROM ShoppingCartItem c WHERE c.user = :user", ShoppingCartProduct.class)
+    return entityManager
+        .createQuery("SELECT c FROM ShoppingCartProduct c WHERE c.user = :user", ShoppingCartProduct.class)
         .setParameter("user", user)
         .getResultList();
   }
@@ -91,7 +95,7 @@ public class ShoppingCartService {
   private ShoppingCartProduct findCartItem(User user, Product product) {
     try {
       return entityManager
-          .createQuery("SELECT c FROM ShoppingCartItem c WHERE c.user = :user AND c.product = :product",
+          .createQuery("SELECT c FROM ShoppingCartProduct c WHERE c.user = :user AND c.product = :product",
               ShoppingCartProduct.class)
           .setParameter("user", user)
           .setParameter("product", product)

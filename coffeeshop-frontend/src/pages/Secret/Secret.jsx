@@ -6,7 +6,7 @@ function Secret(props) {
   const user = props.user;
 
   return (
-    <Box>
+    <div>
       <NavBar user={user} />
 
       <Box minHeight="92vh" display="flex" flexDirection="column">
@@ -25,7 +25,7 @@ function Secret(props) {
       </Box>
 
       <Footer />
-    </Box>
+    </div>
   );
 }
 

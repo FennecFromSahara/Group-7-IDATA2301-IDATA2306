@@ -9,6 +9,7 @@ import { Box, Grid, Typography } from "@mui/material";
  */
 function ProductOverview(props) {
   const { data, error } = useFetch("http://localhost:8042/api/products");
+  const { user } = props;
 
   const renderProducts = () => {
     if (error) {
@@ -22,7 +23,7 @@ function ProductOverview(props) {
             if (index < props.maxIndex) {
               return (
                 <Grid item xs={2} sm={4} md={4} key={product.id}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} user={user} />
                 </Grid>
               );
             }
