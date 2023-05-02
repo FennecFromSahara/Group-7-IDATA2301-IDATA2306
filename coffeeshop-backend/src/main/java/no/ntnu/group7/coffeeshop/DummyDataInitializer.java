@@ -63,9 +63,13 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       userRoles.add(userRole);
       userRoles.add(guestRole);
 
+      Set<Role> adminUserRoles = new LinkedHashSet<>();
+      adminUserRoles.add(userRole);
+      adminUserRoles.add(guestRole);
+      adminUserRoles.add(adminRole);
+
       testUser.setRoles(userRoles);
-      adminUser.setRoles(userRoles);
-      adminUser.addRole(adminRole);
+      adminUser.setRoles(adminUserRoles);
 
       roleRepository.saveAll(userRoles);
       roleRepository.save(adminRole);
