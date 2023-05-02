@@ -13,6 +13,7 @@ import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
 import no.ntnu.group7.coffeeshop.repositories.UserRepository;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -87,10 +88,25 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       Product brazilianCoffee = new Product("Brazilian coffee", new BigDecimal(80), "ground, 500 grams", "", 15);
       Product greenTea = new Product("Green tea", new BigDecimal(50), "200 grams", "", 10);
       Product peruCoffeeBeans = new Product("Peru coffee beans", new BigDecimal(120), "500 grams", "", 1);
+      Product blackTea = new Product("Black tea", new BigDecimal(60), "200 grams", "", 20);
+      Product earlGreyTea = new Product("Earl Grey tea", new BigDecimal(70), "200 grams", "", 5);
+      Product chamomileTea = new Product("Chamomile tea", new BigDecimal(40), "200 grams", "", 15);
+      Product arabicaCoffee = new Product("Arabica coffee", new BigDecimal(100), "ground, 500 grams", "", 10);
+      Product colombiaCoffeeBeans = new Product("Colombia coffee beans", new BigDecimal(110), "500 grams", "", 5);
+      Product whiteTea = new Product("White tea", new BigDecimal(80), "200 grams", "", 15);
+      Product oolongTea = new Product("Oolong tea", new BigDecimal(90), "200 grams", "", 10);
 
-      productRepository.save(brazilianCoffee);
-      productRepository.save(greenTea);
-      productRepository.save(peruCoffeeBeans);
+      productRepository.saveAll(Arrays.asList(
+          brazilianCoffee,
+          greenTea,
+          peruCoffeeBeans,
+          blackTea,
+          earlGreyTea,
+          chamomileTea,
+          arabicaCoffee,
+          colombiaCoffeeBeans,
+          whiteTea,
+          oolongTea));
 
       logger.info("DONE importing test products");
     } else {
