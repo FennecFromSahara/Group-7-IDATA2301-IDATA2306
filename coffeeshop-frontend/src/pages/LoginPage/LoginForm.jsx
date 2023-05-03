@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendAuthenticationRequest } from "../../tools/authentication";
+import { Alert } from "@mui/material";
 
 /**
  * Code adapted from
@@ -49,7 +50,7 @@ export default function LoginForm(props) {
 
   let errorMessage = null;
   if (error) {
-    errorMessage = { error };
+    errorMessage = <Alert severity="error">{error}</Alert>;
   }
 
   function handleUsernameChange(event) {

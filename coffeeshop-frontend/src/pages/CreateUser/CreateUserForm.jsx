@@ -11,6 +11,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { asyncApiRequest } from "../../tools/requests";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Alert } from "@mui/material";
 
 /**
  * Code adapted from
@@ -21,6 +23,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateUserForm() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  let errorMessage = null;
+  if (error) {
+    errorMessage = <Alert severity="error">{error}</Alert>;
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,7 +38,18 @@ export default function CreateUserForm() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    asyncApiRequest("POST", "/signup", data, true).then(onSignupSuccess);
+    //end of test stuff
+    const signupData = {
+      username: data.get("username"),
+      password: data.get("password"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      email: data.get("email"),
+      address: data.get("address"),
+    };
+    asyncApiRequest("POST", "/signup", signupData, true)
+    .then(onSignupSuccess)
+    .catch((error) => setError(error.message))
   };
 
   return (
@@ -113,6 +132,9 @@ export default function CreateUserForm() {
                 id="password"
                 autoComplete="new-password"
               />
+            </Grid>
+            <Grid item xs={12}>
+              {errorMessage}
             </Grid>
           </Grid>
           <Button
