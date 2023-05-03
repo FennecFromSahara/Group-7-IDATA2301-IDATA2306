@@ -17,6 +17,7 @@ import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
 import no.ntnu.group7.coffeeshop.repositories.UserRepository;
 import no.ntnu.group7.coffeeshop.security.AccessUserDetails;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -154,5 +155,14 @@ public class AccessUserService implements UserDetailsService {
     user.setAddress(profileData.getAddress());
     userRepository.save(user);
     return true;
+  }
+
+  /**
+   * Fetches all users in the database.
+   *
+   * @return List of all users.
+   */
+  public List<User> getAllUsers() {
+    return userRepository.findAll();
   }
 }

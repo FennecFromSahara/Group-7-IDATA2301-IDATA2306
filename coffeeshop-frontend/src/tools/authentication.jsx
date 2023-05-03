@@ -53,7 +53,7 @@ export async function sendAuthenticationRequest(
       "/authenticate",
       postData
     );
-    console.log("jwtResponse:", jwtResponse);
+    // console.log("jwtResponse:", jwtResponse);
     if (jwtResponse && jwtResponse.jwt) {
       setCookie("jwt", jwtResponse.jwt);
       const userData = parseJwtUser(jwtResponse.jwt);
@@ -99,6 +99,7 @@ function parseJwtUser(jwtString) {
   const jwtObject = parseJwt(jwtString);
   if (jwtObject) {
     user = {
+      id: jwtObject.id,
       username: jwtObject.sub,
       roles: jwtObject.roles.map((r) => r.authority),
     };

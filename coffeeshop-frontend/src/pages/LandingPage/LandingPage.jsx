@@ -4,16 +4,14 @@ import Footer from "../../components/Footer";
 import ProductOverview from "../../components/ProductOverview";
 import { Box } from "@mui/material";
 
-function LandingPage(props) {
-  const user = props.user;
-
+function LandingPage() {
   return (
     <Box>
-      <NavBar user={user} />
+      <NavBar />
 
       <HeroSection />
 
-      <ProductOverview maxIndex={6} user={user} />
+      <ProductOverview maxIndex={6} />
 
       <Footer />
     </Box>

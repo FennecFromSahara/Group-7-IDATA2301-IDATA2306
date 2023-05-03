@@ -19,9 +19,10 @@ public class JwtUtil {
   @Value("${jwt_secret_key}")
   private String SECRET_KEY;
   /**
-   * Key inside JWT token where roles are stored
+   * Key inside JWT token where roles and id is stored
    */
   private static final String JWT_AUTH_KEY = "roles";
+  private static final String JWT_ID_KEY = "id";
 
   /**
    * Generate a JWT token for an authenticated user
@@ -37,6 +38,7 @@ public class JwtUtil {
     return Jwts.builder()
         .setSubject(userDetails.getUsername())
         .claim(JWT_AUTH_KEY, userDetails.getAuthorities())
+        .claim(JWT_ID_KEY, ((AccessUserDetails) userDetails).getUserId())
         .setIssuedAt(new Date(TIME_NOW))
         .setExpiration(new Date(TIME_AFTER_ONE_HOUR))
         .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -81,5 +83,4 @@ public class JwtUtil {
   private Boolean isTokenExpired(String token) {
     return extractExpiration(token).before(new Date());
   }
-
 }

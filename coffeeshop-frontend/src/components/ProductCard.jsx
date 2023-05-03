@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 import { asyncApiRequest } from "../tools/requests";
+import { useAuth } from "../hooks/useAuth";
 
 /**
  * A component representing a product card
@@ -14,7 +15,7 @@ import { asyncApiRequest } from "../tools/requests";
  * @constructor
  */
 export default function ProductCard(props) {
-  const user = props.user;
+  const { user } = useAuth();
   const product = props.product;
 
   const addToCart = async () => {
@@ -23,8 +24,8 @@ export default function ProductCard(props) {
       return;
     }
 
-    console.log(user.id);
-    console.log(product.id);
+    console.log("User id: " + user.id);
+    console.log("Product id: " + product.id);
 
     try {
       const requestBody = {
@@ -32,7 +33,7 @@ export default function ProductCard(props) {
         productId: product.id,
         quantity: 1,
       };
-      await asyncApiRequest("POST", "/order/add-to-cart", requestBody);
+      await asyncApiRequest("POST", "/orders/add-to-cart", requestBody, true);
       alert("Product added to cart successfully.");
     } catch (error) {
       alert("Error adding product to cart.");

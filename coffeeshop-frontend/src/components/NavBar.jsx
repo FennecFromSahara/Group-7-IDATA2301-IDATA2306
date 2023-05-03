@@ -14,6 +14,7 @@ import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
 import { isAdmin } from "../tools/authentication";
 import { deleteAuthorizationCookies } from "../tools/authentication";
+import { useAuth } from "../hooks/useAuth";
 
 const pages = ["Home", "Products", "About Us"];
 const link = ["/", "/products", "/about"];
@@ -29,8 +30,8 @@ function handleLogout() {
  *
  * @returns {JSX.Element} The JSX code for a nav bar for the coffeeshop
  */
-function NavBar(props) {
-  const user = props.user;
+function NavBar() {
+  const { user } = useAuth();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 

@@ -16,12 +16,14 @@ public class AccessUserDetails implements UserDetails {
   private final String username;
   private final String password;
   private final boolean isActive;
+  private final Long userId;
   private final Set<GrantedAuthority> authorities = new HashSet<>();
 
   public AccessUserDetails(User user) {
     this.username = user.getUsername();
     this.password = user.getPassword();
     this.isActive = user.isActive();
+    this.userId = user.getId();
     this.convertRoles(user.getRoles());
   }
 
@@ -65,5 +67,9 @@ public class AccessUserDetails implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public Long getUserId() {
+    return userId;
   }
 }

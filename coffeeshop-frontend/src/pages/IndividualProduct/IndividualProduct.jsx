@@ -14,8 +14,7 @@ import {
 import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
 
-function IndividualProduct(props) {
-  const user = props.user;
+function IndividualProduct() {
   const { id } = useParams();
   const { data, error } = useFetch(`http://localhost:8042/api/products/${id}`);
   const [selectedSize, setSelectedSize] = useState("small");
@@ -100,7 +99,7 @@ function IndividualProduct(props) {
 
   return (
     <>
-      <NavBar user={user} />
+      <NavBar />
 
       {renderProducts()}
 

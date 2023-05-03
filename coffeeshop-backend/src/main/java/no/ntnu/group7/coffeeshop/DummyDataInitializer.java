@@ -75,8 +75,8 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       roleRepository.saveAll(userRoles);
       roleRepository.save(adminRole);
 
-      userRepository.save(adminUser);
       userRepository.save(testUser);
+      userRepository.save(adminUser);
       logger.info("DONE importing test products");
     } else {
       logger.info("Users already in the database, not importing anything");

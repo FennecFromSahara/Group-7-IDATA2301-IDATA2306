@@ -2,12 +2,10 @@ import { Typography, Box } from "@mui/material";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 
-function About(props) {
-  const user = props.user;
-
+function About() {
   return (
     <div>
-      <NavBar user={user} />
+      <NavBar />
 
       <Box minHeight="92vh" display="flex" flexDirection="column">
         <Box flex={1} overflow="auto">

@@ -1,13 +1,13 @@
 import NavBar from "../../components/NavBar";
 import LoginForm from "./LoginForm";
+import { useAuth } from "../../hooks/useAuth";
 
-function LoginPage(props) {
-  const user = props.user;
-  const setUser = props.setUser;
+function LoginPage() {
+  const { setUser } = useAuth();
 
   return (
     <div>
-      <NavBar user={user} />
+      <NavBar />
 
       <LoginForm setUser={setUser} />
     </div>

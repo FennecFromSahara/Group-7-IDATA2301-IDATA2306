@@ -31,7 +31,7 @@ export function asyncApiRequest(
   }
   const jwtToken = getCookie("jwt");
   if (jwtToken) {
-    console.log(jwtToken);
+    // console.log(jwtToken);
     headers["Authorization"] = "Bearer " + jwtToken;
   }
 
