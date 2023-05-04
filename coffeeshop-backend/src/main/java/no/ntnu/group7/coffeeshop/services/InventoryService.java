@@ -6,7 +6,8 @@ import jakarta.transaction.Transactional;
 import no.ntnu.group7.coffeeshop.model.Product;
 
 /**
- * Provides service for managing the inventory of the coffeeshop.
+ * InventoryService is a service layer class responsible for managing the
+ * inventory of the coffee shop application.
  */
 public class InventoryService {
 
@@ -14,9 +15,10 @@ public class InventoryService {
   private EntityManager entityManager;
 
   /**
-   * Updated the product entity in the database
-   * 
-   * @param shoppingCartProduct product to update
+   * Updates the product entity in the database with the provided product object.
+   *
+   * @param product the Product object containing the updated details to be
+   *                persisted in the database
    */
   @Transactional
   public void updateProduct(Product product) {

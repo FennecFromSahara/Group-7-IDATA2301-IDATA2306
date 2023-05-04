@@ -14,7 +14,9 @@ import no.ntnu.group7.coffeeshop.model.ShoppingCartProduct;
 import no.ntnu.group7.coffeeshop.model.User;
 
 /**
- * Provides functionality needed for checkout
+ * CheckoutService is a service layer class that handles the checkout process
+ * for users in the coffee shop application. It manages the shopping cart,
+ * inventory updates, and order creation.
  */
 public class CheckoutService {
 
@@ -25,10 +27,11 @@ public class CheckoutService {
   private InventoryService inventoryService;
 
   /**
-   * Checkouts a user with their products in the shopping cart and sets the order
-   * status to PROCESSING
-   * 
-   * @param user user to checkout
+   * Performs the checkout process for a given user. Creates an order, adds
+   * shopping cart items to the order, updates the inventory, clears the user's
+   * shopping cart, and sets the order status to PROCESSING.
+   *
+   * @param user the user to checkout
    */
   @Transactional
   public void checkout(User user) {
@@ -66,6 +69,13 @@ public class CheckoutService {
     order.setOrderStatus(Order.OrderStatus.PROCESSING);
   }
 
+  /**
+   * Calculates the total price of all items in a user's shopping cart.
+   *
+   * @param user the user whose shopping cart total should be calculated
+   * @return the total price of all items in the user's shopping cart as a
+   *         BigDecimal
+   */
   private BigDecimal calculateShoppingCartTotal(User user) {
     List<ShoppingCartProduct> cartItems = getShoppingCartProducts(user);
 
@@ -80,19 +90,20 @@ public class CheckoutService {
   }
 
   /**
-   * Returns shopping cart products for the given user
-   * 
-   * @param user user to retrieve shoppingcart products from
-   * @return a list of products in the users shopping cart
+   * Retrieves the shopping cart products for a given user.
+   *
+   * @param user the user whose shopping cart products should be retrieved
+   * @return a list of ShoppingCartProduct objects representing the products in
+   *         the user's shopping cart
    */
   private List<ShoppingCartProduct> getShoppingCartProducts(User user) {
     return shoppingCartService.getCartProducts(user);
   }
 
   /**
-   * Clears shopping cart for a given user
-   * 
-   * @param user user to clear shopping cart
+   * Clears the shopping cart for a given user by removing all items.
+   *
+   * @param user the user whose shopping cart should be cleared
    */
   private void clearShoppingCart(User user) {
     List<ShoppingCartProduct> cartProducts = shoppingCartService.getCartProducts(user);
@@ -103,9 +114,12 @@ public class CheckoutService {
   }
 
   /**
-   * Updates the inventory after a user checks out with their products
-   * 
-   * @param user user whose produts are removed from inventory
+   * Updates the inventory after a user completes the checkout process. Reduces
+   * the inventory amount for each product in the user's shopping cart according
+   * to the purchased quantity.
+   *
+   * @param user the user whose purchased products should be removed from the
+   *             inventory
    */
   @Transactional
   public void updateInventoryAfterCheckout(User user) {

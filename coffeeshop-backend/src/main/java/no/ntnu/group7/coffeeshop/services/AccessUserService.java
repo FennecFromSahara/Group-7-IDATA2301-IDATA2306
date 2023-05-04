@@ -21,7 +21,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Provides AccessUserDetails needed for authentication.
+ * AccessUserService is a service layer class that provides functionality
+ * related to user authentication, management, and profile updates in the coffee
+ * shop application. It implements the UserDetailsService interface for Spring
+ * Security, which is used to load user-specific data during authentication.
  */
 @Service
 public class AccessUserService implements UserDetailsService {
@@ -31,6 +34,16 @@ public class AccessUserService implements UserDetailsService {
   @Autowired
   RoleRepository roleRepository;
 
+  /**
+   * Loads user-specific data during authentication by retrieving a user from the
+   * database using their username and creating an AccessUserDetails object.
+   *
+   * @param username the username of the user to retrieve
+   * @return UserDetails object containing user details required for
+   *         authentication
+   * @throws UsernameNotFoundException if a user with the specified username is
+   *                                   not found
+   */
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Optional<User> user = userRepository.findByUsername(username);
@@ -42,9 +55,10 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Get the user which is authenticated for the current session.
+   * Returns the currently authenticated user for the current session.
    *
-   * @return User object or null if no user has logged in
+   * @return User object representing the currently authenticated user, or null if
+   *         no user is logged in
    */
   public User getSessionUser() {
     SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -54,7 +68,7 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Check if user with given username exists in the database.
+   * Checks if user with given username exists in the database.
    *
    * @param username Username of the user to check, case-sensitive
    * @return True if user exists, false otherwise
@@ -69,15 +83,17 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Try to create a new user.
+   * Attempts to create a new user by checking for potential issues and, if
+   * successful, creating a new user in the database.
    *
-   * @param username  Username of the new user
-   * @param password  Plaintext password of the new user
-   * @param firstName First name of the user
-   * @param lastName  Last name of the user
-   * @param email     Email of the user
-   * @param address   Address of the use
-   * @return null when user created, error message on error
+   * @param username  the desired username for the new user
+   * @param password  the plaintext password for the new user
+   * @param firstName the first name of the new user
+   * @param lastName  the last name of the new user
+   * @param email     the email address of the new user
+   * @param address   the physical address of the new user
+   * @return null if the user was created successfully, or an error message
+   *         describing the issue
    */
   public String tryCreateNewUser(String username, String password, String firstName, String lastName, String email,
       String address) {
@@ -96,7 +112,7 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Check if password matches the requirements.
+   * Checks if password matches the requirements.
    *
    * @param password A password to check
    * @return null if all OK, error message on error
@@ -112,7 +128,7 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Create a new user in the database.
+   * Creates a new user in the database.
    *
    * @param username  Username of the new user
    * @param password  Plaintext password of the new user
@@ -132,7 +148,7 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Create a secure hash of a password.
+   * Creates a secure hash of a password.
    *
    * @param password Plaintext password
    * @return BCrypt hash, with random salt
@@ -142,11 +158,13 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Update profile information for a user.
+   * Updates a user's profile information based on the data provided in the
+   * UserProfileDto object.
    *
-   * @param user        User to update
-   * @param profileData Profile data to set for the user
-   * @return True on success, false otherwise
+   * @param user        the user to update
+   * @param profileData a UserProfileDto object containing the updated profile
+   *                    data
+   * @return true on successful update, false otherwise
    */
   public boolean updateProfile(User user, UserProfileDto profileData) {
     user.setFirstName(profileData.getFirstName());
@@ -158,9 +176,9 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Fetches all users in the database.
+   * Fetches all users from the database and returns them as a list.
    *
-   * @return List of all users.
+   * @return a list of all users in the database
    */
   public List<User> getAllUsers() {
     return userRepository.findAll();

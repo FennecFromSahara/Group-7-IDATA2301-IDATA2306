@@ -12,7 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Represents an order of a product
+ * Represents an order of a product. This class is responsible for storing
+ * the relationship between an order and a product, including the price and
+ * quantity of the product in the order. It is mapped to the "order_product"
+ * table in the database.
  */
 @Entity
 @Table(name = "order_product")
@@ -41,6 +44,15 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
+    /**
+     * Constructs a new OrderProduct with the specified order, product, price, and
+     * quantity.
+     *
+     * @param order    The order associated with this order product.
+     * @param product  The product associated with this order product.
+     * @param price    The price of the product in the order.
+     * @param quantity The quantity of the product in the order.
+     */
     public OrderProduct(Order order, Product product, BigDecimal price, int quantity) {
         this.order = order;
         this.product = product;

@@ -1,15 +1,18 @@
 package no.ntnu.group7.coffeeshop.dto;
 
 /**
- * Data that the user will send in the login request.
+ * Represents the data that the user will send in the login request.
  */
 public class AuthenticationRequest {
   private String username;
   private String password;
 
-  public AuthenticationRequest() {
-  }
-
+  /**
+   * Constructor for creating an authentication request.
+   * 
+   * @param username The username of the user
+   * @param password The password of the user
+   */
   public AuthenticationRequest(String username, String password) {
     this.username = username;
     this.password = password;

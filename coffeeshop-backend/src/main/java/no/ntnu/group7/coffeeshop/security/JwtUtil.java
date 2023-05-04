@@ -11,21 +11,27 @@ import java.util.Date;
 import java.util.function.Function;
 
 /**
- * Utility class for handling JWT tokens
- * Code from https://youtu.be/X80nJ5T7YpE
+ * JwtUtil class is a utility class for handling JWT tokens.
+ * It provides methods to generate, validate, and extract information from JWT
+ * tokens.
+ * 
+ * Code modified from https://youtu.be/X80nJ5T7YpE
  */
 @Component
 public class JwtUtil {
   @Value("${jwt_secret_key}")
   private String SECRET_KEY;
   /**
-   * Key inside JWT token where roles and id is stored
+   * Key inside JWT token where user roles is stored
    */
   private static final String JWT_AUTH_KEY = "roles";
+  /**
+   * Key inside JWT token where user id is stored
+   */
   private static final String JWT_ID_KEY = "id";
 
   /**
-   * Generate a JWT token for an authenticated user
+   * Generates a JWT token for an authenticated user.
    *
    * @param userDetails Object containing user details
    * @return JWT token string
@@ -46,7 +52,7 @@ public class JwtUtil {
   }
 
   /**
-   * Find username from a JWT token
+   * Finds the username from a JWT token.
    *
    * @param token JWT token
    * @return Username
@@ -56,7 +62,7 @@ public class JwtUtil {
   }
 
   /**
-   * Check if a token is valid for a given user
+   * Checks if a token is valid for a given user.
    *
    * @param token       Token to validate
    * @param userDetails Object containing user details

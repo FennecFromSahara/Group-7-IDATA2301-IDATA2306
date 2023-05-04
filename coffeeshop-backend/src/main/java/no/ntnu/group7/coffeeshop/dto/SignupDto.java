@@ -11,6 +11,17 @@ public class SignupDto {
   private final String email;
   private final String address;
 
+  /**
+   * Constructs a new SignupDto with the specified username, password, first name,
+   * last name, email, and address.
+   *
+   * @param username  The unique username for the user.
+   * @param password  The password for the user account.
+   * @param firstName The user's first name.
+   * @param lastName  The user's last name.
+   * @param email     The user's email address.
+   * @param address   The user's physical address.
+   */
   public SignupDto(String username, String password, String firstName, String lastName, String email, String address) {
     this.username = username;
     this.password = password;

@@ -10,7 +10,15 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * User model class that represents a user in the coffee shop system
+ * User model class that represents a user in the coffee shop system. This class
+ * is responsible for
+ * storing the user's basic information, such as username, password, first name,
+ * last name, email,
+ * address, and account status. It is also responsible for managing user roles
+ * and associations
+ * with other entities such as orders and shopping cart products. It is mapped
+ * to the "users"
+ * table in the database.
  */
 @Entity
 @Table(name = "users")
@@ -60,14 +68,15 @@ public class User {
   }
 
   /**
-   * Constructor for the user
+   * Constructs a new User with the specified username, password, first name, last
+   * name, email, and address.
    *
-   * @param username  Username of the user
-   * @param password  Password of the user
-   * @param firstName First name of the user
-   * @param lastName  Last name of the user
-   * @param email     Email of the user
-   * @param address   Address of the user
+   * @param username  Username of the user.
+   * @param password  Password of the user.
+   * @param firstName First name of the user.
+   * @param lastName  Last name of the user.
+   * @param email     Email of the user.
+   * @param address   Address of the user.
    */
   public User(String username, String password, String firstName, String lastName, String email, String address) {
     this.username = username;

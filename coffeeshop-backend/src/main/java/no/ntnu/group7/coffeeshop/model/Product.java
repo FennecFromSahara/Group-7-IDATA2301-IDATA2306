@@ -12,7 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Represents a product
+ * Represents a product in the coffee shop. This class is responsible for
+ * storing the product's name, price, description, image, inventory amount, and
+ * its associated category. It is mapped to the "products" table in the
+ * database.
  */
 @Entity
 @Table(name = "products")
@@ -56,13 +59,14 @@ public class Product {
     }
 
     /**
-     * Create a product
-     * 
-     * @param name            Name of the product
-     * @param price           Price of the product
-     * @param description     Product description
-     * @param image           string to locate image
-     * @param inventoryAmount amount of product in inventory
+     * Constructs a new Product with the specified name, price, description, image,
+     * and inventory amount.
+     *
+     * @param name            Name of the product.
+     * @param price           Price of the product.
+     * @param description     Product description.
+     * @param image           String representing the location of the product image.
+     * @param inventoryAmount Amount of the product in inventory.
      */
     public Product(String name, BigDecimal price, String description, String image, int inventoryAmount) {
         this.name = name;

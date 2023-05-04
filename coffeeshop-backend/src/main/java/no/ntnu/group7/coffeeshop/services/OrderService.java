@@ -9,7 +9,8 @@ import no.ntnu.group7.coffeeshop.model.Order;
 import no.ntnu.group7.coffeeshop.repositories.OrderRepository;
 
 /**
- * Provides service for managing orders in the coffeeshop
+ * OrderService is a service layer class responsible for managing orders in the
+ * coffee shop application.
  */
 @Service
 public class OrderService {
@@ -17,6 +18,11 @@ public class OrderService {
   @Autowired
   private OrderRepository orderRepository;
 
+  /**
+   * Retrieves a list of all orders stored in the database.
+   *
+   * @return a List of Order objects containing the details of all orders
+   */
   public List<Order> getAllOrders() {
     return orderRepository.findAll();
   }

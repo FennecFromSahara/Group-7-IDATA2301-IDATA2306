@@ -13,7 +13,7 @@ import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
 
 /**
- * Controller responsible for the categories.
+ * Controller responsible for the categories for the products in the coffeshop.
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -22,13 +22,25 @@ public class CategoryController {
   @Autowired
   CategoryRepository categoryRepository;
 
-  // GET all categories
+  /**
+   * Handles HTTP GET requests to "/api/categories" and returns a list of all
+   * Category objects in the database.
+   *
+   * @return A list of Category objects.
+   */
   @GetMapping("")
   public List<Category> getAllCategories() {
     return categoryRepository.findAll();
   }
 
-  // GET category by ID
+  /**
+   * Handles HTTP GET requests to "/api/categories/{id}" and returns a single
+   * Category object with the specified ID.
+   * If the Category object is not found, returns a 404 Not Found response.
+   *
+   * @param categoryId The ID of the Category object to retrieve.
+   * @return The Category object with the specified ID.
+   */
   @GetMapping("/{id}")
   public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") int categoryId) {
     Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
@@ -40,40 +52,33 @@ public class CategoryController {
     return ResponseEntity.ok().body(category);
   }
 
-  // CREATE category
+  /**
+   * Handles HTTP POST requests to "/api/categories" and creates a new Category
+   * object in the database.
+   *
+   * @param category The Category object to create.
+   * @return The created Category object.
+   */
   @PostMapping("")
   public Category createCategory(@Valid @RequestBody Category category) {
     return categoryRepository.save(category);
   }
 
-  // UPDATE category
-  @PutMapping("/{id}")
-  public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") int categoryId,
-      @Valid @RequestBody Category categoryDetails) {
-
-    Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-    Category category = optionalCategory.get();
-
-    if (category == null) {
-      return ResponseEntity.notFound().build();
-    }
-    category.setName(categoryDetails.getName());
-
-    Category updatedCategory = categoryRepository.save(category);
-    return ResponseEntity.ok(updatedCategory);
-  }
-
-  // DELETE category by ID
+  /**
+   * Handles HTTP DELETE requests to "/api/categories/{id}" and deletes an
+   * existing Category object from the database
+   * with the specified ID. If the Category object is not found, returns a 404 Not
+   * Found response.
+   *
+   * @param categoryId The ID of the Category object to delete.
+   * @return A response indicating success or failure of the deletion.
+   */
   @DeleteMapping("/{id}")
   public ResponseEntity<Category> deleteCategory(@PathVariable(value = "id") int categoryId) {
     Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
 
     if (optionalCategory.isPresent()) {
       Category category = optionalCategory.get();
-
-      // if (category == null) {
-      // return ResponseEntity.notFound().build();
-      // }
 
       categoryRepository.delete(category);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -19,6 +19,11 @@ public class AccessUserDetails implements UserDetails {
   private final Long userId;
   private final Set<GrantedAuthority> authorities = new HashSet<>();
 
+  /**
+   * Constructs AccessUserDetails instance based on the given User object.
+   *
+   * @param user The User object containing authentication information.
+   */
   public AccessUserDetails(User user) {
     this.username = user.getUsername();
     this.password = user.getPassword();
@@ -27,6 +32,12 @@ public class AccessUserDetails implements UserDetails {
     this.convertRoles(user.getRoles());
   }
 
+  /**
+   * Converts roles from Role objects to SimpleGrantedAuthority objects
+   * and stores them in the authorities set.
+   *
+   * @param roles The set of roles associated with the user.
+   */
   private void convertRoles(Set<Role> roles) {
     authorities.clear();
     for (Role role : roles) {
@@ -69,6 +80,11 @@ public class AccessUserDetails implements UserDetails {
     return true;
   }
 
+  /**
+   * Returns the user's unique identifier (id).
+   *
+   * @return The user's unique identifier (id).
+   */
   public Long getUserId() {
     return userId;
   }

@@ -17,6 +17,13 @@ public class OrderDto {
   private User user;
   private Order order;
 
+  /**
+   * Constructs a new Order DTO with the specified order ID, user, and order.
+   * 
+   * @param orderId The unique identifier for the order.
+   * @param user    The user associated with the order.
+   * @param order   The order details.
+   */
   public OrderDto(int orderId, User user, Order order) {
     this.orderId = orderId;
     this.user = user;
@@ -35,6 +42,13 @@ public class OrderDto {
     return order;
   }
 
+  /**
+   * 
+   * Retrieves the order creation timestamp as a formatted string.
+   * 
+   * @return A string representation of the order creation timestamp formatted as
+   *         ISO_LOCAL_DATE_TIME.
+   */
   @JsonProperty("createdAt")
   public String getCreatedAt() {
     LocalDateTime createdAtLocalDateTime = LocalDateTime.ofInstant(order.getCreatedAt().toInstant(),

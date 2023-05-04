@@ -23,10 +23,14 @@ public class UserController {
   private AccessUserService userService;
 
   /**
-   * Return user profile information
+   * Handles HTTP GET requests to "/api/users/{username}" and returns profile
+   * information for the specified user. If the specified user is not the
+   * currently authenticated user, returns a 403 Forbidden response. If the
+   * request is not made by an authenticated user, returns a 401 Unauthorized
+   * response.
    *
-   * @param username Username for which the profile is requested
-   * @return The profile information or error code when not authorized
+   * @param username The username of the user whose profile is being requested.
+   * @return The profile information for the specified user.
    */
   @GetMapping("/{username}")
   public ResponseEntity<?> getProfile(@PathVariable String username) throws InterruptedException {
@@ -45,10 +49,16 @@ public class UserController {
   }
 
   /**
-   * Update user profile information
+   * Handles HTTP PUT requests to "/api/users/{username}" and updates the profile
+   * information for the specified user. If the specified user is not the
+   * currently authenticated user, returns a 403 Forbidden response. If the
+   * request is not made by an authenticated user, returns a 401 Unauthorized
+   * response.
    *
-   * @param username Username for which the profile is updated
-   * @return HTTP 200 OK or error code with error message
+   * @param username    The username of the user whose profile is being updated.
+   * @param profileData The updated profile information.
+   * @return An HTTP response indicating success or failure of the update
+   *         operation.
    */
   @PutMapping("/{username}")
   public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody UserProfileDto profileData)
@@ -74,9 +84,12 @@ public class UserController {
   }
 
   /**
-   * Returns a list of UserProfileDto's
+   * Handles HTTP GET requests to "/api/users" and returns a list of user profile
+   * information for all users. If the request is not made by an authenticated
+   * admin user, returns a 403 Forbidden response. If the request is not made by
+   * an authenticated user, returns a 401 Unauthorized response.
    *
-   * @return A list of all users or an error code when not authorized
+   * @return A list of user profile information for all users.
    */
   @GetMapping("")
   public ResponseEntity<Object> getAllUsers() throws InterruptedException {

@@ -10,7 +10,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Keeps track of all products different customers have added to their cart. (?)
+ * Represents a product added to a customer's shopping cart. This class is
+ * responsible for storing the relationship between a user, a product, and
+ * the quantity of that product in the user's shopping cart. It is mapped to
+ * the "shopping_cart" table in the database.
  */
 @Entity
 @Table(name = "shopping_cart")
@@ -36,6 +39,14 @@ public class ShoppingCartProduct {
     public ShoppingCartProduct() {
     }
 
+    /**
+     * Constructs a new ShoppingCartProduct with the specified user, product, and
+     * quantity.
+     *
+     * @param user     The user associated with this shopping cart product.
+     * @param product  The product associated with this shopping cart product.
+     * @param quantity The quantity of the product in the shopping cart.
+     */
     public ShoppingCartProduct(User user, Product product, int quantity) {
         this.user = user;
         this.product = product;

@@ -5,7 +5,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * User role (admin, regular user, etc).
+ * Represents a user role (admin, user, guest). This class is responsible
+ * for storing the role's name and its associated users. It is mapped to the
+ * "roles" table in the database.
  */
 @Entity
 @Table(name = "roles")
@@ -26,6 +28,11 @@ public class Role {
   public Role() {
   }
 
+  /**
+   * Constructs a new Role with the specified name.
+   *
+   * @param name The name of the role.
+   */
   public Role(String name) {
     this.name = name;
   }
