@@ -15,6 +15,7 @@ import Popper from "@mui/material/Popper";
 import { isAdmin } from "../tools/authentication";
 import { deleteAuthorizationCookies } from "../tools/authentication";
 import { useAuth } from "../hooks/useAuth";
+import { useMediaQuery } from "@mui/material";
 
 const pages = ["Home", "Products", "About Us"];
 const link = ["/", "/products", "/about"];
@@ -34,6 +35,7 @@ function NavBar() {
   const { user } = useAuth();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const matches = useMediaQuery("(max-width:600px)");
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -116,8 +118,8 @@ function NavBar() {
             </Grow>
           )}
         </Popper>
-        <Typography variant="h2" href="/">
-          MOCHA NOKA KAFE
+        <Typography variant="h2">
+          {matches ? "MNK" : "MOCHA NOKA KAFE"}
         </Typography>
 
         <Box
@@ -144,31 +146,33 @@ function NavBar() {
           ))}
         </Box>
 
-        <IconButton sx={{ mr: 2 }}>
-          <Link to="/shoppingCart">
-            <ShoppingCartIcon />
-          </Link>
-        </IconButton>
-        {user ? (
-          <Button
-            color="inherit"
-            variant="contained"
-            sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        ) : (
-          <Link to="/login" style={{ textDecoration: "none" }}>
+        <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
+          <IconButton sx={{ mr: 2 }}>
+            <Link to="/shoppingCart">
+              <ShoppingCartIcon />
+            </Link>
+          </IconButton>
+          {user ? (
             <Button
               color="inherit"
               variant="contained"
               sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
+              onClick={handleLogout}
             >
-              Login
+              Logout
             </Button>
-          </Link>
-        )}
+          ) : (
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button
+                color="inherit"
+                variant="contained"
+                sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
+              >
+                Login
+              </Button>
+            </Link>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );

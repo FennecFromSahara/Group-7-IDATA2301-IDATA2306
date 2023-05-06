@@ -11,50 +11,48 @@ function Footer() {
   return (
     <Box
       sx={{
-        height: "30vh",
-        pt: 3,
+        py: 3,
         px: 5,
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
+        columns={{ xs: 8, sm: 8, md: 12 }}
       >
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <Typography variant="h1">Contact</Typography>
-        </Grid>
-        <Grid item xs={2} sm={4} md={4}></Grid>
-        <Grid item xs={2} sm={4} md={4}>
-          <Typography variant="h1">Disclaimer</Typography>
-        </Grid>
-        <Grid item xs={2} sm={4} md={4}>
           <Typography>Location</Typography>
           <Typography>+47 123 45 678</Typography>
           <Grid container>
-            <Grid item xs={2} sm={4} md={1}>
-              <Link to="/veryRealURL">
-                <TwitterIcon />
-              </Link>
+            <Grid item>
+              <Box mr={2}>
+                <Link to="/veryRealURL">
+                  <TwitterIcon />
+                </Link>
+              </Box>
             </Grid>
-            <Grid item xs={2} sm={4} md={1}>
-              <Link to="/veryRealURL">
-                <InstagramIcon />
-              </Link>
+            <Grid item>
+              <Box mr={2}>
+                <Link to="/veryRealURL">
+                  <InstagramIcon />
+                </Link>
+              </Box>
             </Grid>
-            <Grid item xs={2} sm={4} md={1}>
+            <Grid item>
               <Link to="/veryRealURL">
                 <FacebookIcon />
               </Link>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={12} sm={12} md={4}>
           <Typography>Opening Hours:</Typography>
           <Typography>Monday - Sunday: 8:00 - 24:00</Typography>
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="h1">Disclaimer</Typography>
           <Typography>
             This website is a result of a university group project, performed in
             the course{" "}

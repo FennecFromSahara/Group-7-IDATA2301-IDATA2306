@@ -18,9 +18,9 @@ function HeroSection() {
       <Box
         sx={{
           position: "absolute",
-          ml: 10,
-          mt: 2,
-          width: "20%",
+          ml: { xs: "10%", sm: "25%", md: 35 },
+          mt: { xs: "10%", sm: "15%", md: 25 },
+          width: { xs: "80%", sm: "60%", md: "20%" },
           minHeight: "20vh",
           p: "10px",
           border: "1px solid #343a40",

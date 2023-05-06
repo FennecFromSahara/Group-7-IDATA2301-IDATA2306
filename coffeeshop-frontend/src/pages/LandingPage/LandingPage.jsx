@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 
 function LandingPage() {
   return (
-    <Box>
+    <Box sx={{}}>
       <NavBar />
 
       <HeroSection />

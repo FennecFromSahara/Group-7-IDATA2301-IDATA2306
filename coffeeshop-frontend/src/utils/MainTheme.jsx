@@ -21,6 +21,7 @@ export const mainTheme = {
       main: "#0288d1",
     },
     background: {
+      main: "#fffcf8",
       paper: "#ffe8cc",
     },
   },
