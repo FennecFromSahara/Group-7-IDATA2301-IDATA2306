@@ -43,4 +43,36 @@ function About() {
   );
 }
 
+
+function TestimonialProps {
+    name: string;
+    comment: string;
+}
+
+export default function TestimonialSection() {
+    const theme = useTheme();
+    const items = [
+        <Testimonial
+            name={'Sean (25)'}
+            comment={'Mocha Nooka Cafe is my favorite spot for a chill, hip atmosphere. ' +
+                'The coffee is always on point and the staff are super helpful.' +
+                'A definite must-visit for anyone anyone who\'s looking for a unique cafe eprerience!'}
+        />,
+        <Testimonial
+            name={'John (65)'}
+            comment={'"I\'ve been coming to Mocha Nooka Cafe for years and it\'s never disappointed.' +
+                ' The coffe is always freshy brewed and the food is always delicious.' +
+                'It\'s a great spot for a quick\n' +
+                'break, or a leisurely chat with friends.'}
+
+        />,
+        <Testimonial
+            name={'Toni (16)'}
+            comment={'"I love coming to Mocha Nooka Cafe!' +
+                ' It\'s the perfect spot to hang out with friends and enjoy something tasty and refreshing.' +
+                'The atmosphere is always chill and the staff are really friendly. Highly recommended!" '}
+        />
+    ];
+
+
 export default About;
