@@ -96,6 +96,11 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       Product whiteTea = new Product("White tea", new BigDecimal(80), "200 grams", "", 15);
       Product oolongTea = new Product("Oolong tea", new BigDecimal(90), "200 grams", "", 10);
 
+      // Other
+      Product chocolate = new Product("Chocolate", new BigDecimal(150), "500 grams 70% cocoa", "", 40);
+      Product pancakes = new Product("Pancakes", new BigDecimal(79), "Fluffy", "", 40);
+      Product coffeeMachine = new Product("Coffee machine", new BigDecimal(4600), "Not edible", "", 10);
+
       productRepository.saveAll(Arrays.asList(
           brazilianCoffee,
           greenTea,
@@ -106,7 +111,10 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
           arabicaCoffee,
           colombiaCoffeeBeans,
           whiteTea,
-          oolongTea));
+          oolongTea,
+          chocolate,
+          pancakes,
+          coffeeMachine));
 
       logger.info("DONE importing test products");
     } else {

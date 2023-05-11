@@ -13,7 +13,7 @@ function Footer() {
       sx={{
         py: 3,
         px: 5,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.secondary.main,
       }}
     >
       <Grid
@@ -60,6 +60,7 @@ function Footer() {
               href="https://www.ntnu.edu/studies/courses/IDATA2301#tab=omEmnet"
               rel="noreferrer noopener"
               target="_blank"
+              style={{ color: theme.palette.info.main }}
             >
               IDATA2301 Web technologies
             </a>
@@ -68,6 +69,7 @@ function Footer() {
               href="https://www.ntnu.edu/"
               rel="noreferrer noopener"
               target="_blank"
+              style={{ color: theme.palette.info.main }}
             >
               NTNU
             </a>

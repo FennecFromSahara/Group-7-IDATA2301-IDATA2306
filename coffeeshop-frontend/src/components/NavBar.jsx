@@ -66,7 +66,7 @@ function NavBar() {
   }
 
   return (
-    <AppBar position="sticky" elevation={0} sx={{ height: "8vh" }}>
+    <AppBar position="sticky" elevation={0} sx={{ height: "6vh" }}>
       <Toolbar>
         <Button
           ref={anchorRef}

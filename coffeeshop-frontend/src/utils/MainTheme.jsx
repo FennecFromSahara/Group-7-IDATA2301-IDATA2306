@@ -3,25 +3,24 @@ export const mainTheme = {
     mode: "light",
     primary: {
       main: "#8fb3a1",
-      contrastText: "#717889",
-      light: "#BDD2C8",
-      dark: "#428061",
+      contrastText: "#ffffff",
+      light: "#c1d5c5",
+      dark: "#5f796c",
     },
     secondary: {
       main: "#ffe8cc",
-      light: "#fffcf8",
-      dark: "#b78f5e",
+      light: "#ffffff",
+      dark: "#ccb199",
     },
     text: {
-      primary: "#6d7389",
-      secondary: "#595e6f",
-      disabled: "#424652",
+      primary: "#424242",
+      secondary: "#616161",
+      disabled: "#bdbdbd",
     },
     info: {
       main: "#0288d1",
     },
     background: {
-      main: "#fffcf8",
       paper: "#ffe8cc",
     },
   },
@@ -34,7 +33,7 @@ export const mainTheme = {
     },
     h2: {
       fontSize: "2rem",
-      fontWeight: 700,
+      fontWeight: 600,
     },
   },
 };

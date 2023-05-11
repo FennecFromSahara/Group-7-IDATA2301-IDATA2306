@@ -1,16 +1,12 @@
 import ProductCard from "./ProductCard";
 import { useFetch } from "../hooks/useFetch";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 
-/**
- * Productoverview displays a cusom number of ProductCard Objects in a grid.
- *
- * @returns {JSX.Element} A grid of ProductCard objects.
- */
 function ProductOverview(props) {
   const { data, error } = useFetch("http://localhost:8042/api/products");
   const [status, setStatus] = useState("loading");
+  const [productsDisplayed, setProductsDisplayed] = useState(props.maxIndex);
 
   useEffect(() => {
     if (error) {
@@ -22,12 +18,23 @@ function ProductOverview(props) {
     }
   }, [error, data]);
 
+  const increaseDisplayedProducts = () => {
+    if (productsDisplayed >= data.length) {
+      alert("No more products to display");
+    } else {
+      setProductsDisplayed(
+        (prevProductsDisplayed) =>
+          prevProductsDisplayed +
+          Math.min(6, data.length - prevProductsDisplayed)
+      );
+    }
+  };
   const renderProducts = () => {
     if (status === "loaded") {
       return (
         <>
           {data.map((product, index) => {
-            if (index < props.maxIndex) {
+            if (index < productsDisplayed) {
               return (
                 <Grid item xs={2} sm={4} md={4} key={product.id}>
                   <ProductCard product={product} />
@@ -56,12 +63,7 @@ function ProductOverview(props) {
           ? ": Something went wrong..."
           : ""}
       </Typography>
-      <Box
-        className="landing-product-overview"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center">
         <Box
           display="flex"
           justifyContent="center"
@@ -76,6 +78,16 @@ function ProductOverview(props) {
             {renderProducts()}
           </Grid>
         </Box>
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: "100%", marginTop: "2rem" }}
+      >
+        <Button variant="contained" onClick={increaseDisplayedProducts}>
+          Show more
+        </Button>
       </Box>
     </Box>
   );

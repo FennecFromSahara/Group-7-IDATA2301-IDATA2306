@@ -9,8 +9,9 @@ import Orders from "./Orders";
 import Products from "./Products";
 import Users from "./Users";
 import { useTheme } from "@emotion/react";
-import { asyncApiRequest } from "../../tools/requests";
 import { useAuth } from "../../hooks/useAuth";
+import ErrorPage from "./ErrorPage";
+import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
 
 function AdminPage() {
   const { user } = useAuth();
@@ -26,13 +27,13 @@ function AdminPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsData = await asyncApiRequest("GET", "/products");
+        const productsData = await getProducts();
         setProducts(productsData);
 
-        const usersData = await asyncApiRequest("GET", "/users");
+        const usersData = await getUsers();
         setUsers(usersData);
 
-        const ordersData = await asyncApiRequest("GET", "/orders");
+        const ordersData = await getOrders();
         setOrders(ordersData);
       } catch (err) {
         setError(`Error fetching data: ${err.message}`);
@@ -46,14 +47,19 @@ function AdminPage() {
     setValue(newValue);
   };
 
+  // Redirect to the homepage or another page if the user is not an admin
   useEffect(() => {
     if (!isAdmin(user)) {
-      navigate("/access_denied"); // Redirect to the homepage or another page if the user is not an admin
+      navigate("/access_denied");
     }
   }, [user, navigate]);
 
   if (!isAdmin(user)) {
     return null; // Render nothing if the user is not an admin
+  }
+
+  if (error) {
+    return <ErrorPage error={error} />;
   }
 
   return (
@@ -63,16 +69,27 @@ function AdminPage() {
       <Box minHeight="92vh" display="flex" flexDirection="column">
         <AppBar
           position="static"
-          sx={{ backgroundColor: theme.palette.primary.light }}
+          sx={{ backgroundColor: theme.palette.primary.main }}
         >
           <Tabs
             value={value}
             onChange={handleChange}
-            sx={{ color: theme.palette.primary.contrastText }}
+            TabIndicatorProps={{
+              style: { backgroundColor: theme.palette.secondary.main },
+            }}
           >
-            <Tab label="Products" />
-            <Tab label="Users" />
-            <Tab label="Orders" />
+            <Tab
+              label="Products"
+              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+            />
+            <Tab
+              label="Users"
+              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+            />
+            <Tab
+              label="Orders"
+              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+            />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
