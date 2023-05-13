@@ -12,6 +12,7 @@ import { useTheme } from "@emotion/react";
 import { useAuth } from "../../hooks/useAuth";
 import ErrorPage from "./ErrorPage";
 import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
+import ProductOverview from "./ProductOverview";
 
 function AdminPage() {
   const { user } = useAuth();
@@ -23,6 +24,7 @@ function AdminPage() {
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +71,7 @@ function AdminPage() {
       <Box minHeight="92vh" display="flex" flexDirection="column">
         <AppBar
           position="static"
-          sx={{ backgroundColor: theme.palette.primary.main }}
+          sx={{ backgroundColor: theme.palette.primary.light }}
         >
           <Tabs
             value={value}
@@ -80,20 +82,27 @@ function AdminPage() {
           >
             <Tab
               label="Products"
-              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
             <Tab
               label="Users"
-              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
             <Tab
               label="Orders"
-              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Products products={products} />
+          {selectedProduct ? (
+            <ProductOverview
+              product={selectedProduct}
+              setProduct={setSelectedProduct}
+            />
+          ) : (
+            <Products products={products} setProduct={setSelectedProduct} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Users users={users} />

@@ -23,17 +23,26 @@ export const mainTheme = {
     background: {
       paper: "#ffe8cc",
     },
+    danger: {
+      main: "#b3625e",
+      dark: "#7B3130",
+      contrastText: "#ffffff",
+    },
   },
   typography: {
     fontFamily: "PT Serif, serif",
     fontSize: 16,
     h1: {
       fontWeight: 700,
-      fontSize: "3rem",
+      fontSize: "rem",
     },
     h2: {
       fontSize: "2rem",
       fontWeight: 600,
+    },
+    h3: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
     },
   },
 };
