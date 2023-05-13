@@ -26,6 +26,20 @@ function AdminPage() {
   const [error, setError] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const updateProducts = (updatedProduct) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      )
+    );
+  };
+
+  const removeProduct = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -99,6 +113,8 @@ function AdminPage() {
             <ProductOverview
               product={selectedProduct}
               setProduct={setSelectedProduct}
+              updateProducts={updateProducts}
+              removeProduct={removeProduct}
             />
           ) : (
             <Products products={products} setProduct={setSelectedProduct} />

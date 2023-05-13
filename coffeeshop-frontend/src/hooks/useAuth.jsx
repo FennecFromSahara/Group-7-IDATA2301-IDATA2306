@@ -26,9 +26,10 @@ export function AuthProvider({ children }) {
     if (!user) {
       const loggedInUser = getAuthenticatedUser();
       if (loggedInUser) {
-        console.log("User session found in cookies, restoring");
+        console.log(
+          "User session found in cookies, restoring: " + loggedInUser.username
+        );
         setUser(loggedInUser);
-        console.log(loggedInUser.id);
       }
     }
   }
