@@ -31,11 +31,8 @@ export function asyncApiRequest(
   }
   const jwtToken = getCookie("jwt");
   if (jwtToken) {
-    // console.log(jwtToken);
     headers["Authorization"] = "Bearer " + jwtToken;
   }
-
-  console.log(body);
 
   return fetch(fullUrl, {
     method: method,
@@ -44,7 +41,13 @@ export function asyncApiRequest(
     body: body,
   })
     .then(handleErrors)
-    .then((response) => (returnPlainText ? response.text() : response.json()));
+    .then((response) =>
+      response
+        .text()
+        .then((text) =>
+          text ? (returnPlainText ? text : JSON.parse(text)) : null
+        )
+    );
 }
 
 /**
@@ -55,7 +58,6 @@ export function asyncApiRequest(
  * @throws Error containing the response code and text from the response body
  */
 async function handleErrors(response) {
-  console.log(response); // Add this line
   if (!response.ok) {
     const responseText = await response.text();
     throw new HttpResponseError(response.status, responseText);
