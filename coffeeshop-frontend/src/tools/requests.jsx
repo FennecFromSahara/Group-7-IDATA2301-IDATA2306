@@ -55,6 +55,7 @@ export function asyncApiRequest(
  * @throws Error containing the response code and text from the response body
  */
 async function handleErrors(response) {
+  console.log(response); // Add this line
   if (!response.ok) {
     const responseText = await response.text();
     throw new HttpResponseError(response.status, responseText);

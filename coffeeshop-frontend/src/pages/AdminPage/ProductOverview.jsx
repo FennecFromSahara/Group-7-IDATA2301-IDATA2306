@@ -3,7 +3,12 @@ import { asyncApiRequest } from "../../tools/requests";
 import { useTheme } from "@emotion/react";
 import { TextField, Button, Box, Grid, Typography } from "@mui/material";
 
-const ProductOverview = ({ product, setProduct }) => {
+const ProductOverview = ({
+  product,
+  setProduct,
+  updateProducts,
+  removeProduct,
+}) => {
   const theme = useTheme();
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
@@ -13,7 +18,6 @@ const ProductOverview = ({ product, setProduct }) => {
   const [price, setPrice] = useState(product.price);
   const [image, setImage] = useState(product.image);
 
-  // TODO: update table in Products.jsx
   const updateProduct = async () => {
     try {
       const updatedProduct = await asyncApiRequest(
@@ -28,18 +32,28 @@ const ProductOverview = ({ product, setProduct }) => {
         }
       );
       setProduct(updatedProduct);
+      updateProducts(updatedProduct);
+      window.alert("Product has been updated");
     } catch (error) {
       console.error("Error updating product:", error);
     }
   };
 
-  // TODO: Successfully delets product, still gives error.
   const deleteProduct = async () => {
-    try {
-      await asyncApiRequest("DELETE", `/products/${product.id}`);
-      setProduct(null); // Clear the selected product
-    } catch (error) {
-      console.error("Error deleting product:", error);
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+
+    console.log(product.id);
+
+    if (confirmed) {
+      try {
+        await asyncApiRequest("DELETE", `/products/${product.id}`);
+        setProduct(null); // Clear the selected product
+        removeProduct(product.id); // Call the passed down function to delete the product
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
     }
   };
 

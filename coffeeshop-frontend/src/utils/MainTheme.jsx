@@ -22,6 +22,7 @@ export const mainTheme = {
     },
     background: {
       paper: "#ffe8cc",
+      hover: "#FFE0B3",
     },
     danger: {
       main: "#b3625e",
