@@ -20,8 +20,6 @@ export function AuthProvider({ children }) {
     tryRestoreUserSession,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-
   function tryRestoreUserSession() {
     if (!user) {
       const loggedInUser = getAuthenticatedUser();
@@ -33,4 +31,6 @@ export function AuthProvider({ children }) {
       }
     }
   }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

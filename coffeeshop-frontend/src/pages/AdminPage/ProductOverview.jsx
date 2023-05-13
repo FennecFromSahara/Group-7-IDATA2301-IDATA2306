@@ -44,13 +44,11 @@ const ProductOverview = ({
       "Are you sure you want to delete this product?"
     );
 
-    console.log(product.id);
-
     if (confirmed) {
       try {
         await asyncApiRequest("DELETE", `/products/${product.id}`);
-        setProduct(null); // Clear the selected product
-        removeProduct(product.id); // Call the passed down function to delete the product
+        setProduct(null);
+        removeProduct(product.id);
       } catch (error) {
         console.error("Error deleting product:", error);
       }
