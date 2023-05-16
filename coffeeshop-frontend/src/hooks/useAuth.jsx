@@ -20,16 +20,17 @@ export function AuthProvider({ children }) {
     tryRestoreUserSession,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-
   function tryRestoreUserSession() {
     if (!user) {
       const loggedInUser = getAuthenticatedUser();
       if (loggedInUser) {
-        console.log("User session found in cookies, restoring");
+        console.log(
+          "User session found in cookies, restoring: " + loggedInUser.username
+        );
         setUser(loggedInUser);
-        console.log(loggedInUser.id);
       }
     }
   }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -22,6 +22,12 @@ export const mainTheme = {
     },
     background: {
       paper: "#ffe8cc",
+      hover: "#FFE0B3",
+    },
+    danger: {
+      main: "#b3625e",
+      dark: "#7B3130",
+      contrastText: "#ffffff",
     },
   },
   typography: {
@@ -29,11 +35,15 @@ export const mainTheme = {
     fontSize: 16,
     h1: {
       fontWeight: 700,
-      fontSize: "3rem",
+      fontSize: "rem",
     },
     h2: {
       fontSize: "2rem",
       fontWeight: 600,
+    },
+    h3: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
     },
   },
 };

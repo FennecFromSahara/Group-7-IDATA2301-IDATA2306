@@ -12,6 +12,8 @@ import { useTheme } from "@emotion/react";
 import { useAuth } from "../../hooks/useAuth";
 import ErrorPage from "./ErrorPage";
 import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
+import ProductOverview from "./ProductOverview";
+import ProductCreate from "./ProductCreate";
 
 function AdminPage() {
   const { user } = useAuth();
@@ -23,6 +25,26 @@ function AdminPage() {
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [creatingProduct, setCreatingProduct] = useState(false);
+
+  const addProduct = (newProduct) => {
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  };
+
+  const updateProducts = (updatedProduct) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      )
+    );
+  };
+
+  const removeProduct = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +91,7 @@ function AdminPage() {
       <Box minHeight="92vh" display="flex" flexDirection="column">
         <AppBar
           position="static"
-          sx={{ backgroundColor: theme.palette.primary.main }}
+          sx={{ backgroundColor: theme.palette.primary.light }}
         >
           <Tabs
             value={value}
@@ -80,20 +102,38 @@ function AdminPage() {
           >
             <Tab
               label="Products"
-              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
             <Tab
               label="Users"
-              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
             <Tab
               label="Orders"
-              sx={{ "&.Mui-selected": { color: theme.palette.secondary.main } }}
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Products products={products} />
+          {creatingProduct ? (
+            <ProductCreate
+              setCreatingProduct={setCreatingProduct}
+              addProduct={addProduct}
+            />
+          ) : selectedProduct ? (
+            <ProductOverview
+              product={selectedProduct}
+              setProduct={setSelectedProduct}
+              updateProducts={updateProducts}
+              removeProduct={removeProduct}
+            />
+          ) : (
+            <Products
+              products={products}
+              setProduct={setSelectedProduct}
+              setCreatingProduct={setCreatingProduct}
+            />
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Users users={users} />
