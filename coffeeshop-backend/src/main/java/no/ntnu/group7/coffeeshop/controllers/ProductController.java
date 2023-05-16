@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
+import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
 
 /**
@@ -21,6 +23,9 @@ public class ProductController {
 
   @Autowired
   private ProductRepository productRepository;
+
+  @Autowired
+  private CategoryRepository categoryRepository;
 
   /**
    * Handles HTTP GET requests to "/api/products" and returns a list of all
@@ -95,5 +100,33 @@ public class ProductController {
     }
     productRepository.deleteById(id);
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+  }
+
+  /**
+   * Handles HTTP GET requests to "/api/products/{id}/categories" and
+   * returns a list of all categories of a particular product.
+   *
+   * @param id The ID of the Product object.
+   * @return A list of Category objects.
+   */
+  @GetMapping("/{id}/categories")
+  public ResponseEntity<List<Category>> getCategoriesOfProduct(@PathVariable int id) {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+    return new ResponseEntity<List<Category>>(product.getCategories(), HttpStatus.OK);
+  }
+
+  /**
+   * Handles HTTP GET requests to "/api/products/category/{categoryId}" and
+   * returns a list of all products in a particular category.
+   *
+   * @param categoryId The ID of the Category object.
+   * @return A list of Product objects.
+   */
+  @GetMapping("/category/{categoryId}")
+  public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable int categoryId) {
+    Category category = categoryRepository.findById(categoryId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+    return new ResponseEntity<List<Product>>(category.getProducts(), HttpStatus.OK);
   }
 }

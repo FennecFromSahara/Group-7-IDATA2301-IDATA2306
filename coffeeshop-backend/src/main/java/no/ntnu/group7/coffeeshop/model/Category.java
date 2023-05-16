@@ -1,10 +1,16 @@
 package no.ntnu.group7.coffeeshop.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -20,11 +26,9 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    // @ManyToMany
-    // @JoinTable(name = "product_category", joinColumns = @JoinColumn(name =
-    // "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-    // @JsonIgnore
-    // private Set<Product> products = new HashSet<>();
+    @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
+    private List<Product> products = new ArrayList<>();
 
     /**
      * Empty constructor needed for JPA

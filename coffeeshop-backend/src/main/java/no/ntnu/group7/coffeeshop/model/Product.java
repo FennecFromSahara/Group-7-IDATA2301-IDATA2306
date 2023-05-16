@@ -4,14 +4,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -34,7 +38,7 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column
+    @Column(length = 2000)
     private String description;
 
     @Column
@@ -43,18 +47,16 @@ public class Product {
     @Column
     private int inventoryAmount;
 
-    // @ManyToMany(mappedBy = "products")
-    // private Set<Category> categories = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "product_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonManagedReference
+    private List<Category> categories = new ArrayList<>();
 
     // @OneToMany(mappedBy = "product")
     // private Set<OrderProduct> orderProducts = new HashSet<>();
 
     // @OneToMany(mappedBy = "product")
     // private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingCartProduct> shoppingCartProducts = new ArrayList<>();
@@ -129,5 +131,13 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }
