@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,7 @@ import no.ntnu.group7.coffeeshop.model.User;
  * for users in the coffee shop application. It manages the shopping cart,
  * inventory updates, and order creation.
  */
+@Service
 public class CheckoutService {
 
   @PersistenceContext
@@ -76,7 +79,7 @@ public class CheckoutService {
    * @return the total price of all items in the user's shopping cart as a
    *         BigDecimal
    */
-  private BigDecimal calculateShoppingCartTotal(User user) {
+  public BigDecimal calculateShoppingCartTotal(User user) {
     List<ShoppingCartProduct> cartItems = getShoppingCartProducts(user);
 
     BigDecimal total = BigDecimal.ZERO;
@@ -86,7 +89,7 @@ public class CheckoutService {
       total = total.add(itemTotal);
     }
 
-    return total;
+    return total; //TODO: should be in shoppingcartservice?
   }
 
   /**
@@ -97,7 +100,7 @@ public class CheckoutService {
    *         the user's shopping cart
    */
   private List<ShoppingCartProduct> getShoppingCartProducts(User user) {
-    return shoppingCartService.getCartProducts(user);
+    return shoppingCartService.getCartProducts(user); //TODO: what dis?
   }
 
   /**

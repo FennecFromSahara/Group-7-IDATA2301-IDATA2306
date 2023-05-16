@@ -11,3 +11,11 @@ export async function getUsers() {
 export async function getOrders() {
   return await asyncApiRequest("GET", "/orders");
 }
+
+export async function getShoppingCart() {
+  return await asyncApiRequest("GET", "/shoppingCart");
+}
+
+export async function getProductById(id) {
+  return await asyncApiRequest("GET", "/products/" + id);
+}
