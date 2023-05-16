@@ -13,6 +13,7 @@ import { useAuth } from "../../hooks/useAuth";
 import ErrorPage from "./ErrorPage";
 import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
 import ProductOverview from "./ProductOverview";
+import ProductCreate from "./ProductCreate";
 
 function AdminPage() {
   const { user } = useAuth();
@@ -25,6 +26,11 @@ function AdminPage() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [creatingProduct, setCreatingProduct] = useState(false);
+
+  const addProduct = (newProduct) => {
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  };
 
   const updateProducts = (updatedProduct) => {
     setProducts((prevProducts) =>
@@ -109,7 +115,12 @@ function AdminPage() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          {selectedProduct ? (
+          {creatingProduct ? (
+            <ProductCreate
+              setCreatingProduct={setCreatingProduct}
+              addProduct={addProduct}
+            />
+          ) : selectedProduct ? (
             <ProductOverview
               product={selectedProduct}
               setProduct={setSelectedProduct}
@@ -117,7 +128,11 @@ function AdminPage() {
               removeProduct={removeProduct}
             />
           ) : (
-            <Products products={products} setProduct={setSelectedProduct} />
+            <Products
+              products={products}
+              setProduct={setSelectedProduct}
+              setCreatingProduct={setCreatingProduct}
+            />
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>

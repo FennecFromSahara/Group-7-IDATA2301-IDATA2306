@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react";
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -6,8 +7,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import ProductCreate from "./ProductCreate";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
@@ -27,6 +30,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Products = ({ products, setProduct }) => {
   const theme = useTheme();
+  const [creatingProduct, setCreatingProduct] = useState(false);
+
+  const addProduct = (newProduct) => {
+    setProduct((prevProducts) => [...prevProducts, newProduct]);
+  };
+
+  if (creatingProduct) {
+    return (
+      <ProductCreate
+        setCreatingProduct={setCreatingProduct}
+        addProduct={addProduct}
+      />
+    );
+  }
 
   return (
     <TableContainer>
@@ -73,6 +90,13 @@ const Products = ({ products, setProduct }) => {
           ))}
         </TableBody>
       </Table>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setCreatingProduct(true)}
+      >
+        Add Product
+      </Button>
     </TableContainer>
   );
 };
