@@ -25,107 +25,107 @@ import jakarta.persistence.JoinColumn;
 @Entity
 @Table(name = "orders")
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "order_status", nullable = false)
-    private OrderStatus orderStatus;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "order_status", nullable = false)
+  private OrderStatus orderStatus;
 
-    @Column(nullable = false)
-    private BigDecimal total;
+  @Column(nullable = false)
+  private BigDecimal total;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Date createdAt;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "created_at")
+  private Date createdAt;
 
-    // Enum for order status
-    public enum OrderStatus {
-        PENDING,
-        PROCESSING,
-        SHIPPED,
-        DELIVERED,
-        CANCELED
-    }
+  // Enum for order status
+  public enum OrderStatus {
+    PENDING,
+    PROCESSING,
+    SHIPPED,
+    DELIVERED,
+    CANCELED
+  }
 
-    /**
-     * Empty constructor needed for JPA
-     */
-    public Order() {
-    }
+  /**
+   * Empty constructor needed for JPA
+   */
+  public Order() {
+  }
 
-    /**
-     * Constructor for creating an order with the current timestamp as the createdAt
-     * value.
-     * 
-     * @param user        The user who placed the order
-     * @param orderStatus The status of the order
-     * @param total       The total cost of the order
-     */
-    public Order(User user, OrderStatus orderStatus, BigDecimal total) {
-        this.user = user;
-        this.orderStatus = orderStatus;
-        this.total = total;
-        this.createdAt = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-    }
+  /**
+   * Constructor for creating an order with the current timestamp as the createdAt
+   * value.
+   * 
+   * @param user        The user who placed the order
+   * @param orderStatus The status of the order
+   * @param total       The total cost of the order
+   */
+  public Order(User user, OrderStatus orderStatus, BigDecimal total) {
+    this.user = user;
+    this.orderStatus = orderStatus;
+    this.total = total;
+    this.createdAt = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+  }
 
-    /**
-     * Constructor for creating an order with a specified createdAt timestamp.
-     * 
-     * @param user        The user who placed the order
-     * @param orderStatus The status of the order
-     * @param total       The total cost of the order
-     * @param createdAt   The timestamp at which the order was created
-     */
-    public Order(User user, OrderStatus orderStatus, BigDecimal total, Date createdAt) {
-        this.user = user;
-        this.orderStatus = orderStatus;
-        this.total = total;
-        this.createdAt = createdAt;
-    }
+  /**
+   * Constructor for creating an order with a specified createdAt timestamp.
+   * 
+   * @param user        The user who placed the order
+   * @param orderStatus The status of the order
+   * @param total       The total cost of the order
+   * @param createdAt   The timestamp at which the order was created
+   */
+  public Order(User user, OrderStatus orderStatus, BigDecimal total, Date createdAt) {
+    this.user = user;
+    this.orderStatus = orderStatus;
+    this.total = total;
+    this.createdAt = createdAt;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
+  public OrderStatus getOrderStatus() {
+    return orderStatus;
+  }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+  public void setOrderStatus(OrderStatus orderStatus) {
+    this.orderStatus = orderStatus;
+  }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
+  public BigDecimal getTotal() {
+    return total;
+  }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
+  public void setTotal(BigDecimal total) {
+    this.total = total;
+  }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+  public Date getCreatedAt() {
+    return createdAt;
+  }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
 }

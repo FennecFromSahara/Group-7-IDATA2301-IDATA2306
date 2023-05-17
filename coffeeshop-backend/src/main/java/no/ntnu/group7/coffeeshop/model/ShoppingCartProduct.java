@@ -18,70 +18,70 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "shopping_cart")
 public class ShoppingCartProduct {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+  @ManyToOne
+  @JoinColumn(name = "product_id", nullable = false)
+  private Product product;
 
-    @Column(nullable = false)
-    private int quantity;
+  @Column(nullable = false)
+  private int quantity;
 
-    /**
-     * Empty constructor needed for JPA
-     */
-    public ShoppingCartProduct() {
-    }
+  /**
+   * Empty constructor needed for JPA
+   */
+  public ShoppingCartProduct() {
+  }
 
-    /**
-     * Constructs a new ShoppingCartProduct with the specified user, product, and
-     * quantity.
-     *
-     * @param user     The user associated with this shopping cart product.
-     * @param product  The product associated with this shopping cart product.
-     * @param quantity The quantity of the product in the shopping cart.
-     */
-    public ShoppingCartProduct(User user, Product product, int quantity) {
-        this.user = user;
-        this.product = product;
-        this.quantity = quantity;
-    }
+  /**
+   * Constructs a new ShoppingCartProduct with the specified user, product, and
+   * quantity.
+   *
+   * @param user     The user associated with this shopping cart product.
+   * @param product  The product associated with this shopping cart product.
+   * @param quantity The quantity of the product in the shopping cart.
+   */
+  public ShoppingCartProduct(User user, Product product, int quantity) {
+    this.user = user;
+    this.product = product;
+    this.quantity = quantity;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public Product getProduct() {
-        return product;
-    }
+  public Product getProduct() {
+    return product;
+  }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 
-    public int getQuantity() {
-        return quantity;
-    }
+  public int getQuantity() {
+    return quantity;
+  }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
 }

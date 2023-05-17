@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,7 @@ import no.ntnu.group7.coffeeshop.services.ShoppingCartService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/shoppingCart")
 public class ShoppingCartController {
-  
+
   @Autowired
   private AccessUserService accessUserService;
 
@@ -32,20 +31,21 @@ public class ShoppingCartController {
 
   @Autowired
   private CheckoutService checkoutService;
-  
+
   @GetMapping("")
   public ResponseEntity<List<ShoppingCartProductDto>> getShoppingCart() {
     User user = accessUserService.getSessionUser();
     if (user == null) {
-      //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+      // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not
+      // authenticated");
     }
-    
+
     List<ShoppingCartProduct> shoppingCartProducts = shoppingCartService.getCartProducts(user);
     List<ShoppingCartProductDto> shoppingCartProductDtos = shoppingCartProducts.stream()
         .map(shoppingCartProduct -> new ShoppingCartProductDto(
-          shoppingCartProduct.getUser().getId(), 
-          shoppingCartProduct.getProduct().getId(), 
-          shoppingCartProduct.getQuantity()))
+            shoppingCartProduct.getUser().getId(),
+            shoppingCartProduct.getProduct().getId(),
+            shoppingCartProduct.getQuantity()))
         .collect(Collectors.toList());
 
     return ResponseEntity.ok(shoppingCartProductDtos);
@@ -55,7 +55,8 @@ public class ShoppingCartController {
   public ResponseEntity<BigDecimal> getTotal() {
     User user = accessUserService.getSessionUser();
     if (user == null) {
-      //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+      // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not
+      // authenticated");
     }
 
     BigDecimal total = checkoutService.calculateShoppingCartTotal(user);

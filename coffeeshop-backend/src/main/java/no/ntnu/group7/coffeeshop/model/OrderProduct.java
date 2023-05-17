@@ -20,83 +20,83 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "order_product")
 public class OrderProduct {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+  @ManyToOne
+  @JoinColumn(name = "order_id", nullable = false)
+  private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+  @ManyToOne
+  @JoinColumn(name = "product_id", nullable = false)
+  private Product product;
 
-    @Column(nullable = false)
-    private BigDecimal price;
+  @Column(nullable = false)
+  private BigDecimal price;
 
-    @Column(nullable = false)
-    private int quantity;
+  @Column(nullable = false)
+  private int quantity;
 
-    /**
-     * Empty constructor needed for JPA
-     */
-    public OrderProduct() {
-    }
+  /**
+   * Empty constructor needed for JPA
+   */
+  public OrderProduct() {
+  }
 
-    /**
-     * Constructs a new OrderProduct with the specified order, product, price, and
-     * quantity.
-     *
-     * @param order    The order associated with this order product.
-     * @param product  The product associated with this order product.
-     * @param price    The price of the product in the order.
-     * @param quantity The quantity of the product in the order.
-     */
-    public OrderProduct(Order order, Product product, BigDecimal price, int quantity) {
-        this.order = order;
-        this.product = product;
-        this.price = price;
-        this.quantity = quantity;
-    }
+  /**
+   * Constructs a new OrderProduct with the specified order, product, price, and
+   * quantity.
+   *
+   * @param order    The order associated with this order product.
+   * @param product  The product associated with this order product.
+   * @param price    The price of the product in the order.
+   * @param quantity The quantity of the product in the order.
+   */
+  public OrderProduct(Order order, Product product, BigDecimal price, int quantity) {
+    this.order = order;
+    this.product = product;
+    this.price = price;
+    this.quantity = quantity;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public Order getOrder() {
-        return order;
-    }
+  public Order getOrder() {
+    return order;
+  }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+  public void setOrder(Order order) {
+    this.order = order;
+  }
 
-    public Product getProduct() {
-        return product;
-    }
+  public Product getProduct() {
+    return product;
+  }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+  public BigDecimal getPrice() {
+    return price;
+  }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+  public void setPrice(BigDecimal price) {
+    this.price = price;
+  }
 
-    public int getQuantity() {
-        return quantity;
-    }
+  public int getQuantity() {
+    return quantity;
+  }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
 }

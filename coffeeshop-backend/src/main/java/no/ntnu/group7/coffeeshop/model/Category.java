@@ -19,53 +19,53 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "categories")
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(nullable = false)
-    private String name;
+  @Column(nullable = false)
+  private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonBackReference
-    private List<Product> products = new ArrayList<>();
+  @ManyToMany(mappedBy = "categories")
+  @JsonBackReference
+  private List<Product> products = new ArrayList<>();
 
-    /**
-     * Empty constructor needed for JPA
-     */
-    public Category() {
-    }
+  /**
+   * Empty constructor needed for JPA
+   */
+  public Category() {
+  }
 
-    /**
-     * Constructor with name as parameter
-     * 
-     * @param name name of category
-     */
-    public Category(String name) {
-        this.name = name;
-    }
+  /**
+   * Constructor with name as parameter
+   * 
+   * @param name name of category
+   */
+  public Category(String name) {
+    this.name = name;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public List<Product> getProducts() {
-        return products;
-    }
+  public List<Product> getProducts() {
+    return products;
+  }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+  public void setProducts(List<Product> products) {
+    this.products = products;
+  }
 }

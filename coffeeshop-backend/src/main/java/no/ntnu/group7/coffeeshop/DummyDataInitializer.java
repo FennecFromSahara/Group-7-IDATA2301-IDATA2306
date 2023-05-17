@@ -44,7 +44,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
   private final Logger logger = LoggerFactory.getLogger("DummyInit");
 
   /**
-   * This method is called when the application is ready (loaded)
+   * This method is called when the application is loaded
    *
    * @param event Event which we don't use :)
    */
@@ -150,7 +150,8 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
         Category accessoriesCategory = new Category("accessories");
 
         List<Category> categories = Arrays.asList(coffeeCategory, groundCategory, teaCategory, greenTeaCategory,
-            blackTeaCategory, herbalTeaCategory, beansCategory, sweetsCategory, otherCategory, bakedCategory,
+            blackTeaCategory, herbalTeaCategory, beansCategory, sweetsCategory, otherCategory,
+            bakedCategory,
             gadgetsCategory, accessoriesCategory);
         categoryRepository.saveAll(categories);
 
@@ -170,7 +171,8 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
 
         chocolate.setCategories(Arrays.asList(sweetsCategory, otherCategory));
         pancakes.setCategories(Arrays.asList(sweetsCategory, bakedCategory, otherCategory));
-        coffeeMachine.setCategories(Arrays.asList(accessoriesCategory, gadgetsCategory, coffeeCategory, otherCategory));
+        coffeeMachine.setCategories(
+            Arrays.asList(accessoriesCategory, gadgetsCategory, coffeeCategory, otherCategory));
         logger.info("DONE applying test categories");
       } else {
         logger.info("Categories already in the database, not importing anything");

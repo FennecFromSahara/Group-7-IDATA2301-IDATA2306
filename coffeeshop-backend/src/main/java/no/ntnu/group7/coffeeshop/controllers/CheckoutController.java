@@ -20,20 +20,20 @@ import no.ntnu.group7.coffeeshop.services.CheckoutService;
 @RequestMapping("/api/checkout")
 public class CheckoutController {
 
-    @Autowired
-    private AccessUserService accessUserService;
+  @Autowired
+  private AccessUserService accessUserService;
 
-    @Autowired
-    private CheckoutService checkoutService;
+  @Autowired
+  private CheckoutService checkoutService;
 
-    @PostMapping("/checkout")
-    public ResponseEntity<String> checkout() {
-        User user = accessUserService.getSessionUser();
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
-        }
-
-        checkoutService.checkout(user);
-        return ResponseEntity.ok("Checkout successful");
+  @PostMapping("/checkout")
+  public ResponseEntity<String> checkout() {
+    User user = accessUserService.getSessionUser();
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
     }
+
+    checkoutService.checkout(user);
+    return ResponseEntity.ok("Checkout successful");
+  }
 }
