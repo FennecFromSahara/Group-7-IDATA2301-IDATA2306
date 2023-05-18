@@ -30,7 +30,10 @@ function HeroSection() {
           flexDirection: "column",
         }}
       >
-        <Typography>We sell coffe'n stuff</Typography>
+        <Typography>
+          The go-to spot for the perfect cup of coffee or a tasty bite of food,
+          for cool cats and urbanites alike.
+        </Typography>
         <Button
           href="/products"
           size="small"

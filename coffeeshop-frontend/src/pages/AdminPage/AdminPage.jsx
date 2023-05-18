@@ -76,29 +76,33 @@ function AdminPage() {
   }, [user, navigate, loading]);
 
   if (loading) {
-    <div>
-      <NavBar user={user} />
+    return (
+      <div>
+        <NavBar user={user} />
 
-      <Box
-        minHeight="94vh"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Typography variant="h1">Loading...</Typography>
-      </Box>
+        <Box
+          minHeight="94vh"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography variant="h1">Checking if you're an admin...</Typography>
+        </Box>
 
-      <Footer />
-    </div>;
-  }
-
-  if (!isAdmin(user)) {
-    return null;
+        <Footer />
+      </div>
+    );
   }
 
   if (error) {
-    return <ErrorPage error={error} />;
+    return (
+      <div>
+        <NavBar user={user} />
+        <ErrorPage error={error} />
+        <Footer />
+      </div>
+    );
   }
 
   return (

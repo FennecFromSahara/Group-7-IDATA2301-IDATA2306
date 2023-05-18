@@ -3,7 +3,7 @@ import { Typography, Box } from "@mui/material";
 function ErrorPage({ error }) {
   return (
     <Box
-      minHeight="62vh"
+      minHeight="94vh"
       display="flex"
       flexDirection="column"
       justifyContent="center"
