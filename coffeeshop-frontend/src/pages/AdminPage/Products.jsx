@@ -43,6 +43,15 @@ const Products = ({ products, setProduct, addProduct }) => {
 
   return (
     <TableContainer>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setCreatingProduct(true)}
+        sx={{ ml: 3, mt: 3 }}
+      >
+        Add Product
+      </Button>
+
       <Table
         sx={{
           m: 3,
@@ -93,14 +102,6 @@ const Products = ({ products, setProduct, addProduct }) => {
           ))}
         </TableBody>
       </Table>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setCreatingProduct(true)}
-        sx={{ ml: 3, mb: 3 }}
-      >
-        Add Product
-      </Button>
     </TableContainer>
   );
 };

@@ -9,6 +9,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     tryRestoreUserSession();
@@ -16,6 +17,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     user,
+    loading,
     setUser,
     tryRestoreUserSession,
   };
@@ -30,6 +32,7 @@ export function AuthProvider({ children }) {
         setUser(loggedInUser);
       }
     }
+    setLoading(false);
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,22 +1,22 @@
-import { Box, AppBar, Tabs, Tab } from "@mui/material";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavBar";
-import { isAdmin } from "../../tools/authentication";
-import { useNavigate } from "react-router-dom";
+import { Box, AppBar, Tabs, Tab, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
+import { useAuth } from "../../hooks/useAuth";
+import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
+import { isAdmin } from "../../tools/authentication";
+import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 import TabPanel from "./TabPanel";
 import Orders from "./Orders";
 import Products from "./Products";
 import Users from "./Users";
-import { useTheme } from "@emotion/react";
-import { useAuth } from "../../hooks/useAuth";
 import ErrorPage from "./ErrorPage";
-import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
 import ProductOverview from "./ProductOverview";
 import ProductCreate from "./ProductCreate";
 
 function AdminPage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -69,15 +69,32 @@ function AdminPage() {
     setValue(newValue);
   };
 
-  // Redirect to the homepage or another page if the user is not an admin
   useEffect(() => {
-    if (!isAdmin(user)) {
+    if (!loading && !isAdmin(user)) {
       navigate("/access_denied");
     }
-  }, [user, navigate]);
+  }, [user, navigate, loading]);
+
+  if (loading) {
+    <div>
+      <NavBar user={user} />
+
+      <Box
+        minHeight="94vh"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Typography variant="h1">Loading...</Typography>
+      </Box>
+
+      <Footer />
+    </div>;
+  }
 
   if (!isAdmin(user)) {
-    return null; // Render nothing if the user is not an admin
+    return null;
   }
 
   if (error) {
