@@ -2,16 +2,16 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import { Box, IconButton, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
+import { Box, IconButton, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import { isAdmin } from "../tools/authentication";
 import { deleteAuthorizationCookies } from "../tools/authentication";
 import { useAuth } from "../hooks/useAuth";
@@ -75,6 +75,9 @@ function NavBar() {
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
+          sx={{
+            ml: "-1rem",
+          }}
         >
           <MenuIcon />
         </Button>
