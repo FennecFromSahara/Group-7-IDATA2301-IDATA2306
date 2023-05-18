@@ -10,7 +10,7 @@ function HeroSection() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "auto",
-        height: "92vh",
+        height: "94vh",
         justifyContent: "center",
         alignItems: "center",
       }}

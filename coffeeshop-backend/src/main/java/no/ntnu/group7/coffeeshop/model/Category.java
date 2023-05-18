@@ -27,7 +27,7 @@ public class Category {
   private String name;
 
   @ManyToMany(mappedBy = "categories")
-  @JsonBackReference
+  @JsonBackReference("product-category")
   private List<Product> products = new ArrayList<>();
 
   /**

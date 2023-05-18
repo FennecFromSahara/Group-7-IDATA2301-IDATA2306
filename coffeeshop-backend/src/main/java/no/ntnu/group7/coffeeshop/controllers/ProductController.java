@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import no.ntnu.group7.coffeeshop.dto.ProductDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
@@ -57,12 +58,21 @@ public class ProductController {
    * Handles HTTP POST requests to "/api/products" and adds a new product
    * in the database.
    *
-   * @param product The product object to add.
+   * @param productDto The product DTO (Data Transfer Object) with details about
+   *                   the object to add.
    * @return The added product.
    */
   @PostMapping("")
-  public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+  public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto) {
+    Product product = new Product();
+    product.setName(productDto.getName());
+    product.setDescription(productDto.getDescription());
+    product.setInventoryAmount(productDto.getInventoryAmount());
+    product.setPrice(productDto.getPrice());
+    product.setImage(productDto.getImage());
+
     Product newProduct = productRepository.save(product);
+
     return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
   }
 
@@ -71,17 +81,28 @@ public class ProductController {
    * product in the database with the specified ID. If the product is not
    * found, returns a 404 Not Found response.
    *
-   * @param id      The ID of the product to update.
-   * @param product The product containing the updated details.
+   * @param id         The ID of the product to update.
+   * @param productDto The product DTO (Data transfer object) containing the
+   *                   updated details.
    * @return The updated product.
    */
   @PutMapping("/{id}")
-  public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product product) {
+  public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody ProductDto productDto) {
     if (!productRepository.existsById(id)) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
     }
-    product.setId(id);
-    Product updatedProduct = productRepository.save(product);
+
+    Product currentProduct = productRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
+    currentProduct.setName(productDto.getName());
+    currentProduct.setDescription(productDto.getDescription());
+    currentProduct.setInventoryAmount(productDto.getInventoryAmount());
+    currentProduct.setPrice(productDto.getPrice());
+    currentProduct.setImage(productDto.getImage());
+
+    Product updatedProduct = productRepository.save(currentProduct);
+
     return new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);
   }
 

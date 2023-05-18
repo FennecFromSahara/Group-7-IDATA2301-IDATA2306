@@ -88,7 +88,7 @@ function AdminPage() {
     <div>
       <NavBar user={user} />
 
-      <Box minHeight="92vh" display="flex" flexDirection="column">
+      <Box minHeight="94vh" display="flex" flexDirection="column">
         <AppBar
           position="static"
           sx={{ backgroundColor: theme.palette.primary.light }}
@@ -131,7 +131,7 @@ function AdminPage() {
             <Products
               products={products}
               setProduct={setSelectedProduct}
-              setCreatingProduct={setCreatingProduct}
+              addProduct={addProduct}
             />
           )}
         </TabPanel>

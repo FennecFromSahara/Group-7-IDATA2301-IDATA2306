@@ -28,13 +28,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Products = ({ products, setProduct }) => {
+const Products = ({ products, setProduct, addProduct }) => {
   const theme = useTheme();
   const [creatingProduct, setCreatingProduct] = useState(false);
-
-  const addProduct = (newProduct) => {
-    setProduct((prevProducts) => [...prevProducts, newProduct]);
-  };
 
   if (creatingProduct) {
     return (
@@ -58,11 +54,11 @@ const Products = ({ products, setProduct }) => {
       >
         <TableHead>
           <TableRow>
-            <StyledTableCell>Product Name</StyledTableCell>
-            <StyledTableCell align="right">Price</StyledTableCell>
-            <StyledTableCell align="right">Description</StyledTableCell>
-            <StyledTableCell align="right">Inventory Amount</StyledTableCell>
-            <StyledTableCell align="right">Image</StyledTableCell>
+            <StyledTableCell align="center">Product Name</StyledTableCell>
+            <StyledTableCell align="center">Price</StyledTableCell>
+            <StyledTableCell align="center">Description</StyledTableCell>
+            <StyledTableCell align="center">Inventory Amount</StyledTableCell>
+            <StyledTableCell align="center">Image</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -71,12 +67,19 @@ const Products = ({ products, setProduct }) => {
               key={product.id}
               onClick={() => setProduct(product)}
             >
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" align="center">
                 {product.name}
               </TableCell>
-              <TableCell align="right">${product.price.toFixed(2)}</TableCell>
-              <TableCell align="right">{product.description}</TableCell>
-              <TableCell align="right">{product.inventoryAmount}</TableCell>
+              <TableCell align="center">${product.price.toFixed(2)}</TableCell>
+              <TableCell align="left">{product.description}</TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: "1.5rem",
+                }}
+              >
+                {product.inventoryAmount}
+              </TableCell>
               <TableCell align="right">
                 {product.image && (
                   <img
@@ -94,6 +97,7 @@ const Products = ({ products, setProduct }) => {
         variant="contained"
         color="primary"
         onClick={() => setCreatingProduct(true)}
+        sx={{ ml: 3, mb: 3 }}
       >
         Add Product
       </Button>
