@@ -23,7 +23,7 @@ function Footer() {
       >
         <Grid item xs={12} sm={6} md={4}>
           <Typography variant="h1">Contact</Typography>
-          <Typography>Location</Typography>
+          <Typography>123 ELF ROAD, NORTH POLE 88888</Typography>
           <Typography>+47 123 45 678</Typography>
           <Grid container>
             <Grid item>
@@ -48,7 +48,7 @@ function Footer() {
           </Grid>
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
-          <Typography>Opening Hours:</Typography>
+          <Typography variant="h1">Opening Hours:</Typography>
           <Typography>Monday - Sunday: 8:00 - 24:00</Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>

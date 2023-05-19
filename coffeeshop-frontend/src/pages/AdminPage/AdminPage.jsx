@@ -8,12 +8,12 @@ import { isAdmin } from "../../tools/authentication";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import TabPanel from "./TabPanel";
-import Orders from "./Orders";
-import Products from "./Products";
-import Users from "./Users";
+import Orders from "./Orders/Orders";
+import Products from "./Products/Products";
+import Users from "./Users/Users";
 import ErrorPage from "./ErrorPage";
-import ProductOverview from "./ProductOverview";
-import ProductCreate from "./ProductCreate";
+import ProductOverview from "./Products/ProductOverview";
+import ProductCreate from "./Products/ProductCreate";
 
 function AdminPage() {
   const { user, loading } = useAuth();

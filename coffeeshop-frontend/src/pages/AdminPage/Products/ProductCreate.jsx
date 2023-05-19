@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography, Grid } from "@mui/material";
-import { asyncApiRequest } from "../../tools/requests";
+import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
 
 const ProductCreate = ({ setCreatingProduct, addProduct }) => {

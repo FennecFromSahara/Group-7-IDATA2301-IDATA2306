@@ -76,7 +76,7 @@ function NavBar() {
           aria-haspopup="true"
           onClick={handleToggle}
           sx={{
-            ml: "-1rem",
+            ml: -3,
           }}
         >
           <MenuIcon />
