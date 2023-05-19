@@ -1,6 +1,7 @@
 package no.ntnu.group7.coffeeshop.controllers;
 
 import no.ntnu.group7.coffeeshop.dto.UserProfileDto;
+import no.ntnu.group7.coffeeshop.model.Role;
 import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.services.AccessUserService;
 
@@ -37,10 +38,18 @@ public class UserController {
   public ResponseEntity<?> getProfile(@PathVariable String username) throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
-    if (sessionUser != null && sessionUser.getUsername().equals(username)) {
-      UserProfileDto profile = new UserProfileDto(sessionUser.getId(), sessionUser.getFirstName(),
-          sessionUser.getLastName(),
-          sessionUser.getEmail(), sessionUser.getAddress());
+    if (sessionUser != null && (sessionUser.getUsername().equals(username) || sessionUser.isAdmin())) {
+      User user = userService.getUserByUsername(username);
+
+      List<String> roleNames = user.getRoles().stream()
+          .map(Role::getName)
+          .collect(Collectors.toList());
+
+      UserProfileDto profile = new UserProfileDto(user.getId(), user.getFirstName(),
+          user.getLastName(),
+          user.getEmail(), user.getAddress(), user.getUsername(),
+          user.getCreatedAt().toString(), String.join(", ", roleNames));
+
       return new ResponseEntity<>(profile, HttpStatus.OK);
     } else if (sessionUser == null) {
       return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
@@ -65,8 +74,10 @@ public class UserController {
   public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody UserProfileDto profileData)
       throws InterruptedException {
     User sessionUser = userService.getSessionUser();
+
     ResponseEntity<String> response;
-    if (sessionUser != null && sessionUser.getUsername().equals(username)) {
+
+    if (sessionUser != null && (sessionUser.getUsername().equals(username) || sessionUser.isAdmin())) {
       if (profileData != null) {
         if (userService.updateProfile(sessionUser, profileData)) {
           response = new ResponseEntity<>("", HttpStatus.OK);
@@ -98,10 +109,17 @@ public class UserController {
 
     if (sessionUser != null && sessionUser.isAdmin()) {
       List<User> allUsers = userService.getAllUsers();
+
       List<UserProfileDto> allUserProfileDtos = allUsers.stream()
-          .map(user -> new UserProfileDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
-              user.getAddress()))
+          .map(user -> {
+            List<String> roleNames = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+            return new UserProfileDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getAddress(), user.getUsername(), user.getCreatedAt().toString(), String.join(", ", roleNames));
+          })
           .collect(Collectors.toList());
+
       return new ResponseEntity<>(allUserProfileDtos, HttpStatus.OK);
     } else if (sessionUser == null) {
       return new ResponseEntity<>("User data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);

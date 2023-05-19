@@ -58,7 +58,7 @@ public class SecurityConfiguration {
         .requestMatchers("/api/categories/**").permitAll()
         .requestMatchers("/api/products").permitAll()
         .requestMatchers("/api/products/**").permitAll()
-        .anyRequest().authenticated()
+        .anyRequest().permitAll()
         .and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()

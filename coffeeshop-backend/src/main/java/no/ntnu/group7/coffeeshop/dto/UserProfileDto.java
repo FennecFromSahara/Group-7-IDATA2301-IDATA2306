@@ -10,23 +10,33 @@ public class UserProfileDto {
   private String lastName;
   private String email;
   private String address;
+  private String username;
+  private String createdAt;
+  private String roles;
 
   /**
    * Constructs a new UserProfileDto with the specified user ID, first name, last
    * name, email, and address.
    *
    * @param id        The unique identifier for the user.
-   * @param firstName The user's first name.
-   * @param lastName  The user's last name.
-   * @param email     The user's email address.
-   * @param address   The user's physical address.
+   * @param firstName The users first name.
+   * @param lastName  The users last name.
+   * @param email     The users email address.
+   * @param address   The users physical address.
+   * @param username  The users username.
+   * @param createdAt The users creation date.
+   * @param roles     The users roles.
    */
-  public UserProfileDto(long id, String firstName, String lastName, String email, String address) {
+  public UserProfileDto(long id, String firstName, String lastName, String email, String address, String username,
+      String createdAt, String roles) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.address = address;
+    this.username = username;
+    this.createdAt = createdAt;
+    this.roles = roles;
   }
 
   public long getId() {
@@ -47,5 +57,17 @@ public class UserProfileDto {
 
   public String getAddress() {
     return address;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public String getRoles() {
+    return roles;
   }
 }

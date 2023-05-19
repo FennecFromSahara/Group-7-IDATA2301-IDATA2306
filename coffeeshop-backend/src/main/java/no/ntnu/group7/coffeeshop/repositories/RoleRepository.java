@@ -9,5 +9,7 @@ import no.ntnu.group7.coffeeshop.model.Role;
  * Spring will auto-generate necessary methods.
  */
 public interface RoleRepository extends JpaRepository<Role, Long> {
-  Role findOneByName(String name);
+
+  Role findByName(String name);
+
 }

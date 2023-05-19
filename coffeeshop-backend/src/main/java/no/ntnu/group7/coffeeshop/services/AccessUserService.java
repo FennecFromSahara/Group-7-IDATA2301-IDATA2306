@@ -139,7 +139,7 @@ public class AccessUserService implements UserDetailsService {
    */
   private void createUser(String username, String password, String firstName, String lastName, String email,
       String address) {
-    Role userRole = roleRepository.findOneByName("ROLE_USER");
+    Role userRole = roleRepository.findByName("ROLE_USER");
     if (userRole != null) {
       User user = new User(username, createHash(password), firstName, lastName, email, address);
       user.addRole(userRole);
@@ -182,5 +182,32 @@ public class AccessUserService implements UserDetailsService {
    */
   public List<User> getAllUsers() {
     return userRepository.findAll();
+  }
+
+  /**
+   * Gives a user the ROLE_ADMIN role.
+   * 
+   * @param user user to make an admin.
+   */
+  public void makeAdmin(User user) {
+    if (!user.isAdmin()) {
+      Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+      if (adminRole == null) {
+        adminRole = new Role("ROLE_ADMIN");
+        roleRepository.save(adminRole);
+      }
+      user.addRole(adminRole);
+      userRepository.save(user);
+    }
+  }
+
+  /**
+   * Fetches a user from the database using their username.
+   *
+   * @param username the username of the user to retrieve
+   * @return User object if user is found, null otherwise
+   */
+  public User getUserByUsername(String username) {
+    return userRepository.findByUsername(username).orElse(null);
   }
 }
