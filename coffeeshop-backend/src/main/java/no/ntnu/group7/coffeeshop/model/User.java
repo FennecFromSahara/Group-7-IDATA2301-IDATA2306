@@ -195,6 +195,15 @@ public class User {
   }
 
   /**
+   * Removes a role from a user
+   * 
+   * @param role Role to remove
+   */
+  public void removeRole(Role role) {
+    roles.remove(role);
+  }
+
+  /**
    * Check if this user is an admin
    *
    * @return True if the user has admin role, false otherwise

@@ -1,6 +1,9 @@
+import { useTheme } from "@emotion/react";
 import { Box, Button, Typography } from "@mui/material";
 
 function HeroSection() {
+  const theme = useTheme();
+
   return (
     <Box
       style={{
@@ -10,7 +13,7 @@ function HeroSection() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "auto",
-        height: "94vh",
+        height: theme.boxSizes.navSection,
         justifyContent: "center",
         alignItems: "center",
       }}

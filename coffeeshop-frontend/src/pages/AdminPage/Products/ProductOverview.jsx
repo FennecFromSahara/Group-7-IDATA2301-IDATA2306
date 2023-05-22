@@ -63,7 +63,7 @@ const ProductOverview = ({
     <Box
       sx={{
         backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(2),
+        padding: 2,
         borderRadius: 2,
         border: `2px solid ${theme.palette.primary.light}`,
         m: 3,
@@ -125,7 +125,7 @@ const ProductOverview = ({
         variant="contained"
         color="primary"
         onClick={updateProduct}
-        style={{ marginRight: theme.spacing(2) }}
+        style={{ marginRight: 2 }}
       >
         Update Product
       </Button>

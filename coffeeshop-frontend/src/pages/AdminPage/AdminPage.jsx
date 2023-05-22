@@ -14,6 +14,7 @@ import Users from "./Users/Users";
 import ErrorPage from "./ErrorPage";
 import ProductOverview from "./Products/ProductOverview";
 import ProductCreate from "./Products/ProductCreate";
+import UserOverview from "./Users/UserOverview";
 
 function AdminPage() {
   const { user, loading } = useAuth();
@@ -21,12 +22,33 @@ function AdminPage() {
   const theme = useTheme();
 
   const [value, setValue] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
+
+  const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [creatingProduct, setCreatingProduct] = useState(false);
+
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (selectedUser) {
+      console.log("Selected User:");
+      console.log(selectedUser);
+    }
+  }, [selectedUser]);
+
+  const updateUsers = (updatedUser) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    );
+  };
+
+  const removeUser = (id) => {
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+  };
 
   const addProduct = (newProduct) => {
     setProducts((prevProducts) => [...prevProducts, newProduct]);
@@ -51,12 +73,15 @@ function AdminPage() {
       try {
         const productsData = await getProducts();
         setProducts(productsData);
+        console.log("products: " + productsData);
 
         const usersData = await getUsers();
         setUsers(usersData);
+        console.log("users: ");
+        console.log(usersData);
 
         const ordersData = await getOrders();
-        setOrders(ordersData);
+        setOrders("orders: " + ordersData);
       } catch (err) {
         setError(`Error fetching data: ${err.message}`);
       }
@@ -157,7 +182,16 @@ function AdminPage() {
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Users users={users} />
+          {selectedUser ? (
+            <UserOverview
+              user={selectedUser}
+              setUser={setSelectedUser}
+              updateUsers={updateUsers}
+              removeUser={removeUser}
+            />
+          ) : (
+            <Users users={users} setUser={setSelectedUser} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Orders orders={orders} />

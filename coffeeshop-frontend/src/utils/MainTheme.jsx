@@ -45,5 +45,13 @@ export const mainTheme = {
       fontSize: "1.5rem",
       fontWeight: 500,
     },
+    h4: {
+      fontSize: "1rem",
+      fontWeight: 300,
+    },
+  },
+  boxSizes: {
+    navSection: "94vh",
+    navSectionFooter: "65vh",
   },
 };

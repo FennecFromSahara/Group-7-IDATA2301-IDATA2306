@@ -25,7 +25,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Users = ({ users }) => {
+const Users = ({ users, setUser }) => {
   const theme = useTheme();
 
   return (
@@ -46,11 +46,12 @@ const Users = ({ users }) => {
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Address</StyledTableCell>
             <StyledTableCell align="center">Created at</StyledTableCell>
+            <StyledTableCell align="center">Admin?</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <StyledTableRow key={user.id}>
+            <StyledTableRow key={user.id} onClick={() => setUser(user)}>
               <TableCell component="th" scope="row" align="center">
                 {user.firstName} {user.lastName}
               </TableCell>
@@ -58,6 +59,9 @@ const Users = ({ users }) => {
               <TableCell align="center">{user.email}</TableCell>
               <TableCell align="center">{user.address}</TableCell>
               <TableCell align="center">{user.createdAt}</TableCell>
+              <TableCell align="center">
+                {user.roles.includes("ROLE_ADMIN") ? "YES" : ""}
+              </TableCell>
             </StyledTableRow>
           ))}
         </TableBody>

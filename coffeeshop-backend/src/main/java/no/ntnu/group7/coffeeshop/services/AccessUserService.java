@@ -1,5 +1,7 @@
 package no.ntnu.group7.coffeeshop.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -19,6 +21,7 @@ import no.ntnu.group7.coffeeshop.security.AccessUserDetails;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * AccessUserService is a service layer class that provides functionality
@@ -33,6 +36,8 @@ public class AccessUserService implements UserDetailsService {
   UserRepository userRepository;
   @Autowired
   RoleRepository roleRepository;
+
+  private static final Logger logger = LoggerFactory.getLogger("DummyInit");
 
   /**
    * Loads user-specific data during authentication by retrieving a user from the
@@ -167,6 +172,7 @@ public class AccessUserService implements UserDetailsService {
    * @return true on successful update, false otherwise
    */
   public boolean updateProfile(User user, UserProfileDto profileData) {
+    user.setUsername(profileData.getUsername());
     user.setFirstName(profileData.getFirstName());
     user.setLastName(profileData.getLastName());
     user.setEmail(profileData.getEmail());
@@ -202,6 +208,23 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
+   * Gives a user the ROLE_ADMIN role.
+   * 
+   * @param user      user to make an admin.
+   * @param ROLE_NAME The name of the role to remove from the user.
+   */
+  public void removeRole(User user, String ROLE_NAME) {
+    Role role = roleRepository.findByName(ROLE_NAME);
+
+    if (role != null) {
+      user.removeRole(role);
+      userRepository.save(user);
+    } else {
+      logger.error("Role with name " + ROLE_NAME + " does not exist in the database.");
+    }
+  }
+
+  /**
    * Fetches a user from the database using their username.
    *
    * @param username the username of the user to retrieve
@@ -209,5 +232,28 @@ public class AccessUserService implements UserDetailsService {
    */
   public User getUserByUsername(String username) {
     return userRepository.findByUsername(username).orElse(null);
+  }
+
+  /**
+   * Converts the Role object to a list of roles as a string
+   * 
+   * @param roles the role objects
+   * @return a string of role names
+   */
+  public String convertRolesToString(Set<Role> roles) {
+    StringBuilder roleNames = new StringBuilder();
+    for (Role role : roles) {
+      roleNames.append(role.getName());
+      roleNames.append(", ");
+    }
+
+    // Remove the last comma and space
+    if (roleNames.length() > 0) {
+      roleNames.setLength(roleNames.length() - 2);
+    }
+
+    String rolesAsString = roleNames.toString();
+
+    return rolesAsString;
   }
 }
