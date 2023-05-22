@@ -1,98 +1,140 @@
-import NavBar from "../../components/NavBar";
-import Footer from "../../components/Footer";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
-import CardMedia from "@mui/material/CardMedia";
 import {
   Box,
-  Container,
-  Typography,
+  Button,
+  CardMedia,
   MenuItem,
   Select,
-  Button,
+  Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
+import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
+import { getProductById } from "../../hooks/apiService";
 
 function IndividualProduct() {
   const { id } = useParams();
-  const { data, error } = useFetch(`http://localhost:8042/api/products/${id}`);
+  const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("small");
-
+  const [showReviews, setShowReviews] = useState(false);
   const theme = useTheme();
+
+  useEffect(() => {
+    getProductById(id)
+      .then((productData) => {
+        setProduct(productData);
+      })
+      .catch((err) => {
+        console.error(`Error fetching product: ${err.message}`);
+      });
+  }, [id]);
 
   const handleChange = (event) => {
     setSelectedSize(event.target.value);
   };
 
-  const renderProducts = () => {
-    if (error) {
-      return <Typography variant="h1">Something went wrong...</Typography>;
+  const handleShowReviews = () => {
+    setShowReviews(!showReviews);
+  };
+
+  const placeholderReviews = [
+    { id: 1, content: "Great product! Highly recommended." },
+    { id: 2, content: "Pretty decent, could be better." },
+    { id: 3, content: "Amazing! Will buy again." },
+  ];
+
+  const renderProduct = () => {
+    if (!product) {
+      return <Typography variant="h1">Loading...</Typography>;
     } else {
       return (
-        <Container
+        <Box
           sx={{
-            height: "64vh",
-            width: "700px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: theme.boxSizes.navSectionFooter,
             m: "3rem auto",
           }}
         >
-          <CardMedia
-            component="img"
-            image="../img/coffe placeholder.jpg"
-            alt="Image of product"
-            sx={{ height: 420, width: 327, float: "left" }}
-          />
           <Box
             sx={{
-              height: 420,
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "center",
             }}
           >
-            <Typography
-              variant="h1"
+            <CardMedia
+              component="img"
+              image="../img/coffee placeholder.jpg"
+              alt="Image of product"
+              sx={{ height: 420, width: 327, float: "left" }}
+            />
+            <Box
               sx={{
-                marginBottom: "1rem",
+                marginLeft: 2,
+                width: "50%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               }}
             >
-              {data.name}
-            </Typography>
-            <Typography
-              sx={{
-                marginBottom: "1rem",
-              }}
-            >
-              {data.description}
-            </Typography>
-            <Select value={selectedSize} onChange={handleChange}>
-              <MenuItem value="small">small</MenuItem>
-              <MenuItem value="medium">medium</MenuItem>
-              <MenuItem value="large">large</MenuItem>
-            </Select>
-            <Typography
-              sx={{
-                marginTop: "3rem",
-              }}
-            >
-              {data.price} Kr
+              <Box>
+                <Typography variant="h2">{product.name}</Typography>
+                <Typography variant="h4" sx={{ fontStyle: "italic" }}>
+                  {product.categories
+                    .map((category) => category.name)
+                    .join(", ")}
+                </Typography>
+                <Typography variant="body1" sx={{ marginTop: 2 }}>
+                  {product.description}
+                </Typography>
+                <Select value={selectedSize} onChange={handleChange}>
+                  <MenuItem value="small">small</MenuItem>
+                  <MenuItem value="medium">medium</MenuItem>
+                  <MenuItem value="large">large</MenuItem>
+                </Select>
+              </Box>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ width: "160px" }}
+              >
+                Add to cart
+              </Button>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              mt: 4,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "65vw",
+              minHeight: "15rem",
+            }}
+          >
+            <Typography variant="h4">
+              Reviews ({placeholderReviews.length})
             </Typography>
             <Button
-              sx={{
-                backgroundColor: theme.palette.primary.light,
-                color: theme.palette.primary.contrastText,
-                width: "130px",
-                marginTop: "1rem",
-              }}
+              variant="outlined"
+              color="primary"
+              sx={{ mt: 2 }}
+              onClick={handleShowReviews}
             >
-              buy now
+              Show reviews
             </Button>
+            {showReviews &&
+              placeholderReviews.map((review) => (
+                <Typography variant="body1" key={review.id} sx={{ mt: 2 }}>
+                  {review.content}
+                </Typography>
+              ))}
           </Box>
-          <Box>
-            <Typography variant="h2">Reviews (6)</Typography>
-            <Typography>
-              <i>*great reviews*</i>
-            </Typography>
-          </Box>
-        </Container>
+        </Box>
       );
     }
   };
@@ -101,7 +143,7 @@ function IndividualProduct() {
     <>
       <NavBar />
 
-      {renderProducts()}
+      {renderProduct()}
 
       <Footer />
     </>

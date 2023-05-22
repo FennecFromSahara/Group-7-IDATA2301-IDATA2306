@@ -47,7 +47,7 @@ export default function ProductCard(props) {
         <Link to={`/products/${product.id}`}>
           <CardMedia
             component="img"
-            image="./img/coffe placeholder.jpg"
+            image="../img/coffee placeholder.jpg"
             alt="Image of product"
           />
         </Link>
@@ -56,7 +56,18 @@ export default function ProductCard(props) {
         <Typography gutterBottom variant="h5" component="div">
           {product.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontStyle: "italic", mt: -1 }}
+        >
+          {product.categories.map((category) => category.name).join(", ")}
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ pt: 1.5, fontWeight: 600, mb: -2 }}
+        >
           {product.price} Kr
         </Typography>
       </CardContent>
