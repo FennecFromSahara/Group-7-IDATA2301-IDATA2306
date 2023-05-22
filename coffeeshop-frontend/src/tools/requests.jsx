@@ -34,6 +34,8 @@ export function asyncApiRequest(
     headers["Authorization"] = "Bearer " + jwtToken;
   }
 
+  console.log(body);
+
   return fetch(fullUrl, {
     method: method,
     mode: "cors",

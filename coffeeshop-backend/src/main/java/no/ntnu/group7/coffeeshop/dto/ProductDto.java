@@ -9,16 +9,19 @@ public class ProductDto {
   private int inventoryAmount;
   private BigDecimal price;
   private String image;
+  private String categories;
 
   public ProductDto() {
   }
 
-  public ProductDto(String name, String description, int inventoryAmount, BigDecimal price, String image) {
+  public ProductDto(String name, String description, int inventoryAmount, BigDecimal price, String image,
+      String categories) {
     this.name = name;
     this.description = description;
     this.inventoryAmount = inventoryAmount;
     this.price = price;
     this.image = image;
+    this.categories = categories;
   }
 
   public String getName() {
@@ -39,5 +42,9 @@ public class ProductDto {
 
   public String getImage() {
     return image;
+  }
+
+  public String getCategories() {
+    return categories;
   }
 }

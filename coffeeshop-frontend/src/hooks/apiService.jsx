@@ -19,3 +19,7 @@ export async function getShoppingCart() {
 export async function getProductById(id) {
   return await asyncApiRequest("GET", "/products/" + id);
 }
+
+export async function getCategories() {
+  return await asyncApiRequest("GET", "/categories");
+}
