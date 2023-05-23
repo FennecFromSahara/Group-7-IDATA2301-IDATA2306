@@ -40,7 +40,7 @@ public class ProductController {
    * @return A list of Product objects.
    */
   @GetMapping("")
-  public List<ProductDto> getAllProducts() {
+  public ResponseEntity<List<ProductDto>> getAllProducts() {
     List<Product> products = productRepository.findAll();
 
     List<ProductDto> productDtos = products.stream().map(product -> {
@@ -58,7 +58,7 @@ public class ProductController {
           categoryDtos);
     }).collect(Collectors.toList());
 
-    return productDtos;
+    return new ResponseEntity<List<ProductDto>>(productDtos, HttpStatus.OK);
   }
 
   /**
@@ -70,10 +70,24 @@ public class ProductController {
    * @return The Product object with the specified ID.
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Product> getProductById(@PathVariable int id) {
+  public ResponseEntity<ProductDto> getProductById(@PathVariable int id) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-    return new ResponseEntity<Product>(product, HttpStatus.OK);
+
+    List<CategoryDto> categoryDtos = product.getCategories().stream()
+        .map(category -> new CategoryDto(category.getId(), category.getName()))
+        .collect(Collectors.toList());
+
+    ProductDto productDto = new ProductDto(
+        product.getId(),
+        product.getName(),
+        product.getDescription(),
+        product.getInventoryAmount(),
+        product.getPrice(),
+        product.getImage(),
+        categoryDtos);
+
+    return new ResponseEntity<ProductDto>(productDto, HttpStatus.OK);
   }
 
   /**

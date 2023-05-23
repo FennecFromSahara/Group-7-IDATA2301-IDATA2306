@@ -35,7 +35,7 @@ export const mainTheme = {
     fontSize: 16,
     h1: {
       fontWeight: 700,
-      fontSize: "rem",
+      fontSize: "3rem",
     },
     h2: {
       fontSize: "2rem",
@@ -52,6 +52,6 @@ export const mainTheme = {
   },
   boxSizes: {
     navSection: "94vh",
-    navSectionFooter: "68vh",
+    navSectionFooter: "76vh",
   },
 };

@@ -35,6 +35,7 @@ export function asyncApiRequest(
   }
 
   console.log(body);
+  console.log(fullUrl);
 
   return fetch(fullUrl, {
     method: method,

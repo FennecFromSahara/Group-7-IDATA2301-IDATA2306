@@ -2,6 +2,7 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -13,17 +14,13 @@ import Popper from "@mui/material/Popper";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { isAdmin } from "../tools/authentication";
-import { deleteAuthorizationCookies } from "../tools/authentication";
 import { useAuth } from "../hooks/useAuth";
 import { useMediaQuery } from "@mui/material";
+import handleLogout from "../tools/handleLogout";
+import { useTheme } from "@emotion/react";
 
 const pages = ["Home", "Products", "About Us"];
 const link = ["/", "/products", "/about"];
-
-function handleLogout() {
-  deleteAuthorizationCookies();
-  window.location.reload();
-}
 
 /**
  * A responsive nav bar that includes a menu button for smaller resolutions.
@@ -34,6 +31,7 @@ function handleLogout() {
 function NavBar() {
   const { user } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
   const anchorRef = React.useRef(null);
   const matches = useMediaQuery("(max-width:600px)");
 
@@ -115,6 +113,7 @@ function NavBar() {
                         </Link>
                       </MenuItem>
                     ))}
+                    {user && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -156,14 +155,15 @@ function NavBar() {
             </Link>
           </IconButton>
           {user ? (
-            <Button
+            <IconButton
               color="inherit"
               variant="contained"
               sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
-              onClick={handleLogout}
             >
-              Logout
-            </Button>
+              <Link to={`/u/${user.username}`}>
+                <AccountCircleIcon />
+              </Link>
+            </IconButton>
           ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>
               <Button

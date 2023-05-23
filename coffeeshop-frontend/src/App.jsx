@@ -12,6 +12,7 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import NoAccessPage from "./pages/AdminPage/NoAccessPage";
 import { AuthProvider } from "./hooks/useAuth";
+import UserProfilePage from "./pages/Profile/UserProfilePage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/veryRealURL" element={<Secret />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/access_denied" element={<NoAccessPage />} />
+        <Route path="/u/:username" element={<UserProfilePage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

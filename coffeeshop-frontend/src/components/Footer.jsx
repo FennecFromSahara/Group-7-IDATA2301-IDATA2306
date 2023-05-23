@@ -14,6 +14,7 @@ function Footer() {
         py: 3,
         px: 5,
         backgroundColor: theme.palette.secondary.main,
+        minHeight: "18vh",
       }}
     >
       <Grid

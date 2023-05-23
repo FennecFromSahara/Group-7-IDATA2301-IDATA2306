@@ -11,7 +11,7 @@ import TabPanel from "./TabPanel";
 import Orders from "./Orders/Orders";
 import Products from "./Products/Products";
 import Users from "./Users/Users";
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "../../components/ErrorPage";
 import ProductOverview from "./Products/ProductOverview";
 import ProductCreate from "./Products/ProductCreate";
 import UserOverview from "./Users/UserOverview";
@@ -93,10 +93,10 @@ function AdminPage() {
   if (loading) {
     return (
       <div>
-        <NavBar user={user} />
+        <NavBar />
 
         <Box
-          minHeight="94vh"
+          minHeight={theme.boxSizes.navSectionFooter}
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -113,7 +113,7 @@ function AdminPage() {
   if (error) {
     return (
       <div>
-        <NavBar user={user} />
+        <NavBar />
         <ErrorPage error={error} />
         <Footer />
       </div>
@@ -122,7 +122,7 @@ function AdminPage() {
 
   return (
     <div>
-      <NavBar user={user} />
+      <NavBar />
 
       <Box minHeight="94vh" display="flex" flexDirection="column">
         <AppBar

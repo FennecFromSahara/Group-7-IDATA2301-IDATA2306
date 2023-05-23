@@ -23,3 +23,7 @@ export async function getProductById(id) {
 export async function getCategories() {
   return await asyncApiRequest("GET", "/categories");
 }
+
+export async function getProfileData(username) {
+  return await asyncApiRequest("GET", "/users/" + username);
+}
