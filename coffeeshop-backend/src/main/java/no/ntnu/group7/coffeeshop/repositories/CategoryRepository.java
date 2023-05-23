@@ -8,5 +8,5 @@ import no.ntnu.group7.coffeeshop.model.Category;
  * Spring will auto-generate necessary methods.
  */
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-
+  Category findByName(String name);
 }

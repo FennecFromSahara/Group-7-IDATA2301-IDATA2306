@@ -26,7 +26,6 @@ function ProductOverview(props) {
         ];
         setCategories(uniqueCategories);
         setStatus("loaded");
-        console.log(products);
       })
       .catch(() => {
         setStatus("error");

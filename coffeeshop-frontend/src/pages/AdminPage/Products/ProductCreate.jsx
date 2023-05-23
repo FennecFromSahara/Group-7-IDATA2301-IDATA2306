@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Box, Button, TextField, Typography, Grid } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Button, TextField, Typography, Grid, Chip } from "@mui/material";
 import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
+import { getCategories } from "../../../hooks/apiService";
 
 const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   const theme = useTheme();
@@ -11,6 +12,33 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   const [inventoryAmount, setInventoryAmount] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
+  const [categories, setCategories] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const categories = await getCategories();
+      setAllCategories(categories);
+    };
+
+    loadCategories();
+  }, []);
+
+  const addCategory = (category) => {
+    setCategories((prevState) =>
+      prevState ? prevState + ", " + category.name : category.name
+    );
+  };
+
+  const removeCategory = (categoryToRemove) => {
+    setCategories((prevState) =>
+      prevState
+        .split(", ")
+        .filter((category) => category !== categoryToRemove.name)
+        .join(", ")
+    );
+  };
 
   const createProduct = async (event) => {
     event.preventDefault();
@@ -26,6 +54,7 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
         description,
         inventoryAmount: parseInt(inventoryAmount),
         price: parseFloat(price),
+        categories,
         image,
       });
 
@@ -134,6 +163,31 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
             mb: 3,
           }}
         />
+
+        <Typography variant="body1" gutterBottom>
+          Categories:
+          {categories.split(", ").map((category) => (
+            <Chip
+              label={category}
+              onDelete={() => removeCategory({ name: category })}
+            />
+          ))}
+        </Typography>
+
+        <Typography variant="body1" gutterBottom>
+          Available Categories:
+          {allCategories
+            .filter(
+              (category) => !categories.split(", ").includes(category.name)
+            )
+            .map((category) => (
+              <Chip
+                label={category.name}
+                onClick={() => addCategory(category)}
+              />
+            ))}
+        </Typography>
+
         <Button
           variant="contained"
           color="primary"

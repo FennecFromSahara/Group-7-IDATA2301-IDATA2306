@@ -33,13 +33,6 @@ function AdminPage() {
 
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (selectedUser) {
-      console.log("Selected User:");
-      console.log(selectedUser);
-    }
-  }, [selectedUser]);
-
   const updateUsers = (updatedUser) => {
     setUsers((prevUsers) =>
       prevUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
@@ -73,12 +66,9 @@ function AdminPage() {
       try {
         const productsData = await getProducts();
         setProducts(productsData);
-        console.log("products: " + productsData);
 
         const usersData = await getUsers();
         setUsers(usersData);
-        console.log("users: ");
-        console.log(usersData);
 
         const ordersData = await getOrders();
         setOrders("orders: " + ordersData);

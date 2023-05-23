@@ -1,7 +1,11 @@
 package no.ntnu.group7.coffeeshop.controllers;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,8 @@ public class ProductController {
 
   @Autowired
   private CategoryRepository categoryRepository;
+
+  private final Logger logger = LoggerFactory.getLogger("Product Controller logger");
 
   /**
    * Handles HTTP GET requests to "/api/products" and returns a list of all
@@ -71,6 +77,27 @@ public class ProductController {
     product.setPrice(productDto.getPrice());
     product.setImage(productDto.getImage());
 
+    // Parse the categories from the ProductDto
+    String categoriesString = productDto.getCategories();
+
+    if (categoriesString != null && !categoriesString.isEmpty()) {
+      String[] categoryNames = categoriesString.split(",\\s*");
+      List<Category> categories = new ArrayList<>();
+
+      for (String categoryName : categoryNames) {
+        Category category = categoryRepository.findByName(categoryName);
+        if (category != null) {
+          categories.add(category);
+        } else {
+          logger.warn("Category not found: " + categoryName);
+        }
+      }
+
+      product.setCategories(categories);
+    } else {
+      product.setCategories(null);
+    }
+
     Product newProduct = productRepository.save(product);
 
     return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
@@ -100,6 +127,27 @@ public class ProductController {
     currentProduct.setInventoryAmount(productDto.getInventoryAmount());
     currentProduct.setPrice(productDto.getPrice());
     currentProduct.setImage(productDto.getImage());
+
+    // Parse the categories from the ProductDto
+    String categoriesString = productDto.getCategories();
+
+    if (categoriesString != null && !categoriesString.isEmpty()) {
+      String[] categoryNames = categoriesString.split(",\\s*");
+      List<Category> categories = new ArrayList<>();
+
+      for (String categoryName : categoryNames) {
+        Category category = categoryRepository.findByName(categoryName);
+        if (category != null) {
+          categories.add(category);
+        } else {
+          logger.warn("Category not found: " + categoryName);
+        }
+      }
+
+      currentProduct.setCategories(categories);
+    } else {
+      currentProduct.setCategories(null);
+    }
 
     Product updatedProduct = productRepository.save(currentProduct);
 

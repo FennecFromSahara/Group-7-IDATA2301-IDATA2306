@@ -67,6 +67,7 @@ const Products = ({ products, setProduct, addProduct }) => {
             <StyledTableCell align="center">Price</StyledTableCell>
             <StyledTableCell align="center">Description</StyledTableCell>
             <StyledTableCell align="center">Inventory Amount</StyledTableCell>
+            <StyledTableCell align="center">Categories</StyledTableCell>
             <StyledTableCell align="center">Image</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -88,6 +89,9 @@ const Products = ({ products, setProduct, addProduct }) => {
                 }}
               >
                 {product.inventoryAmount}
+              </TableCell>
+              <TableCell align="center">
+                {product.categories.map((category) => category.name).join(", ")}
               </TableCell>
               <TableCell align="right">
                 {product.image && (

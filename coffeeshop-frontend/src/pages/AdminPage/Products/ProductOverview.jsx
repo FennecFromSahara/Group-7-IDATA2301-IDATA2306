@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
-import { TextField, Button, Box, Grid, Typography } from "@mui/material";
+import { TextField, Button, Box, Grid, Typography, Chip } from "@mui/material";
+import { getCategories } from "../../../hooks/apiService";
 
 const ProductOverview = ({
   product,
@@ -17,6 +18,36 @@ const ProductOverview = ({
   );
   const [price, setPrice] = useState(product.price);
   const [image, setImage] = useState(product.image);
+  const [categories, setCategories] = useState(
+    product.categories
+      ? product.categories.map((category) => category.name).join(", ")
+      : ""
+  );
+  const [allCategories, setAllCategories] = useState([]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const categories = await getCategories();
+      setAllCategories(categories);
+    };
+
+    loadCategories();
+  }, []);
+
+  const addCategory = (category) => {
+    setCategories((prevState) =>
+      prevState ? prevState + ", " + category.name : category.name
+    );
+  };
+
+  const removeCategory = (categoryToRemove) => {
+    setCategories((prevState) =>
+      prevState
+        .split(", ")
+        .filter((category) => category !== categoryToRemove.name)
+        .join(", ")
+    );
+  };
 
   const updateProduct = async () => {
     try {
@@ -28,6 +59,7 @@ const ProductOverview = ({
           description,
           inventoryAmount,
           price,
+          categories,
           image,
         }
       );
@@ -121,6 +153,25 @@ const ProductOverview = ({
         fullWidth
         sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
       />
+      <Typography variant="body1" gutterBottom>
+        Categories:
+        {categories.split(", ").map((category) => (
+          <Chip
+            label={category}
+            onDelete={() => removeCategory({ name: category })}
+          />
+        ))}
+      </Typography>
+
+      <Typography variant="body1" gutterBottom>
+        Available Categories:
+        {allCategories
+          .filter((category) => !categories.split(", ").includes(category.name))
+          .map((category) => (
+            <Chip label={category.name} onClick={() => addCategory(category)} />
+          ))}
+      </Typography>
+
       <Button
         variant="contained"
         color="primary"
