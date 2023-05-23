@@ -61,11 +61,6 @@ public class ProductController {
     return productDtos;
   }
 
-  @GetMapping("/old")
-  public List<Product> getAllProductsOld() {
-    return productRepository.findAll();
-  }
-
   /**
    * Handles HTTP GET requests to "/api/products/{id}" and returns a single
    * product with the specified ID. If the product is not found, returns a 404 Not
