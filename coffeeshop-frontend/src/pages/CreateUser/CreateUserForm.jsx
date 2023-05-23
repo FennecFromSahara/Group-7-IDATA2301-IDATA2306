@@ -20,7 +20,6 @@ import { Alert } from "@mui/material";
  *
  * @returns
  */
-
 export default function CreateUserForm() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -30,26 +29,49 @@ export default function CreateUserForm() {
     errorMessage = <Alert severity="error">{error}</Alert>;
   }
 
+  // Function to validate username
+  const isValidUsername = (username) => {
+    const re = /^[a-zA-Z0-9]+$/;
+    return re.test(String(username));
+  };
+
+  // Function to validate email
+  const isValidEmail = (email) => {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    //test stuff
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    //end of test stuff
+
+    const username = data.get("username");
+    const email = data.get("email");
+
+    if (!isValidUsername(username)) {
+      setError(
+        "Username can only contain letters and numbers and can't contain any spaces."
+      );
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
     const signupData = {
-      username: data.get("username"),
+      username: username,
       password: data.get("password"),
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
-      email: data.get("email"),
+      email: email,
       address: data.get("address"),
     };
+
     asyncApiRequest("POST", "/signup", signupData, true)
-    .then(onSignupSuccess)
-    .catch((error) => setError(error.message))
+      .then(onSignupSuccess)
+      .catch((error) => setError(error.message));
   };
 
   return (
@@ -71,6 +93,16 @@ export default function CreateUserForm() {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
@@ -90,16 +122,6 @@ export default function CreateUserForm() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>

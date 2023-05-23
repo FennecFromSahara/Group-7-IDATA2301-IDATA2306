@@ -1,8 +1,8 @@
 package no.ntnu.group7.coffeeshop.controllers;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import no.ntnu.group7.coffeeshop.dto.CategoryDto;
 import no.ntnu.group7.coffeeshop.dto.ProductDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
@@ -32,8 +33,6 @@ public class ProductController {
   @Autowired
   private CategoryRepository categoryRepository;
 
-  private final Logger logger = LoggerFactory.getLogger("Product Controller logger");
-
   /**
    * Handles HTTP GET requests to "/api/products" and returns a list of all
    * products in the database.
@@ -41,7 +40,29 @@ public class ProductController {
    * @return A list of Product objects.
    */
   @GetMapping("")
-  public List<Product> getAllProducts() {
+  public List<ProductDto> getAllProducts() {
+    List<Product> products = productRepository.findAll();
+
+    List<ProductDto> productDtos = products.stream().map(product -> {
+      List<CategoryDto> categoryDtos = product.getCategories().stream()
+          .map(category -> new CategoryDto(category.getId(), category.getName()))
+          .collect(Collectors.toList());
+
+      return new ProductDto(
+          product.getId(),
+          product.getName(),
+          product.getDescription(),
+          product.getInventoryAmount(),
+          product.getPrice(),
+          product.getImage(),
+          categoryDtos);
+    }).collect(Collectors.toList());
+
+    return productDtos;
+  }
+
+  @GetMapping("/old")
+  public List<Product> getAllProductsOld() {
     return productRepository.findAll();
   }
 
@@ -78,26 +99,16 @@ public class ProductController {
     product.setImage(productDto.getImage());
 
     // Parse the categories from the ProductDto
-    String categoriesString = productDto.getCategories();
+    List<CategoryDto> categoryDtos = productDto.getCategories();
+    List<Category> categories = new ArrayList<>();
 
-    if (categoriesString != null && !categoriesString.isEmpty()) {
-      String[] categoryNames = categoriesString.split(",\\s*");
-      List<Category> categories = new ArrayList<>();
-
-      for (String categoryName : categoryNames) {
-        Category category = categoryRepository.findByName(categoryName);
-        if (category != null) {
-          categories.add(category);
-        } else {
-          logger.warn("Category not found: " + categoryName);
-        }
-      }
-
-      product.setCategories(categories);
-    } else {
-      product.setCategories(null);
+    for (CategoryDto categoryDto : categoryDtos) {
+      Category category = categoryRepository.findById(categoryDto.getId())
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+      categories.add(category);
     }
 
+    product.setCategories(categories);
     Product newProduct = productRepository.save(product);
 
     return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
@@ -128,27 +139,16 @@ public class ProductController {
     currentProduct.setPrice(productDto.getPrice());
     currentProduct.setImage(productDto.getImage());
 
-    // Parse the categories from the ProductDto
-    String categoriesString = productDto.getCategories();
+    List<CategoryDto> categoryDtos = productDto.getCategories();
+    List<Category> categories = new ArrayList<>();
 
-    if (categoriesString != null && !categoriesString.isEmpty()) {
-      String[] categoryNames = categoriesString.split(",\\s*");
-      List<Category> categories = new ArrayList<>();
-
-      for (String categoryName : categoryNames) {
-        Category category = categoryRepository.findByName(categoryName);
-        if (category != null) {
-          categories.add(category);
-        } else {
-          logger.warn("Category not found: " + categoryName);
-        }
-      }
-
-      currentProduct.setCategories(categories);
-    } else {
-      currentProduct.setCategories(null);
+    for (CategoryDto categoryDto : categoryDtos) {
+      Category category = categoryRepository.findById(categoryDto.getId())
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+      categories.add(category);
     }
 
+    currentProduct.setCategories(categories);
     Product updatedProduct = productRepository.save(currentProduct);
 
     return new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);

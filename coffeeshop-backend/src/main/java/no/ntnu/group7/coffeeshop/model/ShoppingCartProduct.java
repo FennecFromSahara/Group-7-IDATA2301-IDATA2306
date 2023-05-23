@@ -1,6 +1,8 @@
 package no.ntnu.group7.coffeeshop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,10 +15,11 @@ import jakarta.persistence.Table;
 
 /**
  * Represents a product added to a customer's shopping cart. This class is
- * responsible for storing the relationship between a user, a product, and
- * the quantity of that product in the user's shopping cart. It is mapped to
- * the "shopping_cart" table in the database.
+ * responsible for storing the relationship between a user, a product, and the
+ * quantity of that product in the user's shopping cart. It is mapped tothe
+ * "shopping_cart" table in the database.
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "shopping_cart")
 public class ShoppingCartProduct {

@@ -52,6 +52,6 @@ export const mainTheme = {
   },
   boxSizes: {
     navSection: "94vh",
-    navSectionFooter: "65vh",
+    navSectionFooter: "68vh",
   },
 };

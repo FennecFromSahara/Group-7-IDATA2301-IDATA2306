@@ -2,6 +2,9 @@ package no.ntnu.group7.coffeeshop.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +20,7 @@ import jakarta.persistence.Table;
  * quantity of the product in the order. It is mapped to the "order_product"
  * table in the database.
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "order_product")
 public class OrderProduct {

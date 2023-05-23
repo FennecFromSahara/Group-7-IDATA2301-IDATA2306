@@ -17,7 +17,7 @@ function Secret() {
           overflow="auto"
         >
           <Typography type="h1">
-            Shh... pretend like this is the link you wanted.
+            Shh... pretend like this is where you're supposed to be.
           </Typography>
         </Box>
       </Box>

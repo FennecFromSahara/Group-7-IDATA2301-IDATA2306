@@ -43,7 +43,8 @@ export default function ShoppingCart() {
         {shoppingCart.map((shoppingCartProduct) => {
           console.log("stuff:" + shoppingCartProduct.userId);
           return (
-            <ShoppingCartProductCard key={shoppingCartProduct.productId}
+            <ShoppingCartProductCard
+              key={shoppingCartProduct.productId}
               shoppingCartProduct={shoppingCartProduct}
             />
           );
