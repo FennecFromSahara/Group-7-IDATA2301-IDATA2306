@@ -155,21 +155,59 @@ function NavBar() {
         </Box>
 
         <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
-          <IconButton sx={{ mr: 2 }}>
-            <Link to="/shoppingCart">
-              <ShoppingCartIcon />
+          <Button
+            sx={{
+              mr: 2,
+              typography: {
+                border: `2px solid ${theme.palette.primary.main}`,
+                ":hover": {
+                  border: `2px solid ${theme.palette.text.primary}`,
+                },
+              },
+            }}
+          >
+            <Link to="/shoppingCart" style={{ textDecoration: "none" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  typography: { fontSize: 18 },
+                  p: "2px",
+                }}
+              >
+                <ShoppingCartIcon />
+                <Typography>Cart</Typography>
+              </Box>
             </Link>
-          </IconButton>
+          </Button>
           {user ? (
-            <IconButton
-              color="inherit"
-              variant="contained"
-              sx={{ typography: { fontSize: 16, fontWeight: 700 } }}
+            <Button
+              sx={{
+                typography: {
+                  border: `2px solid ${theme.palette.primary.main}`,
+                  ":hover": {
+                    border: `2px solid ${theme.palette.text.primary}`,
+                  },
+                },
+              }}
             >
-              <Link to={`/u/${user.username}`}>
-                <AccountCircleIcon />
+              <Link
+                to={`/u/${user.username}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    typography: { fontSize: 18 },
+                    p: "2px",
+                  }}
+                >
+                  <AccountCircleIcon />
+                  <Typography>Profile</Typography>
+                </Box>
               </Link>
-            </IconButton>
+            </Button>
           ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>
               <Button
