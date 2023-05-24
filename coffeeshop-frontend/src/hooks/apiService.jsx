@@ -20,6 +20,10 @@ export async function getProductById(id) {
   return await asyncApiRequest("GET", "/products/" + id);
 }
 
+export async function getShoppingCartTotal() {
+  return await asyncApiRequest("GET", "/shoppingCart/total");
+}
+
 export async function getCategories() {
   return await asyncApiRequest("GET", "/categories");
 }

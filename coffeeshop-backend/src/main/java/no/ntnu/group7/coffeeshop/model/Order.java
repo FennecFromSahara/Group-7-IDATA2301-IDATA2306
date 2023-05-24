@@ -20,7 +20,7 @@ import jakarta.persistence.JoinColumn;
 
 /**
  * Represents the order of a customer, with a set of orderProducts to keep track
- * of all the products
+ * of all the products TODO: what happened to the set of orderProducts??
  */
 @Entity
 @Table(name = "orders")

@@ -1,5 +1,6 @@
 package no.ntnu.group7.coffeeshop.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -109,6 +110,39 @@ public class ShoppingCartService {
           .getSingleResult();
     } catch (NoResultException e) {
       return null;
+    }
+  }
+
+    /**
+   * Calculates the total price of all items in a user's shopping cart.
+   *
+   * @param user the user whose shopping cart total should be calculated
+   * @return the total price of all items in the user's shopping cart as a
+   *         BigDecimal
+   */
+  public BigDecimal calculateShoppingCartTotal(User user) {
+    List<ShoppingCartProduct> cartItems = getCartProducts(user);
+
+    BigDecimal total = BigDecimal.ZERO;
+
+    for (ShoppingCartProduct cartItem : cartItems) {
+      BigDecimal itemTotal = cartItem.getProduct().getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
+      total = total.add(itemTotal);
+    }
+
+    return total; //TODO: should be in shoppingcartservice?
+  }
+
+    /**
+   * Clears the shopping cart for a given user by removing all items.
+   *
+   * @param user the user whose shopping cart should be cleared
+   */
+  public void clearShoppingCart(User user) {
+    List<ShoppingCartProduct> cartProducts = getCartProducts(user);
+
+    for (ShoppingCartProduct cartProduct : cartProducts) {
+      removeItemFromCart(user, cartProduct.getProduct());
     }
   }
 }

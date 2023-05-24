@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityManager;
@@ -26,7 +27,9 @@ public class CheckoutService {
   @PersistenceContext
   private EntityManager entityManager;
 
+  @Autowired
   private ShoppingCartService shoppingCartService;
+
   private InventoryService inventoryService;
 
   /**
@@ -38,7 +41,7 @@ public class CheckoutService {
    */
   @Transactional
   public void checkout(User user) {
-    BigDecimal total = calculateShoppingCartTotal(user);
+    BigDecimal total = shoppingCartService.calculateShoppingCartTotal(user);
 
     Order order = new Order();
     order.setUser(user);
@@ -49,7 +52,7 @@ public class CheckoutService {
     entityManager.persist(order);
 
     // Add the items from the shopping cart to the order
-    List<ShoppingCartProduct> cartItems = getShoppingCartProducts(user);
+    List<ShoppingCartProduct> cartItems = shoppingCartService.getCartProducts(user);
     for (ShoppingCartProduct cartItem : cartItems) {
       OrderProduct orderItem = new OrderProduct();
       orderItem.setOrder(order);
@@ -64,56 +67,12 @@ public class CheckoutService {
     updateInventoryAfterCheckout(user);
 
     // Clear the shopping cart
-    clearShoppingCart(user);
+    shoppingCartService.clearShoppingCart(user);
 
     // TODO: Process the payment?
 
     // Updates the order status
     order.setOrderStatus(Order.OrderStatus.PROCESSING);
-  }
-
-  /**
-   * Calculates the total price of all items in a user's shopping cart.
-   *
-   * @param user the user whose shopping cart total should be calculated
-   * @return the total price of all items in the user's shopping cart as a
-   *         BigDecimal
-   */
-  public BigDecimal calculateShoppingCartTotal(User user) {
-    List<ShoppingCartProduct> cartItems = getShoppingCartProducts(user);
-
-    BigDecimal total = BigDecimal.ZERO;
-
-    for (ShoppingCartProduct cartItem : cartItems) {
-      BigDecimal itemTotal = cartItem.getProduct().getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
-      total = total.add(itemTotal);
-    }
-
-    return total; //TODO: should be in shoppingcartservice?
-  }
-
-  /**
-   * Retrieves the shopping cart products for a given user.
-   *
-   * @param user the user whose shopping cart products should be retrieved
-   * @return a list of ShoppingCartProduct objects representing the products in
-   *         the user's shopping cart
-   */
-  private List<ShoppingCartProduct> getShoppingCartProducts(User user) {
-    return shoppingCartService.getCartProducts(user); //TODO: what dis?
-  }
-
-  /**
-   * Clears the shopping cart for a given user by removing all items.
-   *
-   * @param user the user whose shopping cart should be cleared
-   */
-  private void clearShoppingCart(User user) {
-    List<ShoppingCartProduct> cartProducts = shoppingCartService.getCartProducts(user);
-
-    for (ShoppingCartProduct cartProduct : cartProducts) {
-      shoppingCartService.removeItemFromCart(user, cartProduct.getProduct());
-    }
   }
 
   /**

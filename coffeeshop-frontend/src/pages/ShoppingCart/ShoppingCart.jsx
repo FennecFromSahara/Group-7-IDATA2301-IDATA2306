@@ -1,26 +1,16 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { Box, Grid } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { Box } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useFetch } from "../../hooks/useFetch";
 import ShoppingCartProductCard from "./ShoppingCartProductCard";
-import { getShoppingCart } from "../../hooks/apiService";
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { getShoppingCart, getShoppingCartTotal } from "../../hooks/apiService";
 
 export default function ShoppingCart() {
-  const [status, setStatus] = useState("loading");
   const [shoppingCart, setShoppingCart] = useState([]);
+  const [total, setTotal] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -28,6 +18,10 @@ export default function ShoppingCart() {
       try {
         const shoppingCartData = await getShoppingCart();
         setShoppingCart(shoppingCartData);
+
+        const totalData = await getShoppingCartTotal();
+        setTotal(totalData);
+        
       } catch (err) {
         setError(`Error fetching data: ${err.message}`);
       }
@@ -65,7 +59,7 @@ export default function ShoppingCart() {
               alignItems: "center",
             }}
           >
-            <Typography mr={2}>Sub total: $"amount"</Typography>
+            <Typography mr={2}>Sub total: ${total}</Typography>
             <Button variant="contained" href="/checkout">
               Checkout
             </Button>

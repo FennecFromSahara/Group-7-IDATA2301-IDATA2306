@@ -7,9 +7,9 @@ import { Button, CardActions, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { useFetch } from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
 import { getProductById } from "../../hooks/apiService";
+import { asyncApiRequest } from "../../tools/requests";
 
 /**
  * A component representing a product card for the shoppingCart page
@@ -36,7 +36,70 @@ export default function ShoppingCartProductCard(props) {
     };
 
     fetchData();
-  }, []); 
+  }, []);
+  
+  const increaseAmount = async () => {
+    // if (!user) {
+    //   alert("Please log in to add items to the cart.");
+    //   return;
+    // }
+
+    // console.log("User id: " + user.id);
+    // console.log("Product id: " + product.id);
+
+    try {
+      const requestBody = {
+        plusOrMinus: "+",
+      };
+      const id = shoppingCartProduct.id;
+      await asyncApiRequest("PUT", `/shoppingCart/${id}`, requestBody, true);
+      alert("Product count increased in cart successfully.");
+    } catch (error) {
+      alert("Error increasing product in cart.");
+      console.error(error);
+    }
+  };
+
+  const decreaseAmount = async () => {
+    // if (!user) {
+    //   alert("Please log in to add items to the cart.");
+    //   return;
+    // }
+
+    // console.log("User id: " + user.id);
+    // console.log("Product id: " + product.id);
+
+    try {
+      const requestBody = {
+        quantity: shoppingCartProduct.quantity - 1,
+      };
+      const id = shoppingCartProduct.id;
+      await asyncApiRequest("PUT", "/shoppingCart/" + id, requestBody, true);
+      alert("Product count decreased in cart successfully.");
+    } catch (error) {
+      alert("Error decreasing product in cart.");
+      console.error(error);
+      console.log("id: " + shoppingCartProduct.id)
+    }
+  };
+
+  const deleteProductFromCart = async () => { //TODO: autorefresh
+    // if (!user) {
+    //   alert("Please log in to add items to the cart.");
+    //   return;
+    // }
+
+    // console.log("User id: " + user.id);
+    // console.log("Product id: " + product.id);
+
+    try {
+      await asyncApiRequest("DELETE", "/shoppingCart/" + product.id);
+      alert("Product deleted from cart successfully.");
+    } catch (error) {
+      alert("Error deleting product from cart.");
+      console.error(error);
+    }
+  };
 
   
   return (
@@ -63,9 +126,9 @@ export default function ShoppingCartProductCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Grid container spacing={2} key={product.id}> 
+        <Grid container spacing={2} > 
           <Grid item xs={4}>
-            <Button size="small">
+            <Button size="small" onClick={decreaseAmount}>
               <RemoveIcon />
             </Button>
           </Grid>
@@ -73,12 +136,12 @@ export default function ShoppingCartProductCard(props) {
             {shoppingCartProduct.quantity}
           </Grid>
           <Grid item xs={4}>
-            <Button size="small">
+            <Button size="small" onClick={increaseAmount}>
               <AddIcon />
             </Button>
           </Grid>
         </Grid>
-        <Button size="small">
+        <Button size="small" onClick={deleteProductFromCart}>
           <HighlightOffIcon />
         </Button>
       </CardActions>

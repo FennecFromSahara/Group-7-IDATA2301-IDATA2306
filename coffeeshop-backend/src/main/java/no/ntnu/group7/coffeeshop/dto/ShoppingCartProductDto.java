@@ -5,6 +5,7 @@ package no.ntnu.group7.coffeeshop.dto;
  * product ID, and product quantity.
  */
 public class ShoppingCartProductDto {
+  private int id;
   private Long userId;
   private int productId;
   private int quantity;
@@ -17,10 +18,15 @@ public class ShoppingCartProductDto {
    * @param productId The unique identifier for the product.
    * @param quantity  The quantity of the product in the shopping cart.
    */
-  public ShoppingCartProductDto(Long userId, int productId, int quantity) {
+  public ShoppingCartProductDto(int id, Long userId, int productId, int quantity) {
+    this.id = id;
     this.userId = userId;
     this.productId = productId;
     this.quantity = quantity;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public Long getUserId() {
