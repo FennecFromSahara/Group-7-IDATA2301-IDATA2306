@@ -1,16 +1,19 @@
 package no.ntnu.group7.coffeeshop.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
+import no.ntnu.group7.coffeeshop.dto.CategoryDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
+import no.ntnu.group7.coffeeshop.services.CategoryService;
 
 /**
  * Controller responsible for the categories for the products in the coffeshop.
@@ -22,6 +25,9 @@ public class CategoryController {
   @Autowired
   CategoryRepository categoryRepository;
 
+  @Autowired
+  CategoryService categoryService;
+
   /**
    * Handles HTTP GET requests to "/api/categories" and returns a list of all
    * Category objects in the database.
@@ -29,8 +35,16 @@ public class CategoryController {
    * @return A list of Category objects.
    */
   @GetMapping("")
-  public List<Category> getAllCategories() {
-    return categoryRepository.findAll();
+  public ResponseEntity<List<CategoryDto>> getAllCategories() {
+    List<Category> categories = categoryRepository.findAll();
+    List<CategoryDto> categoryDtos = new ArrayList<>();
+
+    for (Category category : categories) {
+      CategoryDto dto = new CategoryDto(category.getId(), category.getName());
+      categoryDtos.add(dto);
+    }
+
+    return new ResponseEntity<List<CategoryDto>>(categoryDtos, HttpStatus.OK);
   }
 
   /**
@@ -42,14 +56,13 @@ public class CategoryController {
    * @return The Category object with the specified ID.
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") int categoryId) {
-    Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-    Category category = optionalCategory.get();
+  public ResponseEntity<CategoryDto> getCategoryById(@PathVariable(value = "id") int categoryId) {
+    Category category = categoryRepository.findById(categoryId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
-    if (category == null) {
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok().body(category);
+    CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName());
+
+    return new ResponseEntity<CategoryDto>(categoryDto, HttpStatus.OK);
   }
 
   /**
@@ -60,8 +73,10 @@ public class CategoryController {
    * @return The created Category object.
    */
   @PostMapping("")
-  public Category createCategory(@Valid @RequestBody Category category) {
-    return categoryRepository.save(category);
+  public ResponseEntity<Category> createCategory(@RequestBody CategoryDto categoryDto) {
+    Category newCategory = categoryRepository.save(new Category(categoryDto.getName()));
+
+    return new ResponseEntity<Category>(newCategory, HttpStatus.CREATED);
   }
 
   /**
@@ -74,17 +89,12 @@ public class CategoryController {
    * @return A response indicating success or failure of the deletion.
    */
   @DeleteMapping("/{id}")
-  public ResponseEntity<Category> deleteCategory(@PathVariable(value = "id") int categoryId) {
-    Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-
-    if (optionalCategory.isPresent()) {
-      Category category = optionalCategory.get();
-
-      categoryRepository.delete(category);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  public ResponseEntity<Void> deleteCategory(@PathVariable(value = "id") int categoryId) {
+    if (categoryService.deleteCategory(categoryId)) {
+      return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
   }
 
 }

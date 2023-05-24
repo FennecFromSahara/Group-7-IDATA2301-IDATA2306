@@ -3,7 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useAuth } from "../../hooks/useAuth";
-import { getProducts, getOrders, getUsers } from "../../hooks/apiService";
+import {
+  getProducts,
+  getOrders,
+  getUsers,
+  getCategories,
+} from "../../hooks/apiService";
 import { isAdmin } from "../../tools/authentication";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
@@ -15,6 +20,7 @@ import ErrorPage from "../../components/ErrorPage";
 import ProductOverview from "./Products/ProductOverview";
 import ProductCreate from "./Products/ProductCreate";
 import UserOverview from "./Users/UserOverview";
+import Categories from "./Categories/Categories";
 
 function AdminPage() {
   const { user, loading } = useAuth();
@@ -30,6 +36,8 @@ function AdminPage() {
 
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+
+  const [categories, setCategories] = useState([]);
 
   const [error, setError] = useState(null);
 
@@ -72,6 +80,9 @@ function AdminPage() {
 
         const ordersData = await getOrders();
         setOrders("orders: " + ordersData);
+
+        const categoriesData = await getCategories();
+        setCategories(categoriesData);
       } catch (err) {
         setError(`Error fetching data: ${err.message}`);
       }
@@ -145,7 +156,12 @@ function AdminPage() {
               sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
             <Tab
+              disabled
               label="Orders"
+              sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
+            />
+            <Tab
+              label="Categories"
               sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
           </Tabs>
@@ -185,6 +201,9 @@ function AdminPage() {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Orders orders={orders} />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <Categories categories={categories} />
         </TabPanel>
       </Box>
 

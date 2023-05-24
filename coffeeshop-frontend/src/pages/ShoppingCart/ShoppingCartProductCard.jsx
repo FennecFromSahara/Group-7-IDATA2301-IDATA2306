@@ -18,7 +18,6 @@ import { asyncApiRequest } from "../../tools/requests";
  * @constructor
  */
 export default function ShoppingCartProductCard(props) {
-
   const shoppingCartProduct = props.shoppingCartProduct;
 
   const [product, setProduct] = useState([]);
@@ -38,7 +37,7 @@ export default function ShoppingCartProductCard(props) {
 
     fetchData();
   }, []);
-  
+
   const increaseAmount = async () => {
     // if (!user) {
     //   alert("Please log in to add items to the cart.");
@@ -53,10 +52,13 @@ export default function ShoppingCartProductCard(props) {
         id: shoppingCartProduct.id,
         userId: shoppingCartProduct.userId,
         productId: shoppingCartProduct.productId,
-        quantity: shoppingCartProduct.quantity,
+        quantity: quantity,
       };
+
       await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
+
       setQuantity(quantity + 1);
+
       alert("Product count increased in cart successfully.");
     } catch (error) {
       alert("Error increasing product in cart.");
@@ -80,8 +82,11 @@ export default function ShoppingCartProductCard(props) {
         productId: shoppingCartProduct.productId,
         quantity: shoppingCartProduct.quantity,
       };
+
       await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
+
       setQuantity(quantity - 1);
+
       alert("Product count decreased in cart successfully.");
     } catch (error) {
       alert("Error decreasing product in cart.");
@@ -89,7 +94,8 @@ export default function ShoppingCartProductCard(props) {
     }
   };
 
-  const deleteProductFromCart = async () => { //TODO: autorefresh
+  const deleteProductFromCart = async () => {
+    //TODO: autorefresh
     // if (!user) {
     //   alert("Please log in to add items to the cart.");
     //   return;
@@ -108,8 +114,6 @@ export default function ShoppingCartProductCard(props) {
     }
   };
 
-
-  
   return (
     <Card
       sx={{
@@ -129,12 +133,10 @@ export default function ShoppingCartProductCard(props) {
         <Typography gutterBottom variant="h5" component="h2">
           {product.name}
         </Typography>
-        <Typography>
-          {product.price} Kr
-        </Typography>
+        <Typography>{product.price} Kr</Typography>
       </CardContent>
       <CardActions>
-        <Grid container spacing={2} > 
+        <Grid container spacing={2}>
           <Grid item xs={4}>
             <Button size="small" onClick={decreaseAmount}>
               <RemoveIcon />

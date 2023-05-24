@@ -86,7 +86,8 @@ public class ShoppingCartController {
   public ResponseEntity<Void> deleteItemFromCart(@PathVariable int id) {
     User user = accessUserService.getSessionUser();
     if (user == null) {
-      //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+      // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not
+      // authenticated");
     }
 
     if (!productRepository.existsById(id)) {
@@ -94,43 +95,42 @@ public class ShoppingCartController {
     }
 
     Product product = productRepository.findById(id)
-    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
     shoppingCartService.removeItemFromCart(user, product);
 
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
-  @PutMapping("")
-  public ResponseEntity<Void> updateShoppingCartProductQuantity(@RequestBody ShoppingCartProductDto shoppingCartProductDto) {
-    
-    int id = shoppingCartProductDto.getId();
-    int quantity = shoppingCartProductDto.getQuantity();
-
-    System.out.println("id: " + id);
+  @PutMapping("/{id}")
+  public ResponseEntity<Void> updateShoppingCartProductQuantity(@PathVariable int id, @RequestBody int quantity) {
 
     ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository.findById(id)
-    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ShoppingCartProduct not found"));
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ShoppingCartProduct not found"));
     shoppingCartService.updateCartItemQuantity(shoppingCartProduct, quantity);
 
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
   // @PutMapping("/{id}")
-  // public ResponseEntity<Void> changeShoppingCartProductQuantityByOne(@PathVariable int id, @RequestBody String plusOrMinus) {
-    
-  //   ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository.findById(id)
-  //   .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ShoppingCartProduct not found"));
+  // public ResponseEntity<Void>
+  // changeShoppingCartProductQuantityByOne(@PathVariable int id, @RequestBody
+  // String plusOrMinus) {
 
-  //   if (plusOrMinus == "+") {
-  //     shoppingCartService.updateCartItemQuantity(shoppingCartProduct, shoppingCartProduct.getQuantity() + 1);
-  //   } else if (plusOrMinus == "-") {
-  //     shoppingCartService.updateCartItemQuantity(shoppingCartProduct, shoppingCartProduct.getQuantity() - 1);
-  //   } else {
+  // ShoppingCartProduct shoppingCartProduct =
+  // shoppingCartProductRepository.findById(id)
+  // .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+  // "ShoppingCartProduct not found"));
 
-  //   }
+  // if (plusOrMinus == "+") {
+  // shoppingCartService.updateCartItemQuantity(shoppingCartProduct,
+  // shoppingCartProduct.getQuantity() + 1);
+  // } else if (plusOrMinus == "-") {
+  // shoppingCartService.updateCartItemQuantity(shoppingCartProduct,
+  // shoppingCartProduct.getQuantity() - 1);
+  // } else {
 
-    
+  // }
 
-  //   return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+  // return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   // }
 }

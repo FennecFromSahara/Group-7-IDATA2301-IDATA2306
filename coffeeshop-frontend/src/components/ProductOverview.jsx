@@ -148,6 +148,7 @@ function ProductOverview(props) {
                 container
                 spacing={{ xs: 2, md: 3 }}
                 columns={{ xs: 1, sm: 2, md: 3, lg: 3 }}
+                maxWidth={"1000px"}
               >
                 {renderProducts()}
               </Grid>

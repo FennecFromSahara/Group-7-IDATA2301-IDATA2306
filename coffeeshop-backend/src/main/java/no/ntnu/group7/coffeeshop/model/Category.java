@@ -71,4 +71,8 @@ public class Category {
   public void setProducts(List<Product> products) {
     this.products = products;
   }
+
+  public Category orElseThrow(Object object) {
+    return null;
+  }
 }
