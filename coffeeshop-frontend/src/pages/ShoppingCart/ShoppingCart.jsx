@@ -40,12 +40,25 @@ export default function ShoppingCart() {
             <ShoppingCartProductCard
               key={shoppingCartProduct.productId}
               shoppingCartProduct={shoppingCartProduct}
+              deleteFunction={deleteShoppingCartProduct}
             />
           );
         })}
       </>
     );
   };
+
+    /**
+   * Delete the product with given ID from the product list
+   * @param shoppingCartProductId ID of the product to delete (ID, not index of the item in the array!)
+   */
+    function deleteShoppingCartProduct(shoppingCartProductId) {
+      console.log("delete shoppingcart product " + shoppingCartProductId);
+      const filteredCart = shoppingCart.filter(
+        (shoppingCartProduct) => shoppingCartProduct.id !== shoppingCartProductId
+      );
+      setShoppingCart(filteredCart);
+    }
 
   return (
     <div>

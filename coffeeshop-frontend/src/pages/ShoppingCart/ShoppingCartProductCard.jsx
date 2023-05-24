@@ -23,6 +23,7 @@ export default function ShoppingCartProductCard(props) {
 
   const [product, setProduct] = useState([]);
   const [error, setError] = useState(null);
+  const [quantity, setQuantity] = useState(shoppingCartProduct.quantity);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,10 +50,13 @@ export default function ShoppingCartProductCard(props) {
 
     try {
       const requestBody = {
-        plusOrMinus: "+",
+        id: shoppingCartProduct.id,
+        userId: shoppingCartProduct.userId,
+        productId: shoppingCartProduct.productId,
+        quantity: shoppingCartProduct.quantity,
       };
-      const id = shoppingCartProduct.id;
-      await asyncApiRequest("PUT", `/shoppingCart/${id}`, requestBody, true);
+      await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
+      setQuantity(quantity + 1);
       alert("Product count increased in cart successfully.");
     } catch (error) {
       alert("Error increasing product in cart.");
@@ -71,15 +75,17 @@ export default function ShoppingCartProductCard(props) {
 
     try {
       const requestBody = {
-        quantity: shoppingCartProduct.quantity - 1,
+        id: shoppingCartProduct.id,
+        userId: shoppingCartProduct.userId,
+        productId: shoppingCartProduct.productId,
+        quantity: shoppingCartProduct.quantity,
       };
-      const id = shoppingCartProduct.id;
-      await asyncApiRequest("PUT", "/shoppingCart/" + id, requestBody, true);
+      await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
+      setQuantity(quantity - 1);
       alert("Product count decreased in cart successfully.");
     } catch (error) {
       alert("Error decreasing product in cart.");
       console.error(error);
-      console.log("id: " + shoppingCartProduct.id)
     }
   };
 
@@ -95,11 +101,13 @@ export default function ShoppingCartProductCard(props) {
     try {
       await asyncApiRequest("DELETE", "/shoppingCart/" + product.id);
       alert("Product deleted from cart successfully.");
+      props.deleteFunction(shoppingCartProduct.id);
     } catch (error) {
       alert("Error deleting product from cart.");
       console.error(error);
     }
   };
+
 
   
   return (
@@ -133,7 +141,7 @@ export default function ShoppingCartProductCard(props) {
             </Button>
           </Grid>
           <Grid item xs={4}>
-            {shoppingCartProduct.quantity}
+            {quantity}
           </Grid>
           <Grid item xs={4}>
             <Button size="small" onClick={increaseAmount}>

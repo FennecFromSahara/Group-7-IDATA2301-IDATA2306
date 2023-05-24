@@ -100,10 +100,14 @@ public class ShoppingCartController {
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<Void> updateShoppingCartProductQuantity(@PathVariable int id, @RequestBody int quantity) {
+  @PutMapping("")
+  public ResponseEntity<Void> updateShoppingCartProductQuantity(@RequestBody ShoppingCartProductDto shoppingCartProductDto) {
     
-    
+    int id = shoppingCartProductDto.getId();
+    int quantity = shoppingCartProductDto.getQuantity();
+
+    System.out.println("id: " + id);
+
     ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository.findById(id)
     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ShoppingCartProduct not found"));
     shoppingCartService.updateCartItemQuantity(shoppingCartProduct, quantity);
