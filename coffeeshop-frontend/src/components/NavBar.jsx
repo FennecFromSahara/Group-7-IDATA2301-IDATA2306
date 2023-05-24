@@ -33,7 +33,7 @@ function NavBar() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const anchorRef = React.useRef(null);
-  const matches = useMediaQuery("(max-width:600px)");
+  const matches = useMediaQuery("(max-width:1050px)");
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -121,7 +121,7 @@ function NavBar() {
           )}
         </Popper>
         <Typography variant="h2">
-          {matches ? "MNK" : "MOCHA NOKA KAFE"}
+          {matches ? "MNK |" : "MOCHA NOKA KAFE |"}
         </Typography>
 
         <Box
@@ -136,9 +136,15 @@ function NavBar() {
               key={page}
               sx={{
                 my: 2,
-                color: "inherit",
                 display: "block",
-                typography: { fontSize: 16 },
+                typography: {
+                  fontSize: 20,
+                  fontWeight: 700,
+                  border: `2px solid ${theme.palette.primary.main}`,
+                  ":hover": {
+                    border: `2px solid ${theme.palette.text.primary}`,
+                  },
+                },
               }}
             >
               <Link to={link[index]} style={{ textDecoration: "none" }}>
