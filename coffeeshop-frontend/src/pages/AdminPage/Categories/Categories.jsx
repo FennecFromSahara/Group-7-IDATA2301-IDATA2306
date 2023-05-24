@@ -94,7 +94,7 @@ const Categories = ({ categories }) => {
       <Table
         sx={{
           mx: 15,
-          mt: 3,
+          my: 3,
           maxWidth: "1000px",
           backgroundColor: theme.palette.background.paper,
           border: `3px solid ${theme.palette.primary.light}`,
