@@ -14,21 +14,28 @@ import Review from './Review';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [addressInfo, setAddressInfo] = React.useState({
+    firstName: '',
+    lastName: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+    saveAddress: false,
+  });
+  const [paymentInfo, setPaymentInfo] = React.useState({
+    cardName: '',
+    cardNumber: '',
+    expDate: '',
+    cvv: '',
+    saveCard: false,
+  });
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -37,6 +44,19 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm addressInfo={addressInfo} setAddressInfo={setAddressInfo}/>;
+      case 1:
+        return <PaymentForm paymentInfo={paymentInfo} setPaymentInfo={setPaymentInfo}/>;
+      case 2:
+        return <Review addressInfo={addressInfo} paymentInfo={paymentInfo}/>;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   return (
     <div>

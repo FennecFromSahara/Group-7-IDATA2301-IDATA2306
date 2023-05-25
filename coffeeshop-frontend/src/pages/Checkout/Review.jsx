@@ -29,15 +29,32 @@ const products = [
   { name: 'Shipping', desc: '', price: 'Free' },
 ];
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+// const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+// const payments = [
+//   { name: 'Card type', detail: 'Visa' },
+//   { name: 'Card holder', detail: 'Mr John Smith' },
+//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+//   { name: 'Expiry date', detail: '04/2024' },
+// ];
 
-export default function Review() {
+export default function Review({addressInfo, paymentInfo}) {
+
+  const addresses = [
+    addressInfo.address1, 
+    addressInfo.address2, 
+    addressInfo.city, 
+    addressInfo.state, 
+    addressInfo.zip, 
+    addressInfo.country
+  ];
+
+  const payments = [
+    { name: 'Card type', detail: 'Visa' },
+    { name: 'Card holder', detail: paymentInfo.cardName },
+    { name: 'Card number', detail: paymentInfo.cardNumber },
+    { name: 'Expiry date', detail: paymentInfo.expDate },
+  ];
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
