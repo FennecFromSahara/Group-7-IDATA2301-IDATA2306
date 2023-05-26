@@ -5,7 +5,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
-import { asyncApiRequest } from "../../tools/requests";
 import { useAuth } from "../../hooks/useAuth";
 import imageMap from "../../components/ProductImageMapping";
 import { addToCart } from "../../tools/addToCart";

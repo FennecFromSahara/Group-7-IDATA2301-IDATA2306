@@ -16,8 +16,12 @@ import no.ntnu.group7.coffeeshop.dto.ProductSizeDto;
 import no.ntnu.group7.coffeeshop.dto.ReviewDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
+import no.ntnu.group7.coffeeshop.model.Review;
+import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
+import no.ntnu.group7.coffeeshop.repositories.ReviewRepository;
+import no.ntnu.group7.coffeeshop.repositories.UserRepository;
 
 /**
  * Controller responsible for managing Products in the coffee shop.
@@ -32,6 +36,12 @@ public class ProductController {
 
   @Autowired
   private CategoryRepository categoryRepository;
+
+  @Autowired
+  private ReviewRepository reviewRepository;
+
+  @Autowired
+  private UserRepository userRepository;
 
   /**
    * Handles HTTP GET requests to "/api/products" and returns a list of all
@@ -228,5 +238,23 @@ public class ProductController {
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
     return new ResponseEntity<List<Product>>(category.getProducts(), HttpStatus.OK);
+  }
+
+  @PostMapping("/{id}/add-review")
+  public ResponseEntity<Review> addReview(@PathVariable int id, @RequestBody ReviewDto reviewDto) {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
+    User user = userRepository.findByUsername(reviewDto.getUsername())
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+    Review review = new Review();
+    review.setReviewText(reviewDto.getReviewText());
+    review.setRating(reviewDto.getRating());
+    review.setProduct(product);
+    review.setUser(user);
+    Review newReview = reviewRepository.save(review);
+
+    return new ResponseEntity<>(newReview, HttpStatus.CREATED);
   }
 }

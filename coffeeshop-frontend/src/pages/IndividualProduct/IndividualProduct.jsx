@@ -7,6 +7,7 @@ import {
   MenuItem,
   Select,
   Typography,
+  Rating,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import NavBar from "../../components/NavBar";
@@ -16,15 +17,20 @@ import React from "react";
 import imageMap from "../../components/ProductImageMapping";
 import { addToCart } from "../../tools/addToCart";
 import { useAuth } from "../../hooks/useAuth";
+import ReviewForm from "./ReviewForm";
 
 function IndividualProduct() {
+  const theme = useTheme();
+
   const { id } = useParams();
   const { user } = useAuth();
+
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [showReviews, setShowReviews] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const [image, setImage] = useState("");
-  const theme = useTheme();
+  const [userHasReviewed, setUserHasReviewed] = useState(false);
 
   useEffect(() => {
     getProductById(id)
@@ -34,11 +40,18 @@ function IndividualProduct() {
         if (productData.productSizes && productData.productSizes.length > 0) {
           setSelectedSize(productData.productSizes[0].size);
         }
+        // Check if user has already reviewed the product
+        const userReview = productData.reviews.find(
+          (review) => review.username === user?.username
+        );
+        if (userReview) {
+          setUserHasReviewed(true);
+        }
       })
       .catch((err) => {
         console.error(`Error fetching product: ${err.message}`);
       });
-  }, [id]);
+  }, [id, user]);
 
   const handleChange = (event) => {
     setSelectedSize(event.target.value);
@@ -48,11 +61,9 @@ function IndividualProduct() {
     setShowReviews(!showReviews);
   };
 
-  const placeholderReviews = [
-    { id: 1, content: "Great product! Highly recommended." },
-    { id: 2, content: "Pretty decent, could be better." },
-    { id: 3, content: "Amazing! Will buy again." },
-  ];
+  const handleShowReviewForm = () => {
+    setShowReviewForm(true);
+  };
 
   const renderProduct = () => {
     if (!product) {
@@ -109,8 +120,8 @@ function IndividualProduct() {
                 </Typography>
                 {product.productSizes && product.productSizes.length > 0 && (
                   <Select value={selectedSize} onChange={handleChange}>
-                    {product.productSizes.map((size) => (
-                      <MenuItem key={size.id} value={size.size}>
+                    {product.productSizes.map((size, index) => (
+                      <MenuItem key={index} value={size.size}>
                         {size.size} - {size.weight}
                       </MenuItem>
                     ))}
@@ -130,29 +141,78 @@ function IndividualProduct() {
           <Box
             sx={{
               mt: 4,
-              alignItems: "center",
-              justifyContent: "center",
+              alignItems: "start",
+              justifyContent: "space-between",
+              flexDirection: "column",
+              display: "flex",
               width: "65vw",
               minHeight: "15rem",
             }}
           >
-            <Typography variant="h4">
-              Reviews ({placeholderReviews.length})
-            </Typography>
-            <Button
-              variant="outlined"
-              color="primary"
-              sx={{ mt: 2 }}
-              onClick={handleShowReviews}
-            >
-              Show reviews
-            </Button>
-            {showReviews &&
-              placeholderReviews.map((review) => (
-                <Typography variant="body1" key={review.id} sx={{ mt: 2 }}>
-                  {review.content}
-                </Typography>
-              ))}
+            <Box>
+              <Typography variant="h3">
+                Reviews ({product?.reviews?.length || 0})
+              </Typography>
+              <Button
+                variant="outlined"
+                color="primary"
+                sx={{ mt: 1 }}
+                onClick={handleShowReviews}
+              >
+                Show
+              </Button>
+              {showReviews &&
+                (product?.reviews?.length > 0 ? (
+                  product.reviews.map((review, index) => (
+                    <Box key={index}>
+                      <Typography sx={{ fontSize: 16 }}>
+                        {review.username}:{" "}
+                      </Typography>
+                      <Typography sx={{ fontSize: 16 }}>
+                        <Rating
+                          name="read-only"
+                          value={review.rating}
+                          readOnly
+                          size="small"
+                        />
+                        {review.reviewText}
+                      </Typography>
+                    </Box>
+                  ))
+                ) : (
+                  <Typography variant="body1" sx={{ mt: 2 }}>
+                    This product has no reviews
+                  </Typography>
+                ))}
+            </Box>
+            {showReviews && user && !userHasReviewed && (
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+                size="small"
+                onClick={handleShowReviewForm}
+              >
+                Write a review
+              </Button>
+            )}
+            {showReviewForm && (
+              <ReviewForm
+                open={showReviewForm}
+                handleClose={() => setShowReviewForm(false)}
+                handleSubmit={(newReview) => {
+                  setProduct((prevProduct) => {
+                    return {
+                      ...prevProduct,
+                      reviews: [...prevProduct.reviews, newReview],
+                    };
+                  });
+                  setShowReviewForm(false);
+                  setUserHasReviewed(true);
+                }}
+                productId={product.id}
+              />
+            )}
           </Box>
         </Box>
       );
