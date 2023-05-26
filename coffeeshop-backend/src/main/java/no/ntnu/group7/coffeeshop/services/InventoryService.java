@@ -1,5 +1,7 @@
 package no.ntnu.group7.coffeeshop.services;
 
+import org.springframework.stereotype.Service;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -9,6 +11,7 @@ import no.ntnu.group7.coffeeshop.model.Product;
  * InventoryService is a service layer class responsible for managing the
  * inventory of the coffee shop application.
  */
+@Service
 public class InventoryService {
 
   @PersistenceContext

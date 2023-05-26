@@ -26,7 +26,7 @@ public class CheckoutController {
   @Autowired
   private CheckoutService checkoutService;
 
-  @PostMapping("/checkout")
+  @PostMapping("")
   public ResponseEntity<String> checkout() {
     User user = accessUserService.getSessionUser();
     if (user == null) {

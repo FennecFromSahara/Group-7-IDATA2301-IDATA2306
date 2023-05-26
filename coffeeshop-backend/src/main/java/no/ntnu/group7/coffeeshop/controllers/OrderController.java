@@ -40,28 +40,6 @@ public class OrderController {
   private OrderService orderService;
 
   /**
-   * Handles HTTP POST requests to "/api/orders/add-to-cart" and adds a product to
-   * the shopping cart of the user.
-   *
-   * @param shoppingCartProductDto The DTO containing the ID of the product to add
-   *                               and the quantity.
-   * @return A response indicating success or failure of the operation.
-   */
-  @PostMapping("/add-to-cart")
-  public ResponseEntity<String> addToCart(@RequestBody ShoppingCartProductDto shoppingCartProductDto) {
-    User user = accessUserService.getSessionUser();
-    if (user == null) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
-    }
-
-    Product product = new Product();
-    product.setId(shoppingCartProductDto.getProductId());
-
-    shoppingCartService.addItemToCart(user, product, shoppingCartProductDto.getQuantity());
-    return ResponseEntity.ok("Product added to cart");
-  }
-
-  /**
    * Handles HTTP GET requests to "/api/orders" and returns a list of all orders
    * in the system.
    *

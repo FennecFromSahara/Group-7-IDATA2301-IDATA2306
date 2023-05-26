@@ -30,6 +30,7 @@ public class CheckoutService {
   @Autowired
   private ShoppingCartService shoppingCartService;
 
+  @Autowired
   private InventoryService inventoryService;
 
   /**
