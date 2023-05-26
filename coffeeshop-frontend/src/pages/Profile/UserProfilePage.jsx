@@ -9,6 +9,7 @@ import Footer from "../../components/Footer";
 import { useTheme } from "@emotion/react";
 import handleLogout from "../../tools/handleLogout";
 import ErrorPage from "../../components/ErrorPage";
+import React from "react";
 
 function UserProfilePage() {
   const { user, loading } = useAuth();
@@ -46,6 +47,10 @@ function UserProfilePage() {
       navigate("/access_denied");
     }
   }, [user, profile, navigate, profileLoading]);
+
+  //TODO: Change password
+
+  //TODO: Are you sure on Logout
 
   if (loading || profileLoading) {
     return (
@@ -128,7 +133,7 @@ function UserProfilePage() {
                 <Typography variant="subtitle1">{profile.address}</Typography>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button
                 variant="contained"
                 color="danger"
@@ -136,6 +141,11 @@ function UserProfilePage() {
                 sx={{ mt: 3 }}
               >
                 Logout
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant="contained" color="danger" sx={{ mt: 3 }}>
+                Change password
               </Button>
             </Grid>
           </Grid>

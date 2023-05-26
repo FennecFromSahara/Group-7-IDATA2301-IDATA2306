@@ -1,5 +1,3 @@
-// Cookie handling
-
 /**
  * Get value of a specific cookie.
  * Code copied from https://www.w3schools.com/js/js_cookies.asp

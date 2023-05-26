@@ -3,6 +3,7 @@ import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
 import { TextField, Button, Box, Grid, Typography, Chip } from "@mui/material";
 import { getCategories } from "../../../hooks/apiService";
+import React from "react";
 
 const ProductOverview = ({
   product,

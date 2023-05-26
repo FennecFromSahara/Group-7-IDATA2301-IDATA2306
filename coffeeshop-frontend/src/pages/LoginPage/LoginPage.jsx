@@ -1,3 +1,4 @@
+import React from "react";
 import NavBar from "../../components/NavBar";
 import LoginForm from "./LoginForm";
 import { useAuth } from "../../hooks/useAuth";

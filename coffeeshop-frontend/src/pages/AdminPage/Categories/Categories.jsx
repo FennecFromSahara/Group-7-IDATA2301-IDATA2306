@@ -17,6 +17,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { asyncApiRequest } from "../../../tools/requests";
+import React from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,

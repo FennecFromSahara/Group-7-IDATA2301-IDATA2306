@@ -5,8 +5,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
-import { asyncApiRequest } from "../tools/requests";
-import { useAuth } from "../hooks/useAuth";
+import { asyncApiRequest } from "../../tools/requests";
+import { useAuth } from "../../hooks/useAuth";
+
+import placeholderImage from "../../assets/img/coffee placeholder.jpg";
 
 /**
  * A component representing a product card
@@ -47,8 +49,9 @@ export default function ProductCard(props) {
         <Link to={`/products/${product.id}`}>
           <CardMedia
             component="img"
-            image="../img/coffee placeholder.jpg"
-            alt="Image of product"
+            height="270"
+            image={placeholderImage}
+            alt={`Image of ${product.name}`}
           />
         </Link>
       </CardActionArea>

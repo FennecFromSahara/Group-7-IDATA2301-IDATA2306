@@ -12,6 +12,9 @@ import { useTheme } from "@emotion/react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { getProductById } from "../../hooks/apiService";
+import React from "react";
+
+import placeholderImage from "../../assets/img/coffee placeholder.jpg";
 
 function IndividualProduct() {
   const { id } = useParams();
@@ -69,9 +72,9 @@ function IndividualProduct() {
           >
             <CardMedia
               component="img"
-              image="../img/coffee placeholder.jpg"
+              image={placeholderImage}
               alt="Image of product"
-              sx={{ height: 420, width: 327, float: "left" }}
+              sx={{ height: 420, width: 420, float: "left" }}
             />
             <Box
               sx={{

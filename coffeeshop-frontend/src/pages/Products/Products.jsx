@@ -1,13 +1,14 @@
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import ProductOverview from "../../components/ProductOverview";
+import ProductOverview from "./ProductOverview";
+import React from "react";
 
 function Products() {
   return (
     <div>
       <NavBar />
 
-      <ProductOverview maxIndex={6} />
+      <ProductOverview />
 
       <Footer />
     </div>

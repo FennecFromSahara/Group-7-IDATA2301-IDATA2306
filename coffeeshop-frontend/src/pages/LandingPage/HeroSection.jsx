@@ -1,5 +1,8 @@
+import React from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Button, Typography } from "@mui/material";
+
+import heroImage from "../../assets/img/hero-image-full.jpg";
 
 function HeroSection() {
   const theme = useTheme();
@@ -7,12 +10,9 @@ function HeroSection() {
   return (
     <Box
       style={{
-        backgroundImage: `url(${
-          process.env.PUBLIC_URL + "img/hero-image-full.jpg"
-        })`,
+        backgroundImage: `url(${heroImage})`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "auto",
         height: theme.boxSizes.navSection,
         justifyContent: "center",
         alignItems: "center",

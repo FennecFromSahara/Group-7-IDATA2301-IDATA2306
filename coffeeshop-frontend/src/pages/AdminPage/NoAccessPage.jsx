@@ -2,6 +2,7 @@ import { Typography, Box } from "@mui/material";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import { useTheme } from "@emotion/react";
+import React from "react";
 
 function NoAccessPage() {
   const theme = useTheme();

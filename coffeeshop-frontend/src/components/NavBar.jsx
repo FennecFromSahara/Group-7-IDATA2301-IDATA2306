@@ -11,7 +11,7 @@ import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { isAdmin } from "../tools/authentication";
 import { useAuth } from "../hooks/useAuth";
@@ -33,7 +33,7 @@ function NavBar() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const anchorRef = React.useRef(null);
-  const matches = useMediaQuery("(max-width:1050px)");
+  const matches = useMediaQuery("(max-width:1185px)");
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -57,14 +57,14 @@ function NavBar() {
   }
 
   if (user) {
-    if (isAdmin(user) && !pages.includes("Administration")) {
-      pages.push("Administration");
+    if (isAdmin(user) && !pages.includes("Admin")) {
+      pages.push("Admin");
       link.push("/admin");
     }
   }
 
   return (
-    <AppBar position="sticky" elevation={0} sx={{ height: "6vh" }}>
+    <AppBar position="sticky" elevation={0} sx={{ height: "7vh" }}>
       <Toolbar>
         <Button
           ref={anchorRef}

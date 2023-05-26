@@ -1,16 +1,17 @@
-import { Box, Grid, Typography, Button } from "@mui/material";
+import React from "react";
+import { Box, Grid, Typography, Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
-import { getProducts } from "../hooks/apiService";
+import { getProducts } from "../../hooks/apiService";
 import { useTheme } from "@emotion/react";
 
-function ProductOverview(props) {
+function ProductOverview() {
   const [status, setStatus] = useState("loading");
   const [products, setProducts] = useState([]);
-  const [productsDisplayed, setProductsDisplayed] = useState(props.maxIndex);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const theme = useTheme();
 
   useEffect(() => {
@@ -32,48 +33,32 @@ function ProductOverview(props) {
       });
   }, []);
 
-  const increaseDisplayedProducts = () => {
-    if (productsDisplayed >= products.length) {
-      alert("No more products to display");
-    } else {
-      setProductsDisplayed(
-        (prevProductsDisplayed) =>
-          prevProductsDisplayed +
-          Math.min(6, products.length - prevProductsDisplayed)
-      );
-    }
-  };
-
   const filterProductsByCategory = (category) => {
     setSelectedCategory(category);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
   const renderProducts = () => {
     if (status === "loaded") {
-      return (
-        <>
-          {products
-            .filter((product) => {
-              if (selectedCategory) {
-                return product.categories.some(
-                  (category) => category.name === selectedCategory
-                );
-              } else {
-                return true;
-              }
-            })
-            .map((product, index) => {
-              if (index < productsDisplayed) {
-                return (
-                  <Grid item xs={1} sm={1} md={1} lg={1} key={product.id}>
-                    <ProductCard product={product} />
-                  </Grid>
-                );
-              }
-              return null;
-            })}
-        </>
-      );
+      return products
+        .filter((product) => {
+          return (
+            (!selectedCategory ||
+              product.categories.some(
+                (category) => category.name === selectedCategory
+              )) &&
+            (!searchInput ||
+              product.name.toLowerCase().includes(searchInput.toLowerCase()))
+          );
+        })
+        .map((product, index) => (
+          <Grid item xs={1} sm={1} md={1} lg={1} key={product.id}>
+            <ProductCard product={product} />
+          </Grid>
+        ));
     }
   };
 
@@ -94,6 +79,7 @@ function ProductOverview(props) {
           ? `: browse trough our ${products.length} products!`
           : ""}
       </Typography>
+
       <Box
         display="flex"
         justifyContent="flex-start"
@@ -104,8 +90,15 @@ function ProductOverview(props) {
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          sx={{ minWidth: 160, mr: 8, ml: -3 }}
+          sx={{ width: 185, mr: 8, ml: -3 }}
         >
+          <TextField
+            label="Search for product"
+            variant="outlined"
+            value={searchInput}
+            onChange={handleSearchChange}
+            sx={{ mb: 2 }}
+          />
           <Button
             variant="contained"
             onClick={() => setSelectedCategory("")}
@@ -153,16 +146,6 @@ function ProductOverview(props) {
                 {renderProducts()}
               </Grid>
             </Box>
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ width: "100%", marginTop: "2rem" }}
-          >
-            <Button variant="contained" onClick={increaseDisplayedProducts}>
-              Show more
-            </Button>
           </Box>
         </Box>
       </Box>

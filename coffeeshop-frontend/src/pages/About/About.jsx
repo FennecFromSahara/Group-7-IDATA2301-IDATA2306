@@ -3,6 +3,7 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import TestimonialSection from "./TestimonialSection";
 import { useTheme } from "@emotion/react";
+import React from "react";
 
 function About() {
   const theme = useTheme();

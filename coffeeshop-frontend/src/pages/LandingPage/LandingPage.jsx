@@ -1,7 +1,8 @@
+import React from "react";
 import HeroSection from "./HeroSection";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import ProductOverview from "../../components/ProductOverview";
+import ProductOverview from "../Products/ProductOverview";
 import { Box } from "@mui/material";
 
 function LandingPage() {
@@ -11,7 +12,7 @@ function LandingPage() {
 
       <HeroSection />
 
-      <ProductOverview maxIndex={6} />
+      <ProductOverview />
 
       <Footer />
     </Box>

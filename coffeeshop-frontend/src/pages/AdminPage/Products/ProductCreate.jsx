@@ -3,6 +3,7 @@ import { Box, Button, TextField, Typography, Grid, Chip } from "@mui/material";
 import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
 import { getCategories } from "../../../hooks/apiService";
+import React from "react";
 
 const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   const theme = useTheme();

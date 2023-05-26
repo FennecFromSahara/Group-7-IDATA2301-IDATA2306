@@ -1,5 +1,7 @@
 import CreateUserForm from "./CreateUserForm";
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
+import React from "react";
 
 function CreateUser() {
   return (
@@ -7,6 +9,8 @@ function CreateUser() {
       <NavBar />
 
       <CreateUserForm />
+
+      <Footer />
     </div>
   );
 }

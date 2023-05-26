@@ -21,6 +21,7 @@ import ProductOverview from "./Products/ProductOverview";
 import ProductCreate from "./Products/ProductCreate";
 import UserOverview from "./Users/UserOverview";
 import Categories from "./Categories/Categories";
+import React from "react";
 
 function AdminPage() {
   const { user, loading } = useAuth();

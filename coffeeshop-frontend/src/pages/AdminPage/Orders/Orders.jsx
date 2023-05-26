@@ -1,3 +1,5 @@
+import React from "react";
+
 const Orders = ({ orders }) => {
   return (
     <div>

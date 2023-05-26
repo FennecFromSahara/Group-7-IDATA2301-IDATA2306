@@ -1,4 +1,5 @@
 import Testimonial from "./Testimonial";
+import React from "react";
 
 function TestimonialSection() {
   const testimonials = [

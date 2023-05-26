@@ -13,6 +13,7 @@ import { asyncApiRequest } from "../../tools/requests";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Alert } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 /**
  * Code adapted from
@@ -23,6 +24,7 @@ import { Alert } from "@mui/material";
 export default function CreateUserForm() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const theme = useTheme();
 
   let errorMessage = null;
   if (error) {
@@ -78,6 +80,7 @@ export default function CreateUserForm() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
+        minHeight={theme.boxSizes.navSectionFooter}
         sx={{
           marginTop: 8,
           display: "flex",

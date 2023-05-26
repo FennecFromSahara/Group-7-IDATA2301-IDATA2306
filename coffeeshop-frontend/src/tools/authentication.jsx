@@ -1,5 +1,3 @@
-// Authentication stuff
-
 import { deleteCookie, getCookie, setCookie } from "./cookies";
 import { asyncApiRequest } from "./requests";
 
