@@ -19,11 +19,7 @@ const ProductOverview = ({
   );
   const [price, setPrice] = useState(product.price);
   const [image, setImage] = useState(product.image);
-  const [categories, setCategories] = useState(
-    product.categories
-      ? product.categories.map((category) => category.name).join(", ")
-      : ""
-  );
+  const [categories, setCategories] = useState(product.categories || []);
   const [allCategories, setAllCategories] = useState([]);
 
   useEffect(() => {
@@ -36,17 +32,12 @@ const ProductOverview = ({
   }, []);
 
   const addCategory = (category) => {
-    setCategories((prevState) =>
-      prevState ? prevState + ", " + category.name : category.name
-    );
+    setCategories((prevState) => [...prevState, category]);
   };
 
   const removeCategory = (categoryToRemove) => {
     setCategories((prevState) =>
-      prevState
-        .split(", ")
-        .filter((category) => category !== categoryToRemove.name)
-        .join(", ")
+      prevState.filter((category) => category.id !== categoryToRemove.id)
     );
   };
 
@@ -60,7 +51,10 @@ const ProductOverview = ({
           description,
           inventoryAmount,
           price,
-          categories,
+          categories: categories.map((category) => ({
+            id: category.id,
+            name: category.name,
+          })),
           image,
         }
       );
@@ -154,22 +148,34 @@ const ProductOverview = ({
         fullWidth
         sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
       />
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom component="div">
         Categories:
-        {categories.split(", ").map((category) => (
-          <Chip
-            label={category}
-            onDelete={() => removeCategory({ name: category })}
-          />
-        ))}
+        {categories.map((categoryObj, index) => {
+          const category = allCategories.find(
+            (category) => category.name === categoryObj.name
+          );
+          return (
+            <Chip
+              key={index}
+              label={categoryObj.name}
+              onDelete={() => removeCategory(category)}
+            />
+          );
+        })}
       </Typography>
 
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom component="div">
         Available Categories:
         {allCategories
-          .filter((category) => !categories.split(", ").includes(category.name))
-          .map((category) => (
-            <Chip label={category.name} onClick={() => addCategory(category)} />
+          .filter(
+            (category) => !categories.map((c) => c.name).includes(category.name)
+          )
+          .map((category, index) => (
+            <Chip
+              key={index}
+              label={category.name}
+              onClick={() => addCategory(category)}
+            />
           ))}
       </Typography>
 

@@ -1,31 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Button, Typography } from "@mui/material";
 
-import heroImage from "../../assets/img/hero-image-full.jpg";
+import heroImage1440 from "../../assets/img/landingPage/hero-image-1440.webp";
+import heroImage1080 from "../../assets/img/landingPage/hero-image-1080.webp";
 
 function HeroSection() {
   const theme = useTheme();
 
+  const [backgroundImage, setBackgroundImage] = useState(getBackgroundImage());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setBackgroundImage(getBackgroundImage());
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  function getBackgroundImage() {
+    return window.innerWidth <= theme.breakpoints.values.md
+      ? `url(${heroImage1080})`
+      : `url(${heroImage1440})`;
+  }
+
+  const backgroundStyles = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundImage,
+    height: theme.boxSizes.navSection,
+    width: "100%",
+  };
+
   return (
-    <Box
-      style={{
-        backgroundImage: `url(${heroImage})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        height: theme.boxSizes.navSection,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Box sx={backgroundStyles}>
       <Box
         sx={{
           position: "absolute",
-          ml: { xs: "10%", sm: "25%", md: 35 },
-          mt: { xs: "10%", sm: "15%", md: 25 },
+          left: "10%",
+          top: "50%",
+          transform: "translateY(-50%)",
           width: { xs: "80%", sm: "60%", md: "20%" },
           minHeight: "10rem",
-          minWidth: "25rem",
           p: 1,
           backgroundColor: "#bfc0d2",
           display: "flex",

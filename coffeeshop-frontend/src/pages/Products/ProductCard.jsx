@@ -7,8 +7,7 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 import { asyncApiRequest } from "../../tools/requests";
 import { useAuth } from "../../hooks/useAuth";
-
-import placeholderImage from "../../assets/img/coffee placeholder.jpg";
+import imageMap from "../../components/ProductImageMapping";
 
 /**
  * A component representing a product card
@@ -19,6 +18,8 @@ import placeholderImage from "../../assets/img/coffee placeholder.jpg";
 export default function ProductCard(props) {
   const { user } = useAuth();
   const product = props.product;
+
+  const image = imageMap[product.image];
 
   const addToCart = async () => {
     if (!user) {
@@ -50,7 +51,7 @@ export default function ProductCard(props) {
           <CardMedia
             component="img"
             height="270"
-            image={placeholderImage}
+            image={image}
             alt={`Image of ${product.name}`}
           />
         </Link>

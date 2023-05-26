@@ -13,20 +13,21 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { getProductById } from "../../hooks/apiService";
 import React from "react";
-
-import placeholderImage from "../../assets/img/coffee placeholder.jpg";
+import imageMap from "../../components/ProductImageMapping";
 
 function IndividualProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("small");
   const [showReviews, setShowReviews] = useState(false);
+  const [image, setImage] = useState("");
   const theme = useTheme();
 
   useEffect(() => {
     getProductById(id)
       .then((productData) => {
         setProduct(productData);
+        setImage(imageMap[productData.image]);
       })
       .catch((err) => {
         console.error(`Error fetching product: ${err.message}`);
@@ -72,7 +73,7 @@ function IndividualProduct() {
           >
             <CardMedia
               component="img"
-              image={placeholderImage}
+              image={image}
               alt="Image of product"
               sx={{ height: 420, width: 420, float: "left" }}
             />
