@@ -74,7 +74,7 @@ function ProductOverview() {
         {status === "loading"
           ? ": Loading..."
           : status === "error"
-          ? ": Something went wrong..."
+          ? ": Something went wrong loading the products..."
           : status === "loaded"
           ? `: browse trough our ${products.length} products!`
           : ""}
