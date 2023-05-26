@@ -13,9 +13,10 @@ public class ProductDto {
   private String image;
   private List<CategoryDto> categories;
   private List<ProductSizeDto> productSizes;
+  private List<ReviewDto> reviews;
 
   public ProductDto(int id, String name, String description, int inventoryAmount, BigDecimal price, String image,
-      List<CategoryDto> categories, List<ProductSizeDto> productSizes) {
+      List<CategoryDto> categories, List<ProductSizeDto> productSizes, List<ReviewDto> reviews) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -24,6 +25,7 @@ public class ProductDto {
     this.image = image;
     this.categories = categories;
     this.productSizes = productSizes;
+    this.reviews = reviews;
   }
 
   public int getId() {
@@ -56,5 +58,9 @@ public class ProductDto {
 
   public List<ProductSizeDto> getProductSizes() {
     return productSizes;
+  }
+
+  public List<ReviewDto> getReviews() {
+    return reviews;
   }
 }

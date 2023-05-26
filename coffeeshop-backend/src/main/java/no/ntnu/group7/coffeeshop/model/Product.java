@@ -69,6 +69,10 @@ public class Product {
   @JsonManagedReference("product-size")
   private List<ProductSize> productSizes = new ArrayList<>();
 
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference("product-review")
+  private List<Review> reviews = new ArrayList<>();
+
   /**
    * Empty constructor needed for JPA
    */
@@ -93,67 +97,144 @@ public class Product {
     this.inventoryAmount = inventoryAmount;
   }
 
+  /**
+   * @return the id
+   */
   public int getId() {
     return id;
   }
 
+  /**
+   * @param id the id to set
+   */
   public void setId(int id) {
     this.id = id;
   }
 
+  /**
+   * @return the name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * @param name the name to set
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * @return the price
+   */
   public BigDecimal getPrice() {
     return price;
   }
 
+  /**
+   * @param price the price to set
+   */
   public void setPrice(BigDecimal price) {
     this.price = price;
   }
 
+  /**
+   * @return the description
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * @param description the description to set
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
-  public int getInventoryAmount() {
-    return inventoryAmount;
-  }
-
-  public void setInventoryAmount(int inventoryAmount) {
-    this.inventoryAmount = inventoryAmount;
-  }
-
+  /**
+   * @return the image
+   */
   public String getImage() {
     return image;
   }
 
+  /**
+   * @param image the image to set
+   */
   public void setImage(String image) {
     this.image = image;
   }
 
+  /**
+   * @return the inventoryAmount
+   */
+  public int getInventoryAmount() {
+    return inventoryAmount;
+  }
+
+  /**
+   * @param inventoryAmount the inventoryAmount to set
+   */
+  public void setInventoryAmount(int inventoryAmount) {
+    this.inventoryAmount = inventoryAmount;
+  }
+
+  /**
+   * @return the categories
+   */
   public List<Category> getCategories() {
     return categories;
   }
 
+  /**
+   * @param categories the categories to set
+   */
   public void setCategories(List<Category> categories) {
     this.categories = categories;
   }
 
+  /**
+   * @return the shoppingCartProducts
+   */
+  public List<ShoppingCartProduct> getShoppingCartProducts() {
+    return shoppingCartProducts;
+  }
+
+  /**
+   * @param shoppingCartProducts the shoppingCartProducts to set
+   */
+  public void setShoppingCartProducts(List<ShoppingCartProduct> shoppingCartProducts) {
+    this.shoppingCartProducts = shoppingCartProducts;
+  }
+
+  /**
+   * @return the product sizes
+   */
   public List<ProductSize> getProductSizes() {
     return productSizes;
   }
 
+  /**
+   * @param reviews the product sizes to set
+   */
   public void addProductSizes(List<ProductSize> productSizes) {
     this.productSizes = productSizes;
   }
+
+  /**
+   * @return the reviews
+   */
+  public List<Review> getReviews() {
+    return reviews;
+  }
+
+  /**
+   * @param reviews the reviews to set
+   */
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
+
 }

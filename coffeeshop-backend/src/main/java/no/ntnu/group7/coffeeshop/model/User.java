@@ -4,10 +4,14 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * User model class that represents a user in the coffee shop system. This class
@@ -54,6 +58,10 @@ public class User {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new LinkedHashSet<>();
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference("user-review")
+  private List<Review> reviews = new ArrayList<>();
 
   // @OneToMany(mappedBy = "customer")
   // private Set<Order> orders = new HashSet<>();
@@ -229,4 +237,19 @@ public class User {
     }
     return found;
   }
+
+  /**
+   * @return the reviews
+   */
+  public List<Review> getReviews() {
+    return reviews;
+  }
+
+  /**
+   * @param reviews the reviews to set
+   */
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
+
 }

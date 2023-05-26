@@ -8,10 +8,13 @@ import org.springframework.stereotype.Component;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
 import no.ntnu.group7.coffeeshop.model.ProductSize;
+import no.ntnu.group7.coffeeshop.model.Review;
 import no.ntnu.group7.coffeeshop.model.Role;
 import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
+import no.ntnu.group7.coffeeshop.repositories.ProductSizeRepository;
+import no.ntnu.group7.coffeeshop.repositories.ReviewRepository;
 import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
 import no.ntnu.group7.coffeeshop.repositories.UserRepository;
 import no.ntnu.group7.coffeeshop.services.ProductService;
@@ -42,6 +45,12 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
+
+    @Autowired
     private ProductService productService;
 
     private final Logger logger = LoggerFactory.getLogger("DummyInit");
@@ -53,6 +62,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
      */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+
         if (userRepository.count() == 0) {
             logger.info("Importing test users...");
 
@@ -79,12 +89,8 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
             userRepository.save(testUser);
             userRepository.save(adminUser);
 
-            logger.info("DONE importing test products");
-        } else {
-            logger.info("Users already in the database, not importing anything");
-        }
+            logger.info("DONE importing test users");
 
-        if (productRepository.count() == 0) {
             // Products
             logger.info("Importing test products...");
 
@@ -197,7 +203,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
                     pancakes,
                     coffeeMachine));
 
-            List<Product> teaAndCoffeeProducts = Arrays.asList(brazilianCoffee, greenTea, peruCoffeeBeans, blackTea,
+            List<Product> teaAndCoffeeProducts = Arrays.asList(brazilianCoffee, peruCoffeeBeans, blackTea,
                     earlGreyTea, chamomileTea, arabicaCoffee, colombiaCoffeeBeans, whiteTea, oolongTea);
             for (Product product : teaAndCoffeeProducts) {
                 product.addProductSizes(smallMediumLarge);
@@ -214,9 +220,23 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
 
             logger.info("DONE applying sizes to test products!");
 
+            // Product Reviews
+            logger.info("Adding reviews to test products...");
+
+            Review greenTeaReview1 = new Review(greenTea, testUser, "Great! Tastes like green tea!", 5);
+
+            greenTea.setReviews(Arrays.asList(greenTeaReview1));
+            productService.saveProductWithReviews(greenTea, Arrays.asList(greenTeaReview1), testUser);
+
+            greenTea.addProductSizes(smallMediumLarge);
+            productService.saveProductWithSizes(greenTea);
+
+            logger.info("DONE applying reviews to test products!");
+
             logger.info("DONE importing test products");
         } else {
-            logger.info("Products already in the database, not importing anything");
+            logger.info("Data already imported");
         }
+
     }
 }
