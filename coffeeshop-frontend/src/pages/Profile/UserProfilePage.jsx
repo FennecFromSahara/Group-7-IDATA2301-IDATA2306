@@ -137,7 +137,11 @@ function UserProfilePage() {
               <Button
                 variant="contained"
                 color="danger"
-                onClick={handleLogout}
+                onClick={() => {
+                  if (window.confirm("Are you sure you want to logout?")) {
+                    handleLogout();
+                  }
+                }}
                 sx={{ mt: 3 }}
               >
                 Logout

@@ -65,6 +65,10 @@ public class Product {
   @JsonManagedReference("product-cart")
   private List<ShoppingCartProduct> shoppingCartProducts = new ArrayList<>();
 
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference("product-size")
+  private List<ProductSize> productSizes = new ArrayList<>();
+
   /**
    * Empty constructor needed for JPA
    */
@@ -143,5 +147,15 @@ public class Product {
 
   public void setCategories(List<Category> categories) {
     this.categories = categories;
+  }
+
+  public List<ProductSize> getProductSizes() {
+    return productSizes;
+  }
+
+  public void addProductSizes(List<ProductSize> productSizes) {
+    for (ProductSize productSize : productSizes) {
+      this.productSizes.add(productSize);
+    }
   }
 }

@@ -75,7 +75,12 @@ function IndividualProduct() {
               component="img"
               image={image}
               alt="Image of product"
-              sx={{ height: 420, width: 420, float: "left" }}
+              sx={{
+                height: 420,
+                width: 420,
+                float: "left",
+                border: "3px solid",
+              }}
             />
             <Box
               sx={{

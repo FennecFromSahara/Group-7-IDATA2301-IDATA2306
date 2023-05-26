@@ -12,9 +12,10 @@ public class ProductDto {
   private BigDecimal price;
   private String image;
   private List<CategoryDto> categories;
+  private List<ProductSizeDto> productSizes;
 
   public ProductDto(int id, String name, String description, int inventoryAmount, BigDecimal price, String image,
-      List<CategoryDto> categories) {
+      List<CategoryDto> categories, List<ProductSizeDto> productSizes) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -22,6 +23,7 @@ public class ProductDto {
     this.price = price;
     this.image = image;
     this.categories = categories;
+    this.productSizes = productSizes;
   }
 
   public int getId() {
@@ -50,5 +52,9 @@ public class ProductDto {
 
   public List<CategoryDto> getCategories() {
     return categories;
+  }
+
+  public List<ProductSizeDto> getProductSizes() {
+    return productSizes;
   }
 }

@@ -7,12 +7,14 @@ import org.springframework.stereotype.Component;
 
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
+import no.ntnu.group7.coffeeshop.model.ProductSize;
 import no.ntnu.group7.coffeeshop.model.Role;
 import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
 import no.ntnu.group7.coffeeshop.repositories.RoleRepository;
 import no.ntnu.group7.coffeeshop.repositories.UserRepository;
+import no.ntnu.group7.coffeeshop.services.ProductService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -38,6 +40,9 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductService productService;
 
     private final Logger logger = LoggerFactory.getLogger("DummyInit");
 
@@ -80,6 +85,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
         }
 
         if (productRepository.count() == 0) {
+            // Products
             logger.info("Importing test products...");
 
             Product brazilianCoffee = new Product("Brazilian coffee", new BigDecimal(80),
@@ -113,7 +119,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
                     "Our 200-gram pack of Oolong tea provides a unique flavor that's both robust and delicate. Enjoy the complex, layered flavors of our Oolong tea, perfect for tea connoisseurs.",
                     "oolongTea", 10);
 
-            // Other
+            // Other products
             Product chocolate = new Product("Chocolate", new BigDecimal(150),
                     "Indulge in the ultimate decadence with our delicious 500g 70% cocoa chocolate. Carefully crafted from the finest ingredients, this chocolate is sure to satisfy your sweet tooth. With a grid that makes it easy to break into smaller pieces, it's perfect for baking or for eating straight. Enjoy the smooth, refreshing flavor of this high-quality chocolate and indulge in a treat that is truly unforgettable.",
                     "chocolate", 40);
@@ -124,54 +130,58 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
                     "Introducing the ultimate coffee machine! This sleek and practical black machine is perfect for all your coffee making needs. This machine can do it all from making a delicious cup of coffee to creating velvety foam for cappuccinos and lattes. With easy-to-clean parts, you can be sure your machine is always spotless and ready to use. Enjoy the perfect cup of coffee every time with this one-of-a-kind machine.",
                     "coffeeMachine", 10);
 
-            if (categoryRepository.count() == 0) {
-                logger.info("Importing test categories...");
+            // Categories
+            logger.info("applying test categories...");
 
-                Category coffeeCategory = new Category("coffee");
-                Category groundCategory = new Category("ground");
-                Category teaCategory = new Category("tea");
-                Category greenTeaCategory = new Category("green");
-                Category blackTeaCategory = new Category("black");
-                Category herbalTeaCategory = new Category("herbal");
-                Category beansCategory = new Category("beans");
-                Category sweetsCategory = new Category("sweets");
-                Category otherCategory = new Category("other");
-                Category bakedCategory = new Category("baked");
-                Category gadgetsCategory = new Category("gadgets");
-                Category accessoriesCategory = new Category("accessories");
+            Category coffeeCategory = new Category("coffee");
+            Category groundCategory = new Category("ground");
+            Category teaCategory = new Category("tea");
+            Category greenTeaCategory = new Category("green");
+            Category blackTeaCategory = new Category("black");
+            Category herbalTeaCategory = new Category("herbal");
+            Category beansCategory = new Category("beans");
+            Category sweetsCategory = new Category("sweets");
+            Category otherCategory = new Category("other");
+            Category bakedCategory = new Category("baked");
+            Category gadgetsCategory = new Category("gadgets");
+            Category accessoriesCategory = new Category("accessories");
 
-                List<Category> categories = Arrays.asList(coffeeCategory, groundCategory, teaCategory,
-                        greenTeaCategory,
-                        blackTeaCategory, herbalTeaCategory, beansCategory, sweetsCategory,
-                        otherCategory,
-                        bakedCategory,
-                        gadgetsCategory, accessoriesCategory);
-                categoryRepository.saveAll(categories);
+            List<Category> categories = Arrays.asList(coffeeCategory, groundCategory, teaCategory,
+                    greenTeaCategory,
+                    blackTeaCategory, herbalTeaCategory, beansCategory, sweetsCategory,
+                    otherCategory,
+                    bakedCategory,
+                    gadgetsCategory, accessoriesCategory);
+            categoryRepository.saveAll(categories);
 
-                logger.info("DONE importing test categories");
+            brazilianCoffee.setCategories(Arrays.asList(coffeeCategory, groundCategory));
+            greenTea.setCategories(Arrays.asList(teaCategory, greenTeaCategory));
+            peruCoffeeBeans.setCategories(Arrays.asList(coffeeCategory, beansCategory));
+            blackTea.setCategories(Arrays.asList(teaCategory, blackTeaCategory));
+            earlGreyTea.setCategories(Arrays.asList(teaCategory, blackTeaCategory));
+            chamomileTea.setCategories(Arrays.asList(teaCategory, herbalTeaCategory));
+            arabicaCoffee.setCategories(Arrays.asList(coffeeCategory, groundCategory));
+            colombiaCoffeeBeans.setCategories(Arrays.asList(coffeeCategory, beansCategory));
+            whiteTea.setCategories(Arrays.asList(teaCategory, otherCategory));
+            oolongTea.setCategories(Arrays.asList(teaCategory, otherCategory));
 
-                logger.info("applying test categories...");
-                brazilianCoffee.setCategories(Arrays.asList(coffeeCategory, groundCategory));
-                greenTea.setCategories(Arrays.asList(teaCategory, greenTeaCategory));
-                peruCoffeeBeans.setCategories(Arrays.asList(coffeeCategory, beansCategory));
-                blackTea.setCategories(Arrays.asList(teaCategory, blackTeaCategory));
-                earlGreyTea.setCategories(Arrays.asList(teaCategory, blackTeaCategory));
-                chamomileTea.setCategories(Arrays.asList(teaCategory, herbalTeaCategory));
-                arabicaCoffee.setCategories(Arrays.asList(coffeeCategory, groundCategory));
-                colombiaCoffeeBeans.setCategories(Arrays.asList(coffeeCategory, beansCategory));
-                whiteTea.setCategories(Arrays.asList(teaCategory, otherCategory));
-                oolongTea.setCategories(Arrays.asList(teaCategory, otherCategory));
+            chocolate.setCategories(Arrays.asList(sweetsCategory, otherCategory));
+            pancakes.setCategories(Arrays.asList(sweetsCategory, bakedCategory, otherCategory));
+            coffeeMachine.setCategories(
+                    Arrays.asList(accessoriesCategory, gadgetsCategory, coffeeCategory,
+                            otherCategory));
 
-                chocolate.setCategories(Arrays.asList(sweetsCategory, otherCategory));
-                pancakes.setCategories(Arrays.asList(sweetsCategory, bakedCategory, otherCategory));
-                coffeeMachine.setCategories(
-                        Arrays.asList(accessoriesCategory, gadgetsCategory, coffeeCategory,
-                                otherCategory));
-                logger.info("DONE applying test categories");
-            } else {
-                logger.info("Categories already in the database, not importing anything");
-            }
+            logger.info("DONE applying test categories");
 
+            // Product Sizes
+            logger.info("Adding sizes to test products...");
+
+            ProductSize small = new ProductSize("Small", "200g");
+            ProductSize medium = new ProductSize("Medium", "500g");
+            ProductSize large = new ProductSize("Large", "750g");
+            List<ProductSize> smallMediumLarge = Arrays.asList(small, medium, large);
+
+            // Saving products
             productRepository.saveAll(Arrays.asList(
                     brazilianCoffee,
                     greenTea,
@@ -186,6 +196,23 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
                     chocolate,
                     pancakes,
                     coffeeMachine));
+
+            List<Product> teaAndCoffeeProducts = Arrays.asList(brazilianCoffee, greenTea, peruCoffeeBeans, blackTea,
+                    earlGreyTea, chamomileTea, arabicaCoffee, colombiaCoffeeBeans, whiteTea, oolongTea);
+            for (Product product : teaAndCoffeeProducts) {
+                product.addProductSizes(smallMediumLarge);
+                productService.saveProductWithSizes(product);
+            }
+
+            // Chocolate
+            chocolate.addProductSizes(Arrays.asList(small));
+            productService.saveProductWithSizes(chocolate);
+
+            // Pancakes
+            pancakes.addProductSizes(Arrays.asList(small, medium));
+            productService.saveProductWithSizes(pancakes);
+
+            logger.info("DONE applying sizes to test products!");
 
             logger.info("DONE importing test products");
         } else {

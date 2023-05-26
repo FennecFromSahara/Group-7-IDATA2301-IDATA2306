@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import no.ntnu.group7.coffeeshop.dto.CategoryDto;
 import no.ntnu.group7.coffeeshop.dto.ProductDto;
+import no.ntnu.group7.coffeeshop.dto.ProductSizeDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
@@ -46,6 +47,10 @@ public class ProductController {
           .map(category -> new CategoryDto(category.getId(), category.getName()))
           .collect(Collectors.toList());
 
+      List<ProductSizeDto> productSizeDtos = product.getProductSizes().stream()
+          .map(size -> new ProductSizeDto(size.getId(), size.getSize(), size.getWeight()))
+          .collect(Collectors.toList());
+
       return new ProductDto(
           product.getId(),
           product.getName(),
@@ -53,10 +58,11 @@ public class ProductController {
           product.getInventoryAmount(),
           product.getPrice(),
           product.getImage(),
-          categoryDtos);
+          categoryDtos,
+          productSizeDtos);
     }).collect(Collectors.toList());
 
-    return new ResponseEntity<List<ProductDto>>(productDtos, HttpStatus.OK);
+    return new ResponseEntity<>(productDtos, HttpStatus.OK);
   }
 
   /**
@@ -76,6 +82,10 @@ public class ProductController {
         .map(category -> new CategoryDto(category.getId(), category.getName()))
         .collect(Collectors.toList());
 
+    List<ProductSizeDto> productSizeDtos = product.getProductSizes().stream()
+        .map(size -> new ProductSizeDto(size.getId(), size.getSize(), size.getWeight()))
+        .collect(Collectors.toList());
+
     ProductDto productDto = new ProductDto(
         product.getId(),
         product.getName(),
@@ -83,9 +93,10 @@ public class ProductController {
         product.getInventoryAmount(),
         product.getPrice(),
         product.getImage(),
-        categoryDtos);
+        categoryDtos,
+        productSizeDtos);
 
-    return new ResponseEntity<ProductDto>(productDto, HttpStatus.OK);
+    return new ResponseEntity<>(productDto, HttpStatus.OK);
   }
 
   /**
