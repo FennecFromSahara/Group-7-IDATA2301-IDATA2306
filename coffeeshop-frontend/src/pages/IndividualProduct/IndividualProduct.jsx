@@ -14,11 +14,14 @@ import Footer from "../../components/Footer";
 import { getProductById } from "../../hooks/apiService";
 import React from "react";
 import imageMap from "../../components/ProductImageMapping";
+import { addToCart } from "../../tools/addToCart";
+import { useAuth } from "../../hooks/useAuth";
 
 function IndividualProduct() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [product, setProduct] = useState(null);
-  const [selectedSize, setSelectedSize] = useState("small");
+  const [selectedSize, setSelectedSize] = useState("");
   const [showReviews, setShowReviews] = useState(false);
   const [image, setImage] = useState("");
   const theme = useTheme();
@@ -28,6 +31,9 @@ function IndividualProduct() {
       .then((productData) => {
         setProduct(productData);
         setImage(imageMap[productData.image]);
+        if (productData.productSizes && productData.productSizes.length > 0) {
+          setSelectedSize(productData.productSizes[0].size);
+        }
       })
       .catch((err) => {
         console.error(`Error fetching product: ${err.message}`);
@@ -101,16 +107,21 @@ function IndividualProduct() {
                 <Typography variant="body1" sx={{ marginTop: 2 }}>
                   {product.description}
                 </Typography>
-                <Select value={selectedSize} onChange={handleChange}>
-                  <MenuItem value="small">small</MenuItem>
-                  <MenuItem value="medium">medium</MenuItem>
-                  <MenuItem value="large">large</MenuItem>
-                </Select>
+                {product.productSizes && product.productSizes.length > 0 && (
+                  <Select value={selectedSize} onChange={handleChange}>
+                    {product.productSizes.map((size) => (
+                      <MenuItem key={size.id} value={size.size}>
+                        {size.size} - {size.weight}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
               </Box>
               <Button
                 variant="contained"
                 color="primary"
                 sx={{ width: "160px" }}
+                onClick={() => addToCart(user, product)}
               >
                 Add to cart
               </Button>

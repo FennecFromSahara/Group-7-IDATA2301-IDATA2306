@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { asyncApiRequest } from "../../tools/requests";
 import { useAuth } from "../../hooks/useAuth";
 import imageMap from "../../components/ProductImageMapping";
+import { addToCart } from "../../tools/addToCart";
 
 /**
  * A component representing a product card
@@ -20,29 +21,6 @@ export default function ProductCard(props) {
   const product = props.product;
 
   const image = imageMap[product.image];
-
-  const addToCart = async () => {
-    if (!user) {
-      alert("Please log in to add items to the cart.");
-      return;
-    }
-
-    console.log("User id: " + user.id);
-    console.log("Product id: " + product.id);
-
-    try {
-      const requestBody = {
-        userId: user.id,
-        productId: product.id,
-        quantity: 1,
-      };
-      await asyncApiRequest("POST", "/orders/add-to-cart", requestBody, true);
-      alert("Product added to cart successfully.");
-    } catch (error) {
-      alert("Error adding product to cart.");
-      console.error(error);
-    }
-  };
 
   return (
     <Card sx={{ maxWidth: 270 }} elevation={0}>
@@ -77,7 +55,11 @@ export default function ProductCard(props) {
       </CardContent>
 
       <CardActions>
-        <Button size="small" variant="contained" onClick={addToCart}>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => addToCart(user, product)}
+        >
           Add to cart
         </Button>
       </CardActions>

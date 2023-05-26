@@ -154,8 +154,6 @@ public class Product {
   }
 
   public void addProductSizes(List<ProductSize> productSizes) {
-    for (ProductSize productSize : productSizes) {
-      this.productSizes.add(productSize);
-    }
+    this.productSizes = productSizes;
   }
 }
