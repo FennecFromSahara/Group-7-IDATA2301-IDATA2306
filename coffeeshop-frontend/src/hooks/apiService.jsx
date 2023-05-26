@@ -31,3 +31,7 @@ export async function getCategories() {
 export async function getProfileData(username) {
   return await asyncApiRequest("GET", "/users/" + username);
 }
+
+export async function postCheckout() {
+  return await asyncApiRequest("POST", "/checkout");
+}
