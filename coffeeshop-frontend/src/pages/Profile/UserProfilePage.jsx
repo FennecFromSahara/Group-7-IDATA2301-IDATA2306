@@ -3,13 +3,25 @@ import { getProfileData } from "../../hooks/apiService";
 import { useAuth } from "../../hooks/useAuth";
 import { isAdmin } from "../../tools/authentication";
 import { useEffect, useState } from "react";
-import { Box, Typography, Button, Grid, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from "@mui/material";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { useTheme } from "@emotion/react";
 import handleLogout from "../../tools/handleLogout";
 import ErrorPage from "../../components/ErrorPage";
 import React from "react";
+import { asyncApiRequest } from "../../tools/requests";
 
 function UserProfilePage() {
   const { user, loading } = useAuth();
@@ -21,6 +33,13 @@ function UserProfilePage() {
   const [profileLoading, setProfileLoading] = useState(true);
 
   const [error, setError] = useState(null);
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const [changePasswordError, setChangePasswordError] = useState("");
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -48,9 +67,33 @@ function UserProfilePage() {
     }
   }, [user, profile, navigate, profileLoading]);
 
-  //TODO: Change password
+  const handleChangePassword = async () => {
+    try {
+      const response = await asyncApiRequest(
+        "POST",
+        "/change_password",
+        {
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        },
+        true
+      );
+      alert(response);
+      setChangePasswordError("");
+      setOpen(false);
+    } catch (error) {
+      setChangePasswordError(error.message);
+    }
+  };
 
-  //TODO: Are you sure on Logout
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   if (loading || profileLoading) {
     return (
@@ -148,11 +191,58 @@ function UserProfilePage() {
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button variant="contained" color="danger" sx={{ mt: 3 }}>
+              <Button
+                variant="contained"
+                onClick={handleClickOpen}
+                sx={{ mt: 3 }}
+              >
                 Change password
               </Button>
             </Grid>
           </Grid>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Change Password</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Current password"
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                fullWidth
+              />
+              <TextField
+                margin="dense"
+                label="New password"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                fullWidth
+              />
+              <TextField
+                margin="dense"
+                label="Confirm password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                fullWidth
+              />
+              {changePasswordError && (
+                <Typography style={{ color: theme.palette.danger.main }}>
+                  {changePasswordError}
+                </Typography>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button variant="contained" color="danger" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="contained" onClick={handleChangePassword}>
+                Change Password
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Paper>
       </Box>
 
