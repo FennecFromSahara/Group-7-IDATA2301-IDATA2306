@@ -35,14 +35,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Categories = ({ categories }) => {
+const Categories = ({ categories: initialCategories }) => {
   const theme = useTheme();
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
+  const [categories, setCategories] = useState(initialCategories);
 
   const deleteCategory = async (categoryId) => {
     try {
       await asyncApiRequest("DELETE", `/categories/${categoryId}`);
+      setCategories(
+        categories.filter((category) => category.id !== categoryId)
+      );
     } catch (err) {
       console.error(err);
     }
@@ -50,13 +54,20 @@ const Categories = ({ categories }) => {
 
   const addCategory = async (categoryName) => {
     try {
-      await asyncApiRequest("POST", "/categories", { name: categoryName });
+      const newCategory = await asyncApiRequest("POST", "/categories", {
+        name: categoryName,
+      });
       setCreatingCategory(false);
       setNewCategoryName("");
+      setCategories([...categories, newCategory]);
     } catch (err) {
       console.error(err);
     }
   };
+
+  React.useEffect(() => {
+    setCategories(initialCategories);
+  }, [initialCategories]);
 
   return (
     <TableContainer>
