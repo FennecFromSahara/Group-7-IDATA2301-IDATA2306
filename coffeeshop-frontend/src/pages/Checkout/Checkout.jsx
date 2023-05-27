@@ -39,7 +39,7 @@ export default function Checkout() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
 
-    if (activeStep === steps.length) {
+    if (activeStep === steps.length - 1) {
       postCheckout();
     }
   };

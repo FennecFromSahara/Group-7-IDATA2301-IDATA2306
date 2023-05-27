@@ -113,7 +113,7 @@ public class ShoppingCartService {
     }
   }
 
-    /**
+  /**
    * Calculates the total price of all items in a user's shopping cart.
    *
    * @param user the user whose shopping cart total should be calculated
@@ -130,10 +130,10 @@ public class ShoppingCartService {
       total = total.add(itemTotal);
     }
 
-    return total; //TODO: should be in shoppingcartservice?
+    return total; // TODO: should be in shoppingcartservice?
   }
 
-    /**
+  /**
    * Clears the shopping cart for a given user by removing all items.
    *
    * @param user the user whose shopping cart should be cleared

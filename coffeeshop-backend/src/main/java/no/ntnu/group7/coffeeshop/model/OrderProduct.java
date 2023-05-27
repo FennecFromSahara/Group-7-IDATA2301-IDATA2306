@@ -1,7 +1,5 @@
 package no.ntnu.group7.coffeeshop.model;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -37,9 +35,6 @@ public class OrderProduct {
   private Product product;
 
   @Column(nullable = false)
-  private BigDecimal price;
-
-  @Column(nullable = false)
   private int quantity;
 
   /**
@@ -54,13 +49,11 @@ public class OrderProduct {
    *
    * @param order    The order associated with this order product.
    * @param product  The product associated with this order product.
-   * @param price    The price of the product in the order.
    * @param quantity The quantity of the product in the order.
    */
-  public OrderProduct(Order order, Product product, BigDecimal price, int quantity) {
+  public OrderProduct(Order order, Product product, int quantity) {
     this.order = order;
     this.product = product;
-    this.price = price;
     this.quantity = quantity;
   }
 
@@ -86,14 +79,6 @@ public class OrderProduct {
 
   public void setProduct(Product product) {
     this.product = product;
-  }
-
-  public BigDecimal getPrice() {
-    return price;
-  }
-
-  public void setPrice(BigDecimal price) {
-    this.price = price;
   }
 
   public int getQuantity() {

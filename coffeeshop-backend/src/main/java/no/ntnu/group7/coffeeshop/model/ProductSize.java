@@ -23,17 +23,16 @@ public class ProductSize {
   private int id;
 
   @Column
-  private String size; // small, medium, large
+  private String size;
 
   @Column
-  private String weight; // 200g, 500g, 750g
+  private String weight;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "product_id", nullable = false)
   @JsonBackReference("product-size")
   private Product product;
 
-  // constructor, getters and setters
   public ProductSize() {
 
   }

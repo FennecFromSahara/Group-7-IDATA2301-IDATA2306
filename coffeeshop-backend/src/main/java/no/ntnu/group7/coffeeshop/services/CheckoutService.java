@@ -59,7 +59,6 @@ public class CheckoutService {
       orderItem.setOrder(order);
       orderItem.setProduct(cartItem.getProduct());
       orderItem.setQuantity(cartItem.getQuantity());
-      orderItem.setPrice(cartItem.getProduct().getPrice());
 
       entityManager.persist(orderItem);
     }
@@ -69,8 +68,6 @@ public class CheckoutService {
 
     // Clear the shopping cart
     shoppingCartService.clearShoppingCart(user);
-
-    // TODO: Process the payment?
 
     // Updates the order status
     order.setOrderStatus(Order.OrderStatus.PROCESSING);
