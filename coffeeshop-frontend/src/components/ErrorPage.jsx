@@ -11,7 +11,7 @@ function ErrorPage({ error }) {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      sx={{ minHeight: theme.boxSizes.navSection }}
+      sx={{ minHeight: theme.boxSizes.full }}
     >
       <Typography variant="h2">{error}</Typography>
     </Box>

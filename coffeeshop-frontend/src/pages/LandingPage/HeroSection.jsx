@@ -34,7 +34,7 @@ function HeroSection() {
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundImage,
-    height: theme.boxSizes.navSection,
+    height: theme.boxSizes.full,
     width: "100%",
   };
 

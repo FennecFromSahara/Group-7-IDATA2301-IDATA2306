@@ -16,7 +16,7 @@ function NoAccessPage() {
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        sx={{ minHeight: theme.boxSizes.navSection }}
+        sx={{ minHeight: theme.boxSizes.full }}
       >
         <Typography variant="h2">
           You do not have access to this page

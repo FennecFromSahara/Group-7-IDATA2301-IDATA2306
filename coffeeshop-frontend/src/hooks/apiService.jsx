@@ -35,3 +35,7 @@ export async function getProfileData(username) {
 export async function postCheckout() {
   return await asyncApiRequest("POST", "/checkout");
 }
+
+export async function getProductsCount() {
+  return await asyncApiRequest("GET", "/products/count");
+}

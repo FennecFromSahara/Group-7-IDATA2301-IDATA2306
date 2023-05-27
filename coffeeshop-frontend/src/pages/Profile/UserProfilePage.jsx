@@ -100,7 +100,7 @@ function UserProfilePage() {
       <div>
         <NavBar />
         <Box
-          minHeight={theme.boxSizes.navSectionFooter}
+          minHeight={theme.boxSizes.full}
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -131,7 +131,7 @@ function UserProfilePage() {
 
       <Box
         style={{
-          height: theme.boxSizes.navSectionFooter,
+          minHeight: theme.boxSizes.navSectionFooter,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",

@@ -16,8 +16,8 @@ function About() {
         display="flex"
         flexDirection="column"
         sx={{
-          m: 3,
-          minHeight: theme.boxSizes.navSectionFooter,
+          m: "3rem",
+          minHeight: theme.boxSizes.full3rem,
         }}
       >
         <Box flex={1} overflow="auto">

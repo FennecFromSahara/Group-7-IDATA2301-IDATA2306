@@ -2,8 +2,8 @@ import React from "react";
 import HeroSection from "./HeroSection";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import ProductOverview from "../Products/ProductOverview";
 import { Box } from "@mui/material";
+import ProductDisplay from "./ProductDisplay";
 
 function LandingPage() {
   return (
@@ -12,7 +12,7 @@ function LandingPage() {
 
       <HeroSection />
 
-      <ProductOverview />
+      <ProductDisplay />
 
       <Footer />
     </Box>

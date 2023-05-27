@@ -257,4 +257,16 @@ public class ProductController {
 
     return new ResponseEntity<>(newReview, HttpStatus.CREATED);
   }
+
+  /**
+   * Handles HTTP GET requests to "/api/products/count" and returns the count of
+   * products in the database.
+   *
+   * @return The count of Product objects.
+   */
+  @GetMapping("/count")
+  public ResponseEntity<Long> getProductCount() {
+    long count = productRepository.count();
+    return new ResponseEntity<>(count, HttpStatus.OK);
+  }
 }

@@ -84,7 +84,7 @@ function ProductOverview() {
         display="flex"
         justifyContent="flex-start"
         alignItems="flex-start"
-        sx={{ minHeight: theme.boxSizes.navSection, p: "1rem 3rem 3rem 3rem" }}
+        sx={{ minHeight: theme.boxSizes.full, p: "1rem 3rem 3rem 3rem" }}
       >
         <Box
           display="flex"

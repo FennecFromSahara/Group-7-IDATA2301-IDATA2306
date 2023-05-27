@@ -76,7 +76,7 @@ function IndividualProduct() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            minHeight: theme.boxSizes.navSectionFooter,
+            minHeight: theme.boxSizes.full3rem,
             m: "3rem auto",
           }}
         >
@@ -164,19 +164,21 @@ function IndividualProduct() {
               {showReviews &&
                 (product?.reviews?.length > 0 ? (
                   product.reviews.map((review, index) => (
-                    <Box key={index}>
+                    <Box key={index} sx={{ mt: 2 }}>
                       <Typography sx={{ fontSize: 16 }}>
-                        {review.username}:{" "}
+                        {review.username}:
                       </Typography>
-                      <Typography sx={{ fontSize: 16 }}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
                         <Rating
                           name="read-only"
                           value={review.rating}
                           readOnly
                           size="small"
                         />
-                        {review.reviewText}
-                      </Typography>
+                        <Typography sx={{ fontSize: 16, marginLeft: 1 }}>
+                          {review.reviewText}
+                        </Typography>
+                      </Box>
                     </Box>
                   ))
                 ) : (

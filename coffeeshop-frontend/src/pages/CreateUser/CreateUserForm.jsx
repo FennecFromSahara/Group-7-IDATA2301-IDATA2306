@@ -87,7 +87,7 @@ export default function CreateUserForm() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
-        minHeight={theme.boxSizes.navSectionFooter}
+        minHeight={theme.boxSizes.full}
         sx={{
           marginTop: 8,
           display: "flex",
