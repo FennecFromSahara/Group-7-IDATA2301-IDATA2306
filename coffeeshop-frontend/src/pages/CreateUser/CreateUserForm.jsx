@@ -49,6 +49,8 @@ export default function CreateUserForm() {
 
     const username = data.get("username");
     const email = data.get("email");
+    const password = data.get("password");
+    const confirmPassword = data.get("confirmPassword");
 
     if (!isValidUsername(username)) {
       setError(
@@ -62,9 +64,14 @@ export default function CreateUserForm() {
       return;
     }
 
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     const signupData = {
       username: username,
-      password: data.get("password"),
+      password: password,
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       email: email,
@@ -155,6 +162,17 @@ export default function CreateUserForm() {
                 label="Password"
                 type="password"
                 id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
                 autoComplete="new-password"
               />
             </Grid>
