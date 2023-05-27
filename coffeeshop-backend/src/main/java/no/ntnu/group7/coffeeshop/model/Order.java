@@ -52,9 +52,6 @@ public class Order {
   @Column(name = "created_at")
   private Date createdAt;
 
-  // @OneToMany(mappedBy = "order")
-  // private Set<OrderProduct> orderProducts = new HashSet<>();
-
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("order-orderProduct")
   private List<OrderProduct> orderProducts = new ArrayList<>();

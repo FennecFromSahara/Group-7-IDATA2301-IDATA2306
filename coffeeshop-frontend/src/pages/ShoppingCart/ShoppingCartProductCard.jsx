@@ -40,20 +40,13 @@ export default function ShoppingCartProductCard(props) {
   }, []);
 
   const increaseAmount = async () => {
-    // if (!user) {
-    //   alert("Please log in to add items to the cart.");
-    //   return;
-    // }
-
-    // console.log("User id: " + user.id);
-    // console.log("Product id: " + product.id);
 
     try {
       const requestBody = {
         id: shoppingCartProduct.id,
         userId: shoppingCartProduct.userId,
         productId: shoppingCartProduct.productId,
-        quantity: quantity,
+        quantity: shoppingCartProduct.quantity + 1,
       };
 
       await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
@@ -68,20 +61,13 @@ export default function ShoppingCartProductCard(props) {
   };
 
   const decreaseAmount = async () => {
-    // if (!user) {
-    //   alert("Please log in to add items to the cart.");
-    //   return;
-    // }
-
-    // console.log("User id: " + user.id);
-    // console.log("Product id: " + product.id);
 
     try {
       const requestBody = {
         id: shoppingCartProduct.id,
         userId: shoppingCartProduct.userId,
         productId: shoppingCartProduct.productId,
-        quantity: shoppingCartProduct.quantity,
+        quantity: shoppingCartProduct.quantity - 1,
       };
 
       await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
@@ -96,14 +82,6 @@ export default function ShoppingCartProductCard(props) {
   };
 
   const deleteProductFromCart = async () => {
-    //TODO: autorefresh
-    // if (!user) {
-    //   alert("Please log in to add items to the cart.");
-    //   return;
-    // }
-
-    // console.log("User id: " + user.id);
-    // console.log("Product id: " + product.id);
 
     try {
       await asyncApiRequest("DELETE", "/shoppingCart/" + product.id);

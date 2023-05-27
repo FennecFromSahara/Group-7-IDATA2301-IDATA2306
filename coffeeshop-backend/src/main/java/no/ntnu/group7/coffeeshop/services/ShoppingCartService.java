@@ -130,7 +130,7 @@ public class ShoppingCartService {
       total = total.add(itemTotal);
     }
 
-    return total; // TODO: should be in shoppingcartservice?
+    return total;
   }
 
   /**

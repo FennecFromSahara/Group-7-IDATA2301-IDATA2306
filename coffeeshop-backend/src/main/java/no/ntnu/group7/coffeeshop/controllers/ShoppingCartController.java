@@ -51,68 +51,79 @@ public class ShoppingCartController {
   @GetMapping("")
   public ResponseEntity<List<ShoppingCartProductDto>> getShoppingCart() {
     User user = accessUserService.getSessionUser();
+    ResponseEntity<List<ShoppingCartProductDto>> response;
     if (user == null) {
-      // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not
-      // authenticated");
+      response = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    } else {
+      List<ShoppingCartProduct> shoppingCartProducts = shoppingCartService.getCartProducts(user);
+      List<ShoppingCartProductDto> shoppingCartProductDtos = shoppingCartProducts.stream()
+          .map(shoppingCartProduct -> new ShoppingCartProductDto(
+              shoppingCartProduct.getId(),
+              shoppingCartProduct.getUser().getId(),
+              shoppingCartProduct.getProduct().getId(),
+              shoppingCartProduct.getQuantity()))
+          .collect(Collectors.toList());
+
+      response = new ResponseEntity<>(shoppingCartProductDtos, HttpStatus.OK);
     }
 
-    List<ShoppingCartProduct> shoppingCartProducts = shoppingCartService.getCartProducts(user);
-    List<ShoppingCartProductDto> shoppingCartProductDtos = shoppingCartProducts.stream()
-        .map(shoppingCartProduct -> new ShoppingCartProductDto(
-            shoppingCartProduct.getId(),
-            shoppingCartProduct.getUser().getId(),
-            shoppingCartProduct.getProduct().getId(),
-            shoppingCartProduct.getQuantity()))
-        .collect(Collectors.toList());
-
-    return ResponseEntity.ok(shoppingCartProductDtos);
+    return response;
   }
 
   @GetMapping("/total")
   public ResponseEntity<BigDecimal> getTotal() {
     User user = accessUserService.getSessionUser();
+    ResponseEntity<BigDecimal> response;
     if (user == null) {
-      // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not
-      // authenticated");
+      response = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    } else {
+      BigDecimal total = shoppingCartService.calculateShoppingCartTotal(user);
+      System.out.println("hello:" + total);
+
+      response = new ResponseEntity<>(total, HttpStatus.OK);
     }
 
-    BigDecimal total = shoppingCartService.calculateShoppingCartTotal(user);
-    System.out.println("hello:" + total);
-
-    return ResponseEntity.ok(total);
+    return response;
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteItemFromCart(@PathVariable int id) {
+  public ResponseEntity<String> deleteItemFromCart(@PathVariable int id) {
     User user = accessUserService.getSessionUser();
-    if (user == null) {
-      // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not
-      // authenticated");
-    }
-
+    ResponseEntity<String> response;
     if (!productRepository.existsById(id)) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
     }
 
-    Product product = productRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-    shoppingCartService.removeItemFromCart(user, product);
+    if (user == null) {
+      response = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    } else {
+      Product product = productRepository.findById(id)
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+      shoppingCartService.removeItemFromCart(user, product);
 
-    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+      response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    return response;
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<Void> updateShoppingCartProductQuantity(@PathVariable int id, @RequestBody int quantity) {
+  @PutMapping("")
+  public ResponseEntity<Void> updateShoppingCartProductQuantity(
+      @RequestBody ShoppingCartProductDto shoppingCartProductDto) {
+
+    int id = shoppingCartProductDto.getId();
+    int quantity = shoppingCartProductDto.getQuantity();
 
     ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ShoppingCartProduct not found"));
     shoppingCartService.updateCartItemQuantity(shoppingCartProduct, quantity);
 
-    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
-    /**
-   * Handles HTTP POST requests to "/api/shoppingCart/add-to-cart" and adds a product to
+  /**
+   * Handles HTTP POST requests to "/api/shoppingCart/add-to-cart" and adds a
+   * product to
    * the shopping cart of the user.
    *
    * @param shoppingCartProductDto The DTO containing the ID of the product to add
@@ -132,27 +143,4 @@ public class ShoppingCartController {
     shoppingCartService.addItemToCart(user, product, shoppingCartProductDto.getQuantity());
     return ResponseEntity.ok("Product added to cart");
   }
-
-  // @PutMapping("/{id}")
-  // public ResponseEntity<Void>
-  // changeShoppingCartProductQuantityByOne(@PathVariable int id, @RequestBody
-  // String plusOrMinus) {
-
-  // ShoppingCartProduct shoppingCartProduct =
-  // shoppingCartProductRepository.findById(id)
-  // .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-  // "ShoppingCartProduct not found"));
-
-  // if (plusOrMinus == "+") {
-  // shoppingCartService.updateCartItemQuantity(shoppingCartProduct,
-  // shoppingCartProduct.getQuantity() + 1);
-  // } else if (plusOrMinus == "-") {
-  // shoppingCartService.updateCartItemQuantity(shoppingCartProduct,
-  // shoppingCartProduct.getQuantity() - 1);
-  // } else {
-
-  // }
-
-  // return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-  // }
 }
