@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.group7.coffeeshop.dto.ShoppingCartProductDto;
 import no.ntnu.group7.coffeeshop.model.Product;
 import no.ntnu.group7.coffeeshop.model.ShoppingCartProduct;
@@ -46,7 +49,19 @@ public class ShoppingCartController {
   @Autowired
   private ShoppingCartProductRepository shoppingCartProductRepository;
 
+  /**
+   * HTTP GET endpoint for getting all the products in the users cart
+   * 
+   * @return List of all shoppingCartProducts in the shoppingcart
+   */
   @GetMapping("")
+  @Operation(
+    summary = "Get shopping cart items"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Success"),
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
+  })
   public ResponseEntity<List<ShoppingCartProductDto>> getShoppingCart() {
     User user = accessUserService.getSessionUser();
     if (user == null) {
@@ -65,7 +80,19 @@ public class ShoppingCartController {
     return ResponseEntity.ok(shoppingCartProductDtos);
   }
 
+  /**
+   * HTTP GET endpoint for getting the total cost of a users cart
+   * 
+   * @return The total cost of users shopping cart items
+   */
   @GetMapping("/total")
+  @Operation(
+    summary = "Get total cost of shoppingcart"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Success"),
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
+  })
   public ResponseEntity<BigDecimal> getTotal() {
     User user = accessUserService.getSessionUser();
     if (user == null) {
@@ -76,7 +103,21 @@ public class ShoppingCartController {
     return ResponseEntity.ok(total);
   }
 
+  /**
+   * HTTP DELETE endpoint for deleting an item from cart
+   * 
+   * @param id id of the item to delete
+   * @return A response indicating success or failure of the operation.
+   */
   @DeleteMapping("/{id}")
+  @Operation(
+    summary = "Remove item from shoppingcart"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "204", description = "Item removed successfully"),
+    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    @ApiResponse(responseCode = "404", description = "Product not found")
+  })
   public ResponseEntity<String> deleteItemFromCart(@PathVariable int id) {
     User user = accessUserService.getSessionUser();
     if (user == null) {
@@ -94,8 +135,22 @@ public class ShoppingCartController {
     return ResponseEntity.noContent().build();
   }
 
+  /**
+   * HTTP PUT endpoint for updating the quantity of a shoppingCartProduct
+   * 
+   * @param shoppingCartProductDto The shoppingCartProduct to update quantity of
+   * @return A response indicating success or failure of the operation.
+   */
   @PutMapping("")
-  public ResponseEntity<Void> updateShoppingCartProductQuantity(
+  @Operation(
+    summary = "Update shoppingCartProduct quantity"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Quantity updated successfully"),
+    @ApiResponse(responseCode = "400", description = "Invalid quantity"),
+    @ApiResponse(responseCode = "404", description = "ShoppingCartProduct not found")
+  })
+  public ResponseEntity<String> updateShoppingCartProductQuantity(
       @RequestBody ShoppingCartProductDto shoppingCartProductDto) {
 
     int id = shoppingCartProductDto.getId();
@@ -110,7 +165,7 @@ public class ShoppingCartController {
 
     shoppingCartService.updateCartItemQuantity(shoppingCartProduct, quantity);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok("Quantity updated successfully");
   }
 
   /**
@@ -118,11 +173,20 @@ public class ShoppingCartController {
    * product to
    * the shopping cart of the user.
    *
-   * @param shoppingCartProductDto The DTO containing the ID of the product to add
-   *                               and the quantity.
+   * @param shoppingCartProductDto The DTO containing the ID of the product, and
+   *                               the quantity of the product
    * @return A response indicating success or failure of the operation.
    */
   @PostMapping("/add-to-cart")
+  @Operation(
+    summary = "Add product to cart"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Product added to cart successfully"),
+    @ApiResponse(responseCode = "400", description = "Invalid quantity"),
+    @ApiResponse(responseCode = "401", description = "Unauthorized"),
+    @ApiResponse(responseCode = "404", description = "Product not found")
+  })
   public ResponseEntity<String> addToCart(@RequestBody ShoppingCartProductDto shoppingCartProductDto) {
     User user = accessUserService.getSessionUser();
     if (user == null) {
