@@ -3,8 +3,15 @@ package no.ntnu.group7.coffeeshop.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -13,6 +20,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -43,6 +51,13 @@ public class Order {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
   private Date createdAt;
+
+  // @OneToMany(mappedBy = "order")
+  // private Set<OrderProduct> orderProducts = new HashSet<>();
+
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference("order-orderProduct")
+  private List<OrderProduct> orderProducts = new ArrayList<>();
 
   // Enum for order status
   public enum OrderStatus {
