@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.services.AccessUserService;
 import no.ntnu.group7.coffeeshop.services.CheckoutService;
@@ -26,7 +29,19 @@ public class CheckoutController {
   @Autowired
   private CheckoutService checkoutService;
 
+  /**
+   * HTTP POST endpoint for handling checkout
+   * 
+   * @return A response indicating success or failure of the operation.
+   */
   @PostMapping("")
+  @Operation(
+    summary = "Checkout"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Successful"),
+    @ApiResponse(responseCode = "401", description = "User not authenticated")
+  })
   public ResponseEntity<String> checkout() {
     User user = accessUserService.getSessionUser();
     if (user == null) {

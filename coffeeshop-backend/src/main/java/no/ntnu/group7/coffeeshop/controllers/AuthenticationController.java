@@ -16,6 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 /**
  * Controller responsible for authentication.
  */
@@ -37,6 +41,13 @@ public class AuthenticationController {
    * @return OK + JWT token; Or UNAUTHORIZED
    */
   @PostMapping("/api/authenticate")
+  @Operation(
+    summary = "Try to authenticate"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Successful"),
+    @ApiResponse(responseCode = "401", description = "Invalid username or password")
+  })
   public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -56,6 +67,13 @@ public class AuthenticationController {
    * @return Name of the template for the result page
    */
   @PostMapping("/api/signup")
+  @Operation(
+    summary = "Try to signup"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Successful"),
+    @ApiResponse(responseCode = "400", description = "Error creating user")
+  })
   public ResponseEntity<String> signupProcess(@RequestBody SignupDto signupData) {
     String errorMessage = userService.tryCreateNewUser(signupData.getUsername(), signupData.getPassword(),
         signupData.getFirstName(), signupData.getLastName(), signupData.getEmail(), signupData.getAddress());
@@ -74,7 +92,15 @@ public class AuthenticationController {
    * @param changePasswordData
    * @return
    */
-  @PostMapping("/api/change_password")
+  @PostMapping("/api/change_password") //TODO: should be PUT or the other one?
+  @Operation(
+    summary = "Change password"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Password update successfully"),
+    @ApiResponse(responseCode = "404", description = "User not found"),
+    @ApiResponse(responseCode = "400", description = "Error updating password")
+  })
   public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordData) {
     User user = userService.getSessionUser();
     if (user == null) {

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import no.ntnu.group7.coffeeshop.dto.OrderDto;
 import no.ntnu.group7.coffeeshop.dto.ShoppingCartProductDto;
 import no.ntnu.group7.coffeeshop.model.Order;
@@ -46,6 +48,10 @@ public class OrderController {
    * @return A response containing a list of Order DTOs.
    */
   @GetMapping("")
+  @Operation(
+    summary = "Get all orders"
+  )
+  @ApiResponse(responseCode = "200", description = "Success")
   public ResponseEntity<List<OrderDto>> getAllOrders() {
     List<Order> orders = orderService.getAllOrders();
     List<OrderDto> orderDtos = orders.stream()

@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.group7.coffeeshop.dto.CategoryDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
@@ -34,6 +37,10 @@ public class CategoryController {
    * @return A list of Category objects.
    */
   @GetMapping("")
+  @Operation(
+    summary = "Get all categories"
+  )
+  @ApiResponse(responseCode = "400", description = "Success")
   public ResponseEntity<List<CategoryDto>> getAllCategories() {
     List<Category> categories = categoryRepository.findAll();
     List<CategoryDto> categoryDtos = new ArrayList<>();
@@ -55,6 +62,13 @@ public class CategoryController {
    * @return The Category object with the specified ID.
    */
   @GetMapping("/{id}")
+  @Operation(
+    summary = "Get one category"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Successful"),
+    @ApiResponse(responseCode = "404", description = "Product not found")
+  })
   public ResponseEntity<CategoryDto> getCategoryById(@PathVariable(value = "id") int categoryId) {
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
@@ -72,6 +86,10 @@ public class CategoryController {
    * @return The created Category object.
    */
   @PostMapping("")
+  @Operation(
+    summary = "Add category"
+  )
+  @ApiResponse(responseCode = "201", description = "Created")
   public ResponseEntity<Category> createCategory(@RequestBody CategoryDto categoryDto) {
     Category newCategory = categoryRepository.save(new Category(categoryDto.getName()));
 
@@ -88,6 +106,14 @@ public class CategoryController {
    * @return A response indicating success or failure of the deletion.
    */
   @DeleteMapping("/{id}")
+  @Operation(
+    summary = "Delete category"
+  )
+  @ApiResponses({
+    @ApiResponse(responseCode = "204", description = "Item removed successfully"),
+    @ApiResponse(responseCode = "404", description = "Category not found")
+  })
+  //TODO: maybe not void?
   public ResponseEntity<Void> deleteCategory(@PathVariable(value = "id") int categoryId) {
     if (categoryService.deleteCategory(categoryId)) {
       return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

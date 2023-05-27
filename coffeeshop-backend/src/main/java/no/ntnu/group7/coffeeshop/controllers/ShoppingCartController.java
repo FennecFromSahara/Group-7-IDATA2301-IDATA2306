@@ -32,6 +32,9 @@ import no.ntnu.group7.coffeeshop.services.AccessUserService;
 import no.ntnu.group7.coffeeshop.services.CheckoutService;
 import no.ntnu.group7.coffeeshop.services.ShoppingCartService;
 
+/**
+ * Controller responsible for managing shopping cart related endpoints
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/shoppingCart")
