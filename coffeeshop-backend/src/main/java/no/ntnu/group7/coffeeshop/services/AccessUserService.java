@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import no.ntnu.group7.coffeeshop.dto.ChangePasswordDto;
 import no.ntnu.group7.coffeeshop.dto.UserProfileDto;
 import no.ntnu.group7.coffeeshop.model.Role;
 import no.ntnu.group7.coffeeshop.model.User;
@@ -255,5 +256,23 @@ public class AccessUserService implements UserDetailsService {
     String rolesAsString = roleNames.toString();
 
     return rolesAsString;
+  }
+
+  public String updatePassword(User user, ChangePasswordDto changePasswordData) {
+    String currentPassword = changePasswordData.getCurrentPassword();
+    String newPassword = changePasswordData.getNewPassword();
+    String confirmPassword = changePasswordData.getConfirmPassword();
+
+    if (!BCrypt.checkpw(currentPassword, user.getPassword())) {
+      return "Current password is incorrect";
+    } else if (!newPassword.equals(confirmPassword)) {
+      return "Passwords do not match";
+    } else if (newPassword.length() < MIN_PASSWORD_LENGTH) {
+      return "Password must be at least " + MIN_PASSWORD_LENGTH + " characters";
+    } else {
+      user.setPassword(createHash(newPassword));
+      userRepository.save(user);
+    }
+    return null;
   }
 }

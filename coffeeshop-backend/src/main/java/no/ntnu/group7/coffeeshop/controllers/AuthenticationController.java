@@ -2,7 +2,9 @@ package no.ntnu.group7.coffeeshop.controllers;
 
 import no.ntnu.group7.coffeeshop.dto.AuthenticationRequest;
 import no.ntnu.group7.coffeeshop.dto.AuthenticationResponse;
+import no.ntnu.group7.coffeeshop.dto.ChangePasswordDto;
 import no.ntnu.group7.coffeeshop.dto.SignupDto;
+import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.security.JwtUtil;
 import no.ntnu.group7.coffeeshop.services.AccessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +66,26 @@ public class AuthenticationController {
       response = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
     return response;
+  }
+
+  /**
+   * HTTP POST requets to change password of a user
+   * 
+   * @param changePasswordData
+   * @return
+   */
+  @PostMapping("/api/change_password")
+  public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordData) {
+    User user = userService.getSessionUser();
+    if (user == null) {
+      return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+    String errorMessage = userService.updatePassword(user, changePasswordData);
+    if (errorMessage != null) {
+      return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
   }
 }
