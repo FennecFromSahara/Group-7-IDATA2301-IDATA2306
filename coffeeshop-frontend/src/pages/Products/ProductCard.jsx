@@ -19,8 +19,6 @@ export default function ProductCard(props) {
   const { user } = useAuth();
   const product = props.product;
 
-  const image = imageMap[product.image];
-
   return (
     <Card sx={{ maxWidth: 270 }} elevation={0}>
       <CardActionArea>
@@ -28,7 +26,7 @@ export default function ProductCard(props) {
           <CardMedia
             component="img"
             height="270"
-            image={image}
+            image={imageMap[product.image] || imageMap["placeholder"]}
             alt={`Image of ${product.name}`}
           />
         </Link>

@@ -1,9 +1,21 @@
 import { useState, useEffect } from "react";
-import { Box, Button, TextField, Typography, Grid, Chip } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
 import { getCategories } from "../../../hooks/apiService";
 import React from "react";
+import imageMap from "../../../components/ProductImageMapping";
 
 const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   const theme = useTheme();
@@ -12,10 +24,24 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   const [description, setDescription] = useState("");
   const [inventoryAmount, setInventoryAmount] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState("placeholder");
   const [categories, setCategories] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
+  const changeImage = (img) => {
+    setImage(img);
+    setOpenDialog(false);
+  };
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -27,17 +53,12 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   }, []);
 
   const addCategory = (category) => {
-    setCategories((prevState) =>
-      prevState ? prevState + ", " + category.name : category.name
-    );
+    setSelectedCategories((prevState) => [...prevState, category]);
   };
 
   const removeCategory = (categoryToRemove) => {
-    setCategories((prevState) =>
-      prevState
-        .split(", ")
-        .filter((category) => category !== categoryToRemove.name)
-        .join(", ")
+    setSelectedCategories((prevState) =>
+      prevState.filter((category) => category.id !== categoryToRemove.id)
     );
   };
 
@@ -55,7 +76,7 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
         description,
         inventoryAmount: parseInt(inventoryAmount),
         price: parseFloat(price),
-        categories,
+        categories: selectedCategories,
         image,
       });
 
@@ -153,47 +174,76 @@ const ProductCreate = ({ setCreatingProduct, addProduct }) => {
           }}
           required
         />
-        <TextField
-          label="Image"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          variant="outlined"
-          fullWidth
-          sx={{
-            backgroundColor: theme.palette.primary.contrastText,
-            mb: 3,
-          }}
-        />
+        <Box sx={{ cursor: "pointer" }} onClick={handleClickOpen}>
+          <img
+            src={imageMap[image]}
+            alt={name}
+            style={{ width: "200px", height: "200px" }}
+          />
+          <Typography variant="body2" sx={{ fontStyle: "italic", mb: 2 }}>
+            Click the image to change image
+          </Typography>
+        </Box>
+        <Dialog open={openDialog} onClose={handleClose}>
+          <DialogTitle>Select a new image</DialogTitle>
+          <DialogContent>
+            <Grid container spacing={2}>
+              {Object.keys(imageMap)
+                .filter((img) => img !== image)
+                .map((img, index) => (
+                  <Grid item key={index} onClick={() => changeImage(img)}>
+                    <img
+                      src={imageMap[img]}
+                      alt={img}
+                      style={{
+                        width: "120px",
+                        height: "120px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </Grid>
+                ))}
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
 
-        <Typography variant="body1" gutterBottom>
+        <Box component="div" variant="body1" gutterBottom>
           Categories:
-          {categories.split(", ").map((category) => (
+          {selectedCategories.map((category) => (
             <Chip
-              label={category}
-              onDelete={() => removeCategory({ name: category })}
+              key={category.id}
+              label={category.name}
+              onDelete={() => removeCategory(category)}
             />
           ))}
-        </Typography>
+        </Box>
 
-        <Typography variant="body1" gutterBottom>
+        <Box component="div" variant="body1" gutterBottom>
           Available Categories:
           {allCategories
             .filter(
-              (category) => !categories.split(", ").includes(category.name)
+              (category) =>
+                !selectedCategories.find(
+                  (selected) => selected.id === category.id
+                )
             )
             .map((category) => (
               <Chip
+                key={category.id}
                 label={category.name}
                 onClick={() => addCategory(category)}
               />
             ))}
-        </Typography>
+        </Box>
 
         <Button
           variant="contained"
           color="primary"
           type="submit"
-          style={{ marginRight: theme.spacing(2) }}
+          sx={{ marginRight: 2, mt: 1 }}
           disabled={!name || !description || !inventoryAmount || !price}
         >
           Create Product

@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid, Typography, Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
-
 import { getProducts } from "../../hooks/apiService";
 import { useTheme } from "@emotion/react";
 
@@ -55,7 +54,7 @@ function ProductOverview() {
           );
         })
         .map((product, index) => (
-          <Grid item xs={1} sm={1} md={1} lg={1} key={product.id}>
+          <Grid item xs={1} sm={1} md={1} lg={1} key={index}>
             <ProductCard product={product} />
           </Grid>
         ));

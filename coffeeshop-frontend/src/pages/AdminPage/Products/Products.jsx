@@ -12,6 +12,7 @@ import {
 import { styled } from "@mui/material/styles";
 import ProductCreate from "./ProductCreate";
 import React from "react";
+import imageMap from "../../../components/ProductImageMapping";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
@@ -97,7 +98,7 @@ const Products = ({ products, setProduct, addProduct }) => {
               <TableCell align="right">
                 {product.image && (
                   <img
-                    src={product.image}
+                    src={imageMap[product.image] || imageMap["placeholder"]}
                     alt={product.name}
                     style={{ width: "50px", height: "50px" }}
                   />

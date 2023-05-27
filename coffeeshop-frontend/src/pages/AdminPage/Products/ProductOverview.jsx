@@ -1,9 +1,21 @@
 import { useState, useEffect } from "react";
 import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
-import { TextField, Button, Box, Grid, Typography, Chip } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Grid,
+  Typography,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import { getCategories } from "../../../hooks/apiService";
 import React from "react";
+import imageMap from "../../../components/ProductImageMapping";
 
 const ProductOverview = ({
   product,
@@ -21,6 +33,28 @@ const ProductOverview = ({
   const [image, setImage] = useState(product.image);
   const [categories, setCategories] = useState(product.categories || []);
   const [allCategories, setAllCategories] = useState([]);
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
+  const updateImage = async (image) => {
+    try {
+      await asyncApiRequest("PATCH", `/products/${product.id}/image`, {
+        image,
+      });
+      setImage(image);
+      setOpenDialog(false);
+    } catch (error) {
+      console.error("Error updating image:", error);
+    }
+  };
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -140,14 +174,43 @@ const ProductOverview = ({
         fullWidth
         sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
       />
-      <TextField
-        label="Image"
-        value={image}
-        onChange={(e) => setImage(e.target.value)}
-        variant="outlined"
-        fullWidth
-        sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
-      />
+      <Box sx={{ cursor: "pointer" }} onClick={handleClickOpen}>
+        <img
+          src={imageMap[image]}
+          alt={name}
+          style={{ width: "200px", height: "200px" }}
+        />
+        <Typography variant="body2" sx={{ fontStyle: "italic", mb: 2 }}>
+          Click the image to change image
+        </Typography>
+      </Box>
+      <Dialog open={openDialog} onClose={handleClose}>
+        <DialogTitle>Select a new image</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            {Object.keys(imageMap)
+              .filter((img) => img !== image)
+              .map((img, index) => (
+                <Grid item key={index} onClick={() => updateImage(img)}>
+                  <img
+                    src={imageMap[img]}
+                    alt={img}
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Typography variant="body1" gutterBottom component="div">
         Categories:
         {categories.map((categoryObj, index) => {

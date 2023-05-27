@@ -2,6 +2,7 @@ package no.ntnu.group7.coffeeshop.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +140,6 @@ public class ProductController {
     product.setPrice(productDto.getPrice());
     product.setImage(productDto.getImage());
 
-    // Parse the categories from the ProductDto
     List<CategoryDto> categoryDtos = productDto.getCategories();
     List<Category> categories = new ArrayList<>();
 
@@ -268,5 +268,30 @@ public class ProductController {
   public ResponseEntity<Long> getProductCount() {
     long count = productRepository.count();
     return new ResponseEntity<>(count, HttpStatus.OK);
+  }
+
+  /**
+   * Handles HTTP PATCH requests to "/api/products/{id}/image" and updates
+   * theproduct imagefor the product with the specified ID. If the product is not
+   * found, returns a 404 Not Found response.
+   *
+   * @param id       The ID of the product to update the image.
+   * @param imageMap The new image for the product as a map.
+   * @return The updated product.
+   */
+  @PatchMapping("/{id}/image")
+  public ResponseEntity<Product> updateProductImage(@PathVariable int id, @RequestBody Map<String, String> imageMap) {
+    String image = imageMap.get("image");
+    if (image == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not provided");
+    }
+
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
+    product.setImage(image);
+    Product updatedProduct = productRepository.save(product);
+
+    return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
   }
 }
