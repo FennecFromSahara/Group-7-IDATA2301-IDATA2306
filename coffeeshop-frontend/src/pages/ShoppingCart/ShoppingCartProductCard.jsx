@@ -10,6 +10,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useState, useEffect } from "react";
 import { getProductById } from "../../hooks/apiService";
 import { asyncApiRequest } from "../../tools/requests";
+import imageMap from "../../components/ProductImageMapping";
 
 /**
  * A component representing a product card for the shoppingCart page
@@ -125,7 +126,7 @@ export default function ShoppingCartProductCard(props) {
     >
       <CardMedia
         component="img"
-        image="./img/coffe placeholder.jpg"
+        image={imageMap[product.image] || imageMap["placeholder"]}
         alt="Image of product"
         sx={{ maxWidth: 100 }}
       />
