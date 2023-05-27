@@ -55,12 +55,6 @@ public class Product {
   @JsonManagedReference("product-category")
   private List<Category> categories = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "product")
-  // private Set<OrderProduct> orderProducts = new HashSet<>();
-
-  // @OneToMany(mappedBy = "product")
-  // private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
-
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("product-cart")
   private List<ShoppingCartProduct> shoppingCartProducts = new ArrayList<>();
