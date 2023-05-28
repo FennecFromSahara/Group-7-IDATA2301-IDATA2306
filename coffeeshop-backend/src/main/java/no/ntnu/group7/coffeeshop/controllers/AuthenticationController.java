@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 /**
  * Controller responsible for authentication.
  */
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AuthenticationController {
   @Autowired
