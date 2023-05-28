@@ -123,12 +123,13 @@ export default function ShoppingCartProductCard(props) {
         flexDirection: "row",
         alignItems: "center",
       }}
+      elevation={0}
     >
       <CardMedia
         component="img"
         image={iconImageMap[product.image] || iconImageMap["placeholder"]}
         alt="Image of product"
-        sx={{ width: "100px" }}
+        sx={{ width: "100px", margin: 1}}
       />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="h2">
