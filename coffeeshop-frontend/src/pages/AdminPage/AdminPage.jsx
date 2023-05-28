@@ -1,5 +1,5 @@
 import { Box, AppBar, Tabs, Tab, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useAuth } from "../../hooks/useAuth";
@@ -21,7 +21,7 @@ import ProductOverview from "./Products/ProductOverview";
 import ProductCreate from "./Products/ProductCreate";
 import UserOverview from "./Users/UserOverview";
 import Categories from "./Categories/Categories";
-import React from "react";
+import OrderOverview from "./Orders/OrderOverview";
 
 function AdminPage() {
   const { user, loading } = useAuth();
@@ -30,6 +30,7 @@ function AdminPage() {
 
   const [value, setValue] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -70,6 +71,18 @@ function AdminPage() {
     );
   };
 
+  const updateOrders = (updatedOrder) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === updatedOrder.id ? updatedOrder : order
+      )
+    );
+  };
+
+  const removeOrder = (id) => {
+    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== id));
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -80,7 +93,7 @@ function AdminPage() {
         setUsers(usersData);
 
         const ordersData = await getOrders();
-        setOrders("orders: " + ordersData);
+        setOrders(ordersData);
 
         const categoriesData = await getCategories();
         setCategories(categoriesData);
@@ -157,7 +170,6 @@ function AdminPage() {
               sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
             <Tab
-              disabled
               label="Orders"
               sx={{ "&.Mui-selected": { color: theme.palette.text.primary } }}
             />
@@ -201,7 +213,16 @@ function AdminPage() {
           )}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Orders orders={orders} />
+          {selectedOrder ? (
+            <OrderOverview
+              order={selectedOrder}
+              setOrder={setSelectedOrder}
+              updateOrders={updateOrders}
+              removeOrder={removeOrder}
+            />
+          ) : (
+            <Orders orders={orders} setOrder={setSelectedOrder} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Categories categories={categories} />

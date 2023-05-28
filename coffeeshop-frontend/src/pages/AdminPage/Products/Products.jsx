@@ -82,7 +82,9 @@ const Products = ({ products, setProduct, addProduct }) => {
               <TableCell component="th" scope="row" align="center">
                 {product.name}
               </TableCell>
-              <TableCell align="center">${product.price.toFixed(2)}</TableCell>
+              <TableCell align="center">
+                {product.price.toFixed(2)} Kr
+              </TableCell>
               <TableCell align="left">{product.description}</TableCell>
               <TableCell
                 align="center"

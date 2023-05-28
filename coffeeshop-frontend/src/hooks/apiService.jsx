@@ -33,7 +33,7 @@ export async function getProfileData(username) {
 }
 
 export async function postCheckout() {
-  return await asyncApiRequest("POST", "/checkout");
+  return await asyncApiRequest("POST", "/checkout", true);
 }
 
 export async function getProductsCount() {

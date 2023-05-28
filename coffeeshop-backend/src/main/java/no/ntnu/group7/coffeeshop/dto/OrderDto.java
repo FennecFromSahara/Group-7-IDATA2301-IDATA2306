@@ -1,58 +1,77 @@
 package no.ntnu.group7.coffeeshop.dto;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import no.ntnu.group7.coffeeshop.model.Order;
-import no.ntnu.group7.coffeeshop.model.User;
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Data transfer object (DTO) for submitting orders.
  */
 public class OrderDto {
-  private int orderId;
-  private User user;
-  private Order order;
+  private long id;
+  private String username;
+  private String orderStatus;
+  private BigDecimal totalPrice;
+  private String createdAt;
+  private List<OrderProductDto> orderProducts;
 
   /**
-   * Constructs a new Order DTO with the specified order ID, user, and order.
+   * Constructs a new OrderDto
    * 
-   * @param orderId The unique identifier for the order.
-   * @param user    The user associated with the order.
-   * @param order   The order details.
+   * @param orderId     The unique identifier for the order.
+   * @param username    The user that has the order.
+   * @param orderstatus The status of the order.
+   * @param createdAt   The orders creation date.
    */
-  public OrderDto(int orderId, User user, Order order) {
-    this.orderId = orderId;
-    this.user = user;
-    this.order = order;
-  }
-
-  public int getOrderId() {
-    return orderId;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public Order getOrder() {
-    return order;
+  public OrderDto(long id, String username, String orderStatus, BigDecimal totalPrice, String createdAt,
+      List<OrderProductDto> orderProducts) {
+    this.id = id;
+    this.username = username;
+    this.orderStatus = orderStatus;
+    this.totalPrice = totalPrice;
+    this.createdAt = createdAt;
+    this.orderProducts = orderProducts;
   }
 
   /**
-   * 
-   * Retrieves the order creation timestamp as a formatted string.
-   * 
-   * @return A string representation of the order creation timestamp formatted as
-   *         ISO_LOCAL_DATE_TIME.
+   * @return the orderId
    */
-  @JsonProperty("createdAt")
+  public long getId() {
+    return id;
+  }
+
+  /**
+   * @return the username
+   */
+  public String getUsername() {
+    return username;
+  }
+
+  /**
+   * @return the orderStatus
+   */
+  public String getOrderStatus() {
+    return orderStatus;
+  }
+
+  /**
+   * @return the createdAt
+   */
   public String getCreatedAt() {
-    LocalDateTime createdAtLocalDateTime = LocalDateTime.ofInstant(order.getCreatedAt().toInstant(),
-        ZoneId.systemDefault());
-    return createdAtLocalDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    return createdAt;
   }
+
+  /**
+   * @return the orderProducts
+   */
+  public List<OrderProductDto> getOrderProducts() {
+    return orderProducts;
+  }
+
+  /**
+   * @return the totalPrice
+   */
+  public BigDecimal getTotalPrice() {
+    return totalPrice;
+  }
+
 }

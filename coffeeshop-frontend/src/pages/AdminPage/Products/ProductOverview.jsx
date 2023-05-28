@@ -24,6 +24,7 @@ const ProductOverview = ({
   removeProduct,
 }) => {
   const theme = useTheme();
+
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
   const [inventoryAmount, setInventoryAmount] = useState(

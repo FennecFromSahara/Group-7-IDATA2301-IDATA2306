@@ -1,5 +1,6 @@
 package no.ntnu.group7.coffeeshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -24,9 +25,10 @@ import jakarta.persistence.Table;
 public class OrderProduct {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private long id;
 
   @ManyToOne
+  @JsonBackReference("order-orderProduct")
   @JoinColumn(name = "order_id", nullable = false)
   private Order order;
 
@@ -57,11 +59,11 @@ public class OrderProduct {
     this.quantity = quantity;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
 

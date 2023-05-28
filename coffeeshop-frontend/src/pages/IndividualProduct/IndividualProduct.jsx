@@ -127,6 +127,9 @@ function IndividualProduct() {
                     ))}
                   </Select>
                 )}
+                <Typography variant="h3" sx={{ marginTop: 2 }}>
+                  {product.price} Kr
+                </Typography>
               </Box>
               <Button
                 variant="contained"

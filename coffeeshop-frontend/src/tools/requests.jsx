@@ -33,7 +33,7 @@ export function asyncApiRequest(
   }
 
   console.log(body);
-  console.log(fullUrl);
+  console.log(method + " " + fullUrl);
 
   return fetch(fullUrl, {
     method: method,

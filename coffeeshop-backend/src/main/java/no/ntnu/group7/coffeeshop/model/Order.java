@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -28,14 +28,15 @@ import jakarta.persistence.JoinColumn;
 
 /**
  * Represents the order of a customer, with a set of orderProducts to keep track
- * of all the products TODO: what happened to the set of orderProducts??
+ * of all the products
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "orders")
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private long id;
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
@@ -101,43 +102,88 @@ public class Order {
     this.createdAt = createdAt;
   }
 
-  public int getId() {
+  /**
+   * @return the id
+   */
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  /**
+   * @param id the id to set
+   */
+  public void setId(long id) {
     this.id = id;
   }
 
+  /**
+   * @return the user
+   */
   public User getUser() {
     return user;
   }
 
+  /**
+   * @param user the user to set
+   */
   public void setUser(User user) {
     this.user = user;
   }
 
+  /**
+   * @return the orderStatus
+   */
   public OrderStatus getOrderStatus() {
     return orderStatus;
   }
 
+  /**
+   * @param orderStatus the orderStatus to set
+   */
   public void setOrderStatus(OrderStatus orderStatus) {
     this.orderStatus = orderStatus;
   }
 
+  /**
+   * @return the total
+   */
   public BigDecimal getTotal() {
     return total;
   }
 
+  /**
+   * @param total the total to set
+   */
   public void setTotal(BigDecimal total) {
     this.total = total;
   }
 
+  /**
+   * @return the createdAt
+   */
   public Date getCreatedAt() {
     return createdAt;
   }
 
+  /**
+   * @param createdAt the createdAt to set
+   */
   public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
   }
+
+  /**
+   * @return the orderProducts
+   */
+  public List<OrderProduct> getOrderProducts() {
+    return orderProducts;
+  }
+
+  /**
+   * @param orderProducts the orderProducts to set
+   */
+  public void setOrderProducts(List<OrderProduct> orderProducts) {
+    this.orderProducts = orderProducts;
+  }
+
 }

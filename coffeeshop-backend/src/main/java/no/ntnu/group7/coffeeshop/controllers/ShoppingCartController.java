@@ -29,7 +29,6 @@ import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
 import no.ntnu.group7.coffeeshop.repositories.ShoppingCartProductRepository;
 import no.ntnu.group7.coffeeshop.services.AccessUserService;
-import no.ntnu.group7.coffeeshop.services.CheckoutService;
 import no.ntnu.group7.coffeeshop.services.ShoppingCartService;
 
 /**
@@ -58,12 +57,10 @@ public class ShoppingCartController {
    * @return List of all shoppingCartProducts in the shoppingcart
    */
   @GetMapping("")
-  @Operation(
-    summary = "Get shopping cart items"
-  )
+  @Operation(summary = "Get shopping cart items")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Success"),
-    @ApiResponse(responseCode = "401", description = "Unauthorized")
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "401", description = "Unauthorized")
   })
   public ResponseEntity<List<ShoppingCartProductDto>> getShoppingCart() {
     User user = accessUserService.getSessionUser();
@@ -89,12 +86,10 @@ public class ShoppingCartController {
    * @return The total cost of users shopping cart items
    */
   @GetMapping("/total")
-  @Operation(
-    summary = "Get total cost of shoppingcart"
-  )
+  @Operation(summary = "Get total cost of shoppingcart")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Success"),
-    @ApiResponse(responseCode = "401", description = "Unauthorized")
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "401", description = "Unauthorized")
   })
   public ResponseEntity<BigDecimal> getTotal() {
     User user = accessUserService.getSessionUser();
@@ -113,13 +108,11 @@ public class ShoppingCartController {
    * @return A response indicating success or failure of the operation.
    */
   @DeleteMapping("/{id}")
-  @Operation(
-    summary = "Remove item from shoppingcart"
-  )
+  @Operation(summary = "Remove item from shoppingcart")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Item removed successfully"),
-    @ApiResponse(responseCode = "401", description = "Unauthorized"),
-    @ApiResponse(responseCode = "404", description = "Product not found")
+      @ApiResponse(responseCode = "204", description = "Item removed successfully"),
+      @ApiResponse(responseCode = "401", description = "Unauthorized"),
+      @ApiResponse(responseCode = "404", description = "Product not found")
   })
   public ResponseEntity<String> deleteItemFromCart(@PathVariable int id) {
     User user = accessUserService.getSessionUser();
@@ -145,13 +138,11 @@ public class ShoppingCartController {
    * @return A response indicating success or failure of the operation.
    */
   @PutMapping("")
-  @Operation(
-    summary = "Update shoppingCartProduct quantity"
-  )
+  @Operation(summary = "Update shoppingCartProduct quantity")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Quantity updated successfully"),
-    @ApiResponse(responseCode = "400", description = "Invalid quantity"),
-    @ApiResponse(responseCode = "404", description = "ShoppingCartProduct not found")
+      @ApiResponse(responseCode = "200", description = "Quantity updated successfully"),
+      @ApiResponse(responseCode = "400", description = "Invalid quantity"),
+      @ApiResponse(responseCode = "404", description = "ShoppingCartProduct not found")
   })
   public ResponseEntity<String> updateShoppingCartProductQuantity(
       @RequestBody ShoppingCartProductDto shoppingCartProductDto) {
@@ -181,14 +172,12 @@ public class ShoppingCartController {
    * @return A response indicating success or failure of the operation.
    */
   @PostMapping("/add-to-cart")
-  @Operation(
-    summary = "Add product to cart"
-  )
+  @Operation(summary = "Add product to cart")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Product added to cart successfully"),
-    @ApiResponse(responseCode = "400", description = "Invalid quantity"),
-    @ApiResponse(responseCode = "401", description = "Unauthorized"),
-    @ApiResponse(responseCode = "404", description = "Product not found")
+      @ApiResponse(responseCode = "200", description = "Product added to cart successfully"),
+      @ApiResponse(responseCode = "400", description = "Invalid quantity"),
+      @ApiResponse(responseCode = "401", description = "Unauthorized"),
+      @ApiResponse(responseCode = "404", description = "Product not found")
   })
   public ResponseEntity<String> addToCart(@RequestBody ShoppingCartProductDto shoppingCartProductDto) {
     User user = accessUserService.getSessionUser();

@@ -15,8 +15,7 @@ public class UserProfileDto {
   private String roles;
 
   /**
-   * Constructs a new UserProfileDto with the specified user ID, first name, last
-   * name, email, and address.
+   * Constructs a new UserProfileDto
    *
    * @param id        The unique identifier for the user.
    * @param firstName The users first name.
