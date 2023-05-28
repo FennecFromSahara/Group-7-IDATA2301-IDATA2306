@@ -23,11 +23,6 @@ public class ProductService {
     this.reviewRepository = reviewRepository;
   }
 
-  @Transactional
-  public void saveProductWithSizes(Product product) {
-    product.getProductSizes().forEach(productSize -> productSize.setProduct(product));
-    productRepository.save(product);
-  }
 
   @Transactional
   public void saveProductWithReviews(Product product, List<Review> reviews, User user) {

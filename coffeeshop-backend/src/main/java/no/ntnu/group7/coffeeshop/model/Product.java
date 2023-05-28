@@ -60,10 +60,6 @@ public class Product {
   private List<ShoppingCartProduct> shoppingCartProducts = new ArrayList<>();
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference("product-size")
-  private List<ProductSize> productSizes = new ArrayList<>();
-
-  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("product-review")
   private List<Review> reviews = new ArrayList<>();
 
@@ -201,20 +197,6 @@ public class Product {
    */
   public void setShoppingCartProducts(List<ShoppingCartProduct> shoppingCartProducts) {
     this.shoppingCartProducts = shoppingCartProducts;
-  }
-
-  /**
-   * @return the product sizes
-   */
-  public List<ProductSize> getProductSizes() {
-    return productSizes;
-  }
-
-  /**
-   * @param reviews the product sizes to set
-   */
-  public void addProductSizes(List<ProductSize> productSizes) {
-    this.productSizes = productSizes;
   }
 
   /**
