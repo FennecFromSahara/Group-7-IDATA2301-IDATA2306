@@ -1,23 +1,34 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { yellow } from '@mui/material/colors';
+import React from "react";
+import { Box, Typography } from "@mui/material";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+import { useTheme } from "@emotion/react";
 
-const primary = yellow[500]; // #fff59d
+export default function NotFoundPage() {
+  const theme = useTheme();
 
-export default function Error() {
-    return (
+  return (
+    <div>
+      <NavBar />
+
+      <Box
+        display="flex"
+        flexDirection="column"
+        minHeight={theme.boxSizes.navSectionFooter}
+      >
         <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '100vh',
-                backgroundColor: primary,
-            }}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          Box
+          flex={1}
+          overflow="auto"
         >
-            <Typography variant="h1" style={{ color: 'white' }}>
-                404
-            </Typography>
+          <Typography variant="h1">404: Page not found</Typography>
         </Box>
-    );
+      </Box>
+
+      <Footer />
+    </div>
+  );
 }
