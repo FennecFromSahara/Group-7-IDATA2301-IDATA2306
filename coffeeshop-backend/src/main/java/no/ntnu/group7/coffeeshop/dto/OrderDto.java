@@ -3,15 +3,24 @@ package no.ntnu.group7.coffeeshop.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Data transfer object (DTO) for submitting orders.
  */
+@Schema(description = "DTO for order")
 public class OrderDto {
+  @Schema(description = "Unqiue ID")
   private long id;
+  @Schema(description = "Username of the user who placed the order")
   private String username;
+  @Schema(description = "Status of order")
   private String orderStatus;
+  @Schema(description = "Total price of order")
   private BigDecimal totalPrice;
+  @Schema(description = "When the order was created")
   private String createdAt;
+  @Schema(description = "List of orderProducts in the order")
   private List<OrderProductDto> orderProducts;
 
   /**

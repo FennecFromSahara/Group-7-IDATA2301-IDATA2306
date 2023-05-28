@@ -1,10 +1,15 @@
 package no.ntnu.group7.coffeeshop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Represents the data that the user will send in the login request.
  */
+@Schema(description = "Represents an authentication request")
 public class AuthenticationRequest {
+  @Schema(description = "The username of the user")
   private String username;
+  @Schema(description = "The password of the user")
   private String password;
 
   /**

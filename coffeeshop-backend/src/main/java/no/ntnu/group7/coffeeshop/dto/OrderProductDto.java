@@ -1,8 +1,14 @@
 package no.ntnu.group7.coffeeshop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "DTO for OrderProduct")
 public class OrderProductDto {
+  @Schema(description = "Unqiue ID")
   private long id;
+  @Schema(description = "Name of the product this represents")
   private String productName;
+  @Schema(description = "Quantity of the product")
   private int quantity;
 
   /**

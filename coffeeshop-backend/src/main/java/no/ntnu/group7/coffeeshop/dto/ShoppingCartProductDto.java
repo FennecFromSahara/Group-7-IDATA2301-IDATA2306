@@ -1,13 +1,20 @@
 package no.ntnu.group7.coffeeshop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Data transfer object for shopping cart products. It contains the user ID,
  * product ID, and product quantity.
  */
+@Schema(description = "DTO for ShoppingCartProduct")
 public class ShoppingCartProductDto {
+  @Schema(description = "Unqiue ID")
   private int id;
+  @Schema(description = "Unique ID of user")
   private Long userId;
+  @Schema(description = "Unique ID of product")
   private int productId;
+  @Schema(description = "Quantity of product")
   private int quantity;
 
   /**
