@@ -12,6 +12,9 @@ export const mainTheme = {
       light: "#ffffff",
       dark: "#ccb199",
     },
+    tertiary: {
+      main: "#bfc0d2",
+    },
     text: {
       primary: "#424242",
       secondary: "#616161",

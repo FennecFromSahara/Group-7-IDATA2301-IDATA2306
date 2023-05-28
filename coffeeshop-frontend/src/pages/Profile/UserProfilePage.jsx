@@ -189,7 +189,13 @@ function UserProfilePage() {
           alignItems: "center",
         }}
       >
-        <Paper elevation={0} sx={{ p: 3, minWidth: "350px" }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 3,
+            minWidth: "350px",
+          }}
+        >
           <Grid container>
             <Grid item>
               <Typography variant="h1" component="div">

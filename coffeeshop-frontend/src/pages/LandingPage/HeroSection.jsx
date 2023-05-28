@@ -58,7 +58,7 @@ function HeroSection() {
           width: { xs: "80%", sm: "60%", md: "20%" },
           minHeight: "10rem",
           p: 1,
-          backgroundColor: "#bfc0d2",
+          backgroundColor: theme.palette.tertiary.main,
           display: "flex",
           justifyContent: "space-between",
           flexDirection: "column",
