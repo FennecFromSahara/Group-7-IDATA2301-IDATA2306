@@ -1,5 +1,6 @@
 import { asyncApiRequest } from "../tools/requests";
 
+// GET
 export async function getProducts() {
   return await asyncApiRequest("GET", "/products");
 }
@@ -24,6 +25,19 @@ export async function getShoppingCartTotal() {
   return await asyncApiRequest("GET", "/shoppingCart/total");
 }
 
+export async function getCategories() {
+  return await asyncApiRequest("GET", "/categories");
+}
+
+export async function getProfileData(username) {
+  return await asyncApiRequest("GET", "/users/" + username);
+}
+
+export async function getProductsCount() {
+  return await asyncApiRequest("GET", "/products/count");
+}
+
+// POST
 export async function addToCartRequest(requestBody) {
   return await asyncApiRequest(
     "POST",
@@ -33,18 +47,6 @@ export async function addToCartRequest(requestBody) {
   );
 }
 
-export async function getCategories() {
-  return await asyncApiRequest("GET", "/categories");
-}
-
-export async function getProfileData(username) {
-  return await asyncApiRequest("GET", "/users/" + username);
-}
-
 export async function postCheckout() {
   return await asyncApiRequest("POST", "/checkout", "", true);
-}
-
-export async function getProductsCount() {
-  return await asyncApiRequest("GET", "/products/count");
 }

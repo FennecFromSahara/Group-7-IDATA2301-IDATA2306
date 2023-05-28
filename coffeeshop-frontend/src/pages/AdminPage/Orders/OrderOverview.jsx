@@ -46,7 +46,6 @@ const OrderOverview = ({ order, setOrder, updateOrders, removeOrder }) => {
 
   const updateOrder = async () => {
     try {
-      console.log(orderStatus);
       const updatedOrder = await asyncApiRequest(
         "PATCH",
         `/orders/${order.id}/${orderStatus}`
