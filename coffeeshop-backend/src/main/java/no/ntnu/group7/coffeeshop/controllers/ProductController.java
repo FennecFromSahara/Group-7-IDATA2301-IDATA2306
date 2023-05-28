@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.group7.coffeeshop.dto.CategoryDto;
 import no.ntnu.group7.coffeeshop.dto.ProductDto;
-import no.ntnu.group7.coffeeshop.dto.ProductSizeDto;
 import no.ntnu.group7.coffeeshop.dto.ReviewDto;
 import no.ntnu.group7.coffeeshop.model.Category;
 import no.ntnu.group7.coffeeshop.model.Product;
@@ -64,10 +63,6 @@ public class ProductController {
           .map(category -> new CategoryDto(category.getId(), category.getName()))
           .collect(Collectors.toList());
 
-      List<ProductSizeDto> productSizeDtos = product.getProductSizes().stream()
-          .map(size -> new ProductSizeDto(size.getId(), size.getSize(), size.getWeight()))
-          .collect(Collectors.toList());
-
       List<ReviewDto> reviewDtos = product.getReviews().stream()
           .map(review -> new ReviewDto(review.getId(), review.getReviewText(), review.getRating(),
               review.getUser().getUsername()))
@@ -80,8 +75,7 @@ public class ProductController {
           product.getInventoryAmount(),
           product.getPrice(),
           product.getImage(),
-          categoryDtos,
-          productSizeDtos,
+          categoryDtos, 
           reviewDtos);
     }).collect(Collectors.toList());
 
@@ -110,10 +104,6 @@ public class ProductController {
         .map(category -> new CategoryDto(category.getId(), category.getName()))
         .collect(Collectors.toList());
 
-    List<ProductSizeDto> productSizeDtos = product.getProductSizes().stream()
-        .map(size -> new ProductSizeDto(size.getId(), size.getSize(), size.getWeight()))
-        .collect(Collectors.toList());
-
     List<ReviewDto> reviewDtos = product.getReviews().stream()
         .map(review -> new ReviewDto(review.getId(), review.getReviewText(), review.getRating(),
             review.getUser().getUsername()))
@@ -127,7 +117,6 @@ public class ProductController {
         product.getPrice(),
         product.getImage(),
         categoryDtos,
-        productSizeDtos,
         reviewDtos);
 
     return new ResponseEntity<>(productDto, HttpStatus.OK);
