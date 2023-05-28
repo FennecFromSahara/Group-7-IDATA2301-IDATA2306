@@ -49,6 +49,7 @@ function ProductDisplay() {
             alignItems="center"
             justifyContent="center"
             style={{ minHeight: "100vh" }}
+            key={product.id}
           >
             {isImageOnLeft && (
               <Grid item xs={6}>
@@ -66,9 +67,7 @@ function ProductDisplay() {
             )}
             <Grid item xs={6}>
               <Box>
-                <Typography variant="h2" s>
-                  {product.name}
-                </Typography>
+                <Typography variant="h2">{product.name}</Typography>
                 <Typography variant="h4" sx={{ fontStyle: "italic", mb: 1 }}>
                   {product.categories
                     .map((category) => category.name)
