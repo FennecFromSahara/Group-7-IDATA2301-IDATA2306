@@ -1,14 +1,14 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { Button, CardActionArea, CardActions, Snackbar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import imageMap from "../../components/ProductImageMapping";
-import { addToCart } from "../../tools/addToCart";
-
+import { addToCartRequest } from "../../hooks/apiService";
+import Alert from "../../components/Alert";
 /**
  * A component representing a product card
  * @param product the product to be displayed
@@ -18,6 +18,54 @@ import { addToCart } from "../../tools/addToCart";
 export default function ProductCard(props) {
   const { user } = useAuth();
   const product = props.product;
+  const [alertState, setAlertState] = useState("idle");
+  const [open, setOpen] = React.useState(false);
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      setAlertState("error-login");
+      setOpen(true);
+      return;
+    }
+
+    try {
+      const requestBody = {
+        userId: user.id,
+        productId: product.id,
+        quantity: 1,
+      };
+
+      await addToCartRequest(requestBody);
+      setAlertState("success");
+      setOpen(true);
+    } catch (error) {
+      console.error(error);
+      setAlertState("error");
+      setOpen(true);
+    }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  let alertTitle = "";
+  let alertSeverity = "";
+
+  if (alertState === "success") {
+    alertTitle = "Product added to cart successfully.";
+    alertSeverity = "success";
+  } else if (alertState === "error") {
+    alertTitle = "Error adding product to cart.";
+    alertSeverity = "error";
+  } else if (alertState === "error-login") {
+    alertTitle = "Please log in to add items to the cart.";
+    alertSeverity = "error";
+  }
 
   return (
     <Card sx={{ maxWidth: 270 }} elevation={0}>
@@ -52,13 +100,25 @@ export default function ProductCard(props) {
       </CardContent>
 
       <CardActions>
-        <Button
-          size="small"
-          variant="contained"
-          onClick={() => addToCart(user, product)}
-        >
+        <Button size="small" variant="contained" onClick={handleAddToCart}>
           Add to cart
         </Button>
+
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          sx={{ mt: "8vh", ml: "12vw" }}
+        >
+          <Alert
+            onClose={handleClose}
+            severity={alertSeverity}
+            alertState={alertState}
+          >
+            {alertTitle}
+          </Alert>
+        </Snackbar>
       </CardActions>
     </Card>
   );

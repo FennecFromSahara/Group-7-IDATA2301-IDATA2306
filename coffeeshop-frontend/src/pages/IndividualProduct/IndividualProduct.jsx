@@ -4,10 +4,9 @@ import {
   Box,
   Button,
   CardMedia,
-  MenuItem,
-  Select,
   Typography,
   Rating,
+  Snackbar,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import NavBar from "../../components/NavBar";
@@ -15,9 +14,10 @@ import Footer from "../../components/Footer";
 import { getProductById } from "../../hooks/apiService";
 import React from "react";
 import imageMap from "../../components/ProductImageMapping";
-import { addToCart } from "../../tools/addToCart";
 import { useAuth } from "../../hooks/useAuth";
 import ReviewForm from "./ReviewForm";
+import { addToCartRequest } from "../../hooks/apiService";
+import Alert from "../../components/Alert";
 
 function IndividualProduct() {
   const theme = useTheme();
@@ -26,11 +26,13 @@ function IndividualProduct() {
   const { user } = useAuth();
 
   const [product, setProduct] = useState(null);
-  const [selectedSize, setSelectedSize] = useState("");
   const [showReviews, setShowReviews] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [image, setImage] = useState("");
   const [userHasReviewed, setUserHasReviewed] = useState(false);
+
+  const [alertState, setAlertState] = useState("idle");
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     getProductById(id)
@@ -49,6 +51,52 @@ function IndividualProduct() {
         console.error(`Error fetching product: ${err.message}`);
       });
   }, [id, user]);
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      setAlertState("error-login");
+      setOpen(true);
+      return;
+    }
+
+    try {
+      const requestBody = {
+        userId: user.id,
+        productId: product.id,
+        quantity: 1,
+      };
+
+      await addToCartRequest(requestBody);
+      setAlertState("success");
+      setOpen(true);
+    } catch (error) {
+      console.error(error);
+      setAlertState("error");
+      setOpen(true);
+    }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  let alertTitle = "";
+  let alertSeverity = "";
+
+  if (alertState === "success") {
+    alertTitle = "Product added to cart successfully.";
+    alertSeverity = "success";
+  } else if (alertState === "error") {
+    alertTitle = "Error adding product to cart.";
+    alertSeverity = "error";
+  } else if (alertState === "error-login") {
+    alertTitle = "Please log in to add items to the cart.";
+    alertSeverity = "error";
+  }
 
   const handleShowReviews = () => {
     setShowReviews(!showReviews);
@@ -119,10 +167,25 @@ function IndividualProduct() {
                 variant="contained"
                 color="primary"
                 sx={{ width: "160px" }}
-                onClick={() => addToCart(user, product)}
+                onClick={handleAddToCart}
               >
                 Add to cart
               </Button>
+              <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                sx={{ mt: "8vh", ml: "12vw" }}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity={alertSeverity}
+                  alertState={alertState}
+                >
+                  {alertTitle}
+                </Alert>
+              </Snackbar>
             </Box>
           </Box>
           <Box
