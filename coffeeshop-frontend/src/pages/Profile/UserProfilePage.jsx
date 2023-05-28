@@ -14,7 +14,13 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Snackbar,
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { useTheme } from "@emotion/react";
@@ -22,6 +28,7 @@ import handleLogout from "../../tools/handleLogout";
 import ErrorPage from "../../components/ErrorPage";
 import React from "react";
 import { asyncApiRequest } from "../../tools/requests";
+import Alert from "../../components/Alert";
 
 function UserProfilePage() {
   const { user, loading } = useAuth();
@@ -38,8 +45,23 @@ function UserProfilePage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [open, setOpen] = useState(false);
-  const [changePasswordError, setChangePasswordError] = useState("");
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertState, setAlertState] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -69,6 +91,13 @@ function UserProfilePage() {
 
   const handleChangePassword = async () => {
     try {
+      if (currentPassword === newPassword) {
+        setAlertState("error");
+        setAlertMessage("Current password and new password cannot be the same");
+        setAlertOpen(true);
+        return;
+      }
+
       const response = await asyncApiRequest(
         "POST",
         "/change_password",
@@ -79,11 +108,15 @@ function UserProfilePage() {
         },
         true
       );
-      alert(response);
-      setChangePasswordError("");
+      setAlertState("success");
+      setAlertMessage(response);
+      setAlertOpen(true);
+
       setOpen(false);
     } catch (error) {
-      setChangePasswordError(error.message);
+      setAlertState("error");
+      setAlertMessage(error.message);
+      setAlertOpen(true);
     }
   };
 
@@ -129,6 +162,21 @@ function UserProfilePage() {
     <div>
       <NavBar />
 
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{ mt: "8vh" }}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertState}
+          cartState={alertState}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
       <Box
         style={{
           minHeight: theme.boxSizes.navSectionFooter,
@@ -207,32 +255,78 @@ function UserProfilePage() {
                 autoFocus
                 margin="dense"
                 label="Current password"
-                type="password"
+                type={showCurrentPassword ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 fullWidth
+                InputProps={{
+                  // <-- This is where the toggle button is added
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() =>
+                          setShowCurrentPassword(!showCurrentPassword)
+                        }
+                      >
+                        {showCurrentPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
+
               <TextField
                 margin="dense"
                 label="New password"
-                type="password"
+                type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                      >
+                        {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
+
               <TextField
                 margin="dense"
                 label="Confirm password"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      >
+                        {showConfirmPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-              {changePasswordError && (
-                <Typography style={{ color: theme.palette.danger.main }}>
-                  {changePasswordError}
-                </Typography>
-              )}
             </DialogContent>
             <DialogActions>
               <Button variant="contained" color="danger" onClick={handleClose}>
