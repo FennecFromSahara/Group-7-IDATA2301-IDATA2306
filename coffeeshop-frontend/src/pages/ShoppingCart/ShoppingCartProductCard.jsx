@@ -43,14 +43,13 @@ export default function ShoppingCartProductCard(props) {
       try {
         const userProduct = await getProductById(shoppingCartProduct.productId);
         setProduct(userProduct);
-        console.log("product" + product);
       } catch (err) {
         setError(`Error fetching data: ${err.message}`);
       }
     };
 
     fetchData();
-  }, []);
+  }, [shoppingCartProduct.productId]);
 
   const increaseAmount = async () => {
     try {
@@ -174,7 +173,7 @@ export default function ShoppingCartProductCard(props) {
           severity={alertState}
           alertState={alertState}
         >
-          {alertMessage}
+          {error || alertMessage}
         </Alert>
       </Snackbar>
     </Card>
