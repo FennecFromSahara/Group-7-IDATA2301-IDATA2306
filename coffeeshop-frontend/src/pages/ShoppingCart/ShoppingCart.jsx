@@ -30,26 +30,30 @@ export default function ShoppingCart() {
   }, []);
 
   const updateTotal = (priceChange) => {
-    setTotal(total+priceChange);
+    setTotal(total + priceChange);
   };
 
   const renderProducts = () => {
     console.log("shoppingcart" + shoppingCart);
-    return (
-      <>
-        {shoppingCart.map((shoppingCartProduct) => {
-          console.log("stuff:" + shoppingCartProduct.userId);
-          return (
-            <ShoppingCartProductCard
-              key={shoppingCartProduct.productId}
-              shoppingCartProduct={shoppingCartProduct}
-              deleteFunction={deleteShoppingCartProduct}
-              updateTotal={updateTotal}
-            />
-          );
-        })}
-      </>
-    );
+    if (shoppingCart.length === 0) {
+      return <Typography variant="h3">No items in cart</Typography>;
+    } else {
+      return (
+        <>
+          {shoppingCart.map((shoppingCartProduct) => {
+            console.log("stuff:" + shoppingCartProduct.userId);
+            return (
+              <ShoppingCartProductCard
+                key={shoppingCartProduct.productId}
+                shoppingCartProduct={shoppingCartProduct}
+                deleteFunction={deleteShoppingCartProduct}
+                updateTotal={updateTotal}
+              />
+            );
+          })}
+        </>
+      );
+    }
   };
 
   /**

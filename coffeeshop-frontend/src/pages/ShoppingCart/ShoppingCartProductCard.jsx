@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions, Grid } from "@mui/material";
+import { Button, CardActions, Grid, Snackbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { getProductById } from "../../hooks/apiService";
 import { asyncApiRequest } from "../../tools/requests";
 import imageMap from "../../components/ProductImageMapping";
+import Alert from "../../components/Alert";
 
 /**
  * A component representing a product card for the shoppingCart page
@@ -24,6 +25,18 @@ export default function ShoppingCartProductCard(props) {
   const [product, setProduct] = useState([]);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(shoppingCartProduct.quantity);
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertState, setAlertState] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +53,6 @@ export default function ShoppingCartProductCard(props) {
   }, []);
 
   const increaseAmount = async () => {
-
     try {
       const requestBody = {
         id: shoppingCartProduct.id,
@@ -53,17 +65,21 @@ export default function ShoppingCartProductCard(props) {
 
       setQuantity(quantity + 1);
 
-      alert("Product count increased in cart successfully.");
-      props.updateTotal(product.price);
+      setAlertState("success");
+      setAlertMessage("Product count increased");
+      setAlertOpen(true);
 
+      props.updateTotal(product.price);
     } catch (error) {
-      alert("Error increasing product in cart.");
       console.error(error);
+
+      setAlertState("error");
+      setAlertMessage("Error increasing product in cart.");
+      setAlertOpen(true);
     }
   };
 
   const decreaseAmount = async () => {
-
     try {
       const requestBody = {
         id: shoppingCartProduct.id,
@@ -76,24 +92,25 @@ export default function ShoppingCartProductCard(props) {
 
       setQuantity(quantity - 1);
 
-      alert("Product count decreased in cart successfully.");
-      props.updateTotal(-product.price);
+      setAlertState("warning");
+      setAlertMessage("Product count decreased");
+      setAlertOpen(true);
 
+      props.updateTotal(-product.price);
     } catch (error) {
-      alert("Error decreasing product in cart.");
       console.error(error);
+      setAlertState("error");
+      setAlertMessage("Error decreasing product in cart.");
+      setAlertOpen(true);
     }
   };
 
   const deleteProductFromCart = async () => {
-
     try {
       await asyncApiRequest("DELETE", "/shoppingCart/" + product.id);
-      alert("Product deleted from cart successfully.");
       props.deleteFunction(shoppingCartProduct.id);
-      props.updateTotal((-product.price)*(quantity));
+      props.updateTotal(-product.price * quantity);
     } catch (error) {
-      alert("Error deleting product from cart.");
       console.error(error);
     }
   };
@@ -120,16 +137,24 @@ export default function ShoppingCartProductCard(props) {
         <Typography>{product.price} Kr</Typography>
       </CardContent>
       <CardActions>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item xs="auto">
             <Button size="small" onClick={decreaseAmount}>
               <RemoveIcon />
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          <Grid
+            item
+            xs={true}
+            style={{
+              textAlign: "center",
+              fontSize: "1.5rem",
+              fontWeight: 700,
+            }}
+          >
             {quantity}
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs="auto">
             <Button size="small" onClick={increaseAmount}>
               <AddIcon />
             </Button>
@@ -139,6 +164,19 @@ export default function ShoppingCartProductCard(props) {
           <HighlightOffIcon />
         </Button>
       </CardActions>
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertState}
+          alertState={alertState}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }

@@ -24,6 +24,15 @@ export async function getShoppingCartTotal() {
   return await asyncApiRequest("GET", "/shoppingCart/total");
 }
 
+export async function addToCartRequest(requestBody) {
+  return await asyncApiRequest(
+    "POST",
+    "/shoppingCart/add-to-cart",
+    requestBody,
+    true
+  );
+}
+
 export async function getCategories() {
   return await asyncApiRequest("GET", "/categories");
 }

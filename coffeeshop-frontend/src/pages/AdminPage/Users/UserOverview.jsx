@@ -1,8 +1,16 @@
 import { useState } from "react";
-import { Box, Button, TextField, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Snackbar,
+} from "@mui/material";
 import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
 import React from "react";
+import Alert from "../../../components/Alert";
 
 const UserOverview = ({ user, setUser, updateUsers, removeUser }) => {
   const theme = useTheme();
@@ -12,6 +20,18 @@ const UserOverview = ({ user, setUser, updateUsers, removeUser }) => {
   const [email, setEmail] = useState(user.email);
   const [address, setAddress] = useState(user.address);
   const id = user.id;
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertState, setAlertState] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   const updateUser = async () => {
     try {
@@ -36,9 +56,15 @@ const UserOverview = ({ user, setUser, updateUsers, removeUser }) => {
 
       setUser(mergedUser);
       updateUsers(mergedUser);
-      window.alert("User has been updated");
+
+      setAlertState("success");
+      setAlertMessage("User has been updated");
+      setAlertOpen(true);
     } catch (error) {
       console.error("Error updating user:", error);
+      setAlertState("error");
+      setAlertMessage("Error updating user");
+      setAlertOpen(true);
     }
   };
 
@@ -64,9 +90,14 @@ const UserOverview = ({ user, setUser, updateUsers, removeUser }) => {
 
       setUser(mergedUser);
       updateUsers(mergedUser);
-      window.alert("User's admin status has been updated");
+      setAlertState("success");
+      setAlertMessage("ADMIN status has been updated");
+      setAlertOpen(true);
     } catch (error) {
       console.error("Error updating user's admin status:", error);
+      setAlertState("error");
+      setAlertMessage("Error updating ADMIN status");
+      setAlertOpen(true);
     }
   };
 
@@ -91,99 +122,118 @@ const UserOverview = ({ user, setUser, updateUsers, removeUser }) => {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: theme.palette.background.paper,
-        padding: 2,
-        borderRadius: 2,
-        border: `2px solid ${theme.palette.primary.light}`,
-        m: 3,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "100%", // or a specific height
-      }}
-    >
-      <Grid container>
-        <Grid item xs>
-          <Typography variant="h1" gutterBottom>
-            User Overview: {username} (id: {user.id})
-          </Typography>
+    <>
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertState}
+          alertState={alertState}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+          padding: 2,
+          borderRadius: 2,
+          border: `2px solid ${theme.palette.primary.light}`,
+          m: 3,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%", // or a specific height
+        }}
+      >
+        <Grid container>
+          <Grid item xs>
+            <Typography variant="h1" gutterBottom>
+              User Overview: {username} (id: {user.id})
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={backToUsers}>
+              Back
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={backToUsers}>
-            Back
-          </Button>
+        <TextField
+          label="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          variant="outlined"
+          fullWidth
+          sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
+        />
+        <TextField
+          label="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          variant="outlined"
+          fullWidth
+          sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
+        />
+        <TextField
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          variant="outlined"
+          fullWidth
+          sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
+        />
+        <TextField
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          variant="outlined"
+          fullWidth
+          sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
+        />
+        <TextField
+          label="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          variant="outlined"
+          fullWidth
+          sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
+        />
+        <Grid container justifyContent="space-between" alignItems="flex-end">
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={updateUser}
+              sx={{ mr: 2, mt: 2 }}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              color="danger"
+              onClick={deleteUser}
+              sx={{ mr: 2, mt: 2 }}
+            >
+              Delete
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color={user.roles.includes("ROLE_ADMIN") ? "error" : "warning"}
+              onClick={toggleAdminRole}
+            >
+              {user.roles.includes("ROLE_ADMIN")
+                ? "Remove Admin Privileges"
+                : "Make Admin"}
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-      <TextField
-        label="First Name"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        variant="outlined"
-        fullWidth
-        sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
-      />
-      <TextField
-        label="Last Name"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        variant="outlined"
-        fullWidth
-        sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
-      />
-      <TextField
-        label="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        variant="outlined"
-        fullWidth
-        sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
-      />
-      <TextField
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        variant="outlined"
-        fullWidth
-        sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
-      />
-      <TextField
-        label="Address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        variant="outlined"
-        fullWidth
-        sx={{ backgroundColor: theme.palette.primary.contrastText, mb: 3 }}
-      />
-      <Grid container justifyContent="space-between" alignItems="flex-end">
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={updateUser}
-            style={{ marginRight: 2 }}
-          >
-            Save
-          </Button>
-          <Button variant="contained" color="danger" onClick={deleteUser}>
-            Delete
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            color={user.roles.includes("ROLE_ADMIN") ? "error" : "warning"}
-            onClick={toggleAdminRole}
-            style={{ marginRight: 2 }}
-          >
-            {user.roles.includes("ROLE_ADMIN")
-              ? "Remove Admin Privileges"
-              : "Make Admin"}
-          </Button>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 };
 
