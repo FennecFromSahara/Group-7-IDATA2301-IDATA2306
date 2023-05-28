@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,27 +20,33 @@ import jakarta.validation.constraints.Min;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "reviews")
+@Schema(description = "Represents a review of a product")
 public class Review {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Unique ID")
   private int id;
 
   @ManyToOne
   @JoinColumn(name = "product_id", nullable = false)
   @JsonBackReference("product-review")
+  @Schema(description = "The product this review is about")
   private Product product;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   @JsonBackReference("user-review")
+  @Schema(description = "The user who wrote the review")
   private User user;
 
   @Column(length = 2000, nullable = false)
+  @Schema(description = "The content of the review")
   private String reviewText;
 
   @Column(nullable = false)
   @Min(1)
   @Max(5)
+  @Schema(description = "Review rating")
   private int rating;
 
   public Review() {

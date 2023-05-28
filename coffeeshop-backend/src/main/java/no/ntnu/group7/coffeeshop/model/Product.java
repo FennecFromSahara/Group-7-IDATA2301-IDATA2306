@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,37 +31,47 @@ import jakarta.persistence.Table;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "products")
+@Schema(description = "Represents a product in the coffeeshop")
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Unique ID")
   private int id;
 
   @Column(nullable = false)
+  @Schema(description = "Name of the product")
   private String name;
 
   @Column(nullable = false)
+  @Schema(description = "Product price")
   private BigDecimal price;
 
   @Column(length = 2000)
+  @Schema(description = "Product description")
   private String description;
 
   @Column
+  @Schema(description = "Product image")
   private String image;
 
   @Column
+  @Schema(description = "How much of this product is in stock")
   private int inventoryAmount;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "product_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
   @JsonManagedReference("product-category")
+  @Schema(description = "List of categories this product belongs in")
   private List<Category> categories = new ArrayList<>();
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("product-cart")
+  @Schema(description = "List of shoppingCartProducts who represent this product")
   private List<ShoppingCartProduct> shoppingCartProducts = new ArrayList<>();
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("product-review")
+  @Schema(description = "List of reviews this product has")
   private List<Review> reviews = new ArrayList<>();
 
   /**

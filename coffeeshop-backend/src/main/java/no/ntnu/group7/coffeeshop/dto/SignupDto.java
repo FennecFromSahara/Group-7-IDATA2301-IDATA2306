@@ -1,14 +1,23 @@
 package no.ntnu.group7.coffeeshop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Data transfer object (DTO) for data from the sign-up form.
  */
+@Schema(description = "DTO for signing up")
 public class SignupDto {
+  @Schema(description = "Username")
   private final String username;
+  @Schema(description = "Password")
   private final String password;
+  @Schema(description = "First name")
   private final String firstName;
+  @Schema(description = "Last name")
   private final String lastName;
+  @Schema(description = "Users email")
   private final String email;
+  @Schema(description = "Users address")
   private final String address;
 
   /**

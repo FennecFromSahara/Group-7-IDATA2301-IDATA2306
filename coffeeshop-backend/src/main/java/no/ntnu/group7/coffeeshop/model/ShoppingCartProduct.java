@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,21 +23,26 @@ import jakarta.persistence.Table;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "shopping_cart")
+@Schema(description = "Represents a product in a shoppingcart")
 public class ShoppingCartProduct {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Unique ID")
   private int id;
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
+  @Schema(description = "The user this ShoppingCartProduct belong to")
   private User user;
 
   @ManyToOne
   @JoinColumn(name = "product_id", nullable = false)
   @JsonBackReference("product-cart")
+  @Schema(description = "The product the ShoppingCartProduct represents")
   private Product product;
 
   @Column(nullable = false)
+  @Schema(description = "Quantity of the product")
   private int quantity;
 
   /**

@@ -1,17 +1,28 @@
 package no.ntnu.group7.coffeeshop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Data transfer object (DTO) for submitting changes and retrieving profile
  * data.
  */
+@Schema(description = "DTO for a user profile")
 public class UserProfileDto {
+  @Schema(description = "Unqiue ID of user")
   private long id;
+  @Schema(description = "First name")
   private String firstName;
+  @Schema(description = "Fast name")
   private String lastName;
+  @Schema(description = "Email")
   private String email;
+  @Schema(description = "Address")
   private String address;
+  @Schema(description = "Username")
   private String username;
+  @Schema(description = "When the user was created")
   private String createdAt;
+  @Schema(description = "Roles the user has")
   private String roles;
 
   /**

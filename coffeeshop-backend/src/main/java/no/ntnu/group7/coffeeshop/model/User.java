@@ -13,6 +13,8 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * User model class that represents a user in the coffee shop system. This class
  * is responsible for
@@ -26,41 +28,53 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 @Entity
 @Table(name = "users")
+@Schema(description = "Represents a user")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Unique ID")
   private long id;
 
   @Column(unique = true, nullable = false)
+  @Schema(description = "Username")
   private String username;
 
   @Column(nullable = false)
+  @Schema(description = "Password")
   private String password;
 
   @Column(nullable = false)
+  @Schema(description = "Users first name")
   private String firstName;
 
   @Column(nullable = false)
+  @Schema(description = "Users last name")
   private String lastName;
 
   @Column(unique = true, nullable = false)
+  @Schema(description = "Users email")
   private String email;
 
   @Column(nullable = false)
+  @Schema(description = "Users address")
   private String address;
 
+  @Schema(description = "Wether the user is active or not")
   private boolean active = true;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
+  @Schema(description = "When the user was created")
   private Date createdAt;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @Schema(description = "Set of roles the user has")
   private Set<Role> roles = new LinkedHashSet<>();
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("user-review")
+  @Schema(description = "List of reviews the user has written")
   private List<Review> reviews = new ArrayList<>();
 
   /**
