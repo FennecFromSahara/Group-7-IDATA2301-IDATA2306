@@ -325,8 +325,7 @@ public class ProductController {
   /**
    * Handles HTTP PATCH requests to "/api/products/{id}/image" and updates
    * the product image for the product with the specified ID. If the product is
-   * not
-   * found, returns a 404 Not Found response.
+   * not found, returns a 404 Not Found response.
    *
    * @param id       The ID of the product to update the image.
    * @param imageMap The new image for the product as a map.
@@ -335,7 +334,7 @@ public class ProductController {
   @PatchMapping("/{id}/image")
   @Operation(summary = "Update image of one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Product.class))),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = ProductDto.class))),
       @ApiResponse(responseCode = "400", description = "Image not provided"),
       @ApiResponse(responseCode = "404", description = "Product not found")
   })
