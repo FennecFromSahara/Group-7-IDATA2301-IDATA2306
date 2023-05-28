@@ -3,15 +3,27 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import { Box } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import { useState, useEffect } from "react";
 import ShoppingCartProductCard from "./ShoppingCartProductCard";
 import { getShoppingCart, getShoppingCartTotal } from "../../hooks/apiService";
+import Alert from "../../components/Alert";
 
 export default function ShoppingCart() {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertState, setAlertState] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +60,9 @@ export default function ShoppingCart() {
                 shoppingCartProduct={shoppingCartProduct}
                 deleteFunction={deleteShoppingCartProduct}
                 updateTotal={updateTotal}
+                setAlertOpen={setAlertOpen}
+                setAlertState={setAlertState}
+                setAlertMessage={setAlertMessage}
               />
             );
           })}
@@ -65,6 +80,9 @@ export default function ShoppingCart() {
     const filteredCart = shoppingCart.filter(
       (shoppingCartProduct) => shoppingCartProduct.id !== shoppingCartProductId
     );
+    setAlertState("warning");
+    setAlertMessage("Product removed from cart");
+    setAlertOpen(true);
     setShoppingCart(filteredCart);
   }
 
@@ -86,6 +104,19 @@ export default function ShoppingCart() {
             </Button>
           </Box>
         </Stack>
+        <Snackbar
+          open={alertOpen}
+          autoHideDuration={6000}
+          onClose={handleAlertClose}
+        >
+          <Alert
+            onClose={handleAlertClose}
+            severity={alertState}
+            alertState={alertState}
+          >
+            {error || alertMessage}
+          </Alert>
+        </Snackbar>
       </Container>
     </div>
   );

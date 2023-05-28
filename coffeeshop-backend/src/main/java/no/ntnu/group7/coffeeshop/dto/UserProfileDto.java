@@ -12,7 +12,7 @@ public class UserProfileDto {
   private long id;
   @Schema(description = "First name")
   private String firstName;
-  @Schema(description = "Fast name")
+  @Schema(description = "Last name")
   private String lastName;
   @Schema(description = "Email")
   private String email;

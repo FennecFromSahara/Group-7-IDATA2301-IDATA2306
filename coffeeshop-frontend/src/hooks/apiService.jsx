@@ -50,3 +50,11 @@ export async function addToCartRequest(requestBody) {
 export async function postCheckout() {
   return await asyncApiRequest("POST", "/checkout", "", true);
 }
+
+export async function patchShoppingCartProductQuantity(requestBody) {
+  return await asyncApiRequest("PATCH", "/shoppingCart/quantity", requestBody, true);
+}
+
+export async function deleteProductFromShoppingCartRequest(productId) {
+  return await asyncApiRequest("DELETE", "/shoppingCart/" + productId);
+}
