@@ -3,15 +3,13 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions, Grid, Snackbar } from "@mui/material";
+import { Button, CardActions, Grid} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useState, useEffect } from "react";
-import { getProductById } from "../../hooks/apiService";
-import { asyncApiRequest } from "../../tools/requests";
+import { deleteProductFromShoppingCartRequest, getProductById, patchShoppingCartProductQuantity } from "../../hooks/apiService";
 import imageMap from "../../components/ProductImageMapping";
-import Alert from "../../components/Alert";
 
 /**
  * A component representing a product card for the shoppingCart page
@@ -20,22 +18,13 @@ import Alert from "../../components/Alert";
  */
 export default function ShoppingCartProductCard(props) {
   const shoppingCartProduct = props.shoppingCartProduct;
+  const setAlertOpen = props.setAlertOpen;
+  const setAlertState = props.setAlertState;
+  const setAlertMessage = props.setAlertMessage;
 
   const [product, setProduct] = useState([]);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(shoppingCartProduct.quantity);
-
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertState, setAlertState] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
-
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setAlertOpen(false);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +48,7 @@ export default function ShoppingCartProductCard(props) {
         quantity: quantity + 1,
       };
 
-      await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
+      patchShoppingCartProductQuantity(requestBody);
 
       setQuantity(quantity + 1);
 
@@ -86,15 +75,19 @@ export default function ShoppingCartProductCard(props) {
         quantity: quantity - 1,
       };
 
-      await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
+      if (quantity - 1 <= 0) {
+        setAlertState("error");
+        setAlertMessage("Cannot reduce below 1");
+        setAlertOpen(true);
+      } else {
+        patchShoppingCartProductQuantity(requestBody);
+        setQuantity(quantity - 1);
+        setAlertState("warning");
+        setAlertMessage("Product count decreased");
+        setAlertOpen(true);
+        props.updateTotal(-product.price);
+      }
 
-      setQuantity(quantity - 1);
-
-      setAlertState("warning");
-      setAlertMessage("Product count decreased");
-      setAlertOpen(true);
-
-      props.updateTotal(-product.price);
     } catch (error) {
       console.error(error);
       setAlertState("error");
@@ -105,7 +98,7 @@ export default function ShoppingCartProductCard(props) {
 
   const deleteProductFromCart = async () => {
     try {
-      await asyncApiRequest("DELETE", "/shoppingCart/" + product.id);
+      deleteProductFromShoppingCartRequest(product.id)
       props.deleteFunction(shoppingCartProduct.id);
       props.updateTotal(-product.price * quantity);
     } catch (error) {
@@ -162,19 +155,6 @@ export default function ShoppingCartProductCard(props) {
           <HighlightOffIcon />
         </Button>
       </CardActions>
-      <Snackbar
-        open={alertOpen}
-        autoHideDuration={6000}
-        onClose={handleAlertClose}
-      >
-        <Alert
-          onClose={handleAlertClose}
-          severity={alertState}
-          alertState={alertState}
-        >
-          {error || alertMessage}
-        </Alert>
-      </Snackbar>
     </Card>
   );
 }

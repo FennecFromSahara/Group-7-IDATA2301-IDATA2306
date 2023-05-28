@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -142,7 +143,7 @@ public class ShoppingCartController {
    * @param shoppingCartProductDto The shoppingCartProduct to update quantity of
    * @return A response indicating success or failure of the operation.
    */
-  @PutMapping("")
+  @PatchMapping("/quantity")
   @Operation(summary = "Update shoppingCartProduct quantity")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Quantity updated successfully"),
