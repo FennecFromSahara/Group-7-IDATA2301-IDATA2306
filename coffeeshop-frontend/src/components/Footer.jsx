@@ -31,7 +31,7 @@ function Footer() {
       >
         <Grid item xs={12} sm={6} md={4}>
           <Typography variant="h1">Contact</Typography>
-          <Typography>123 ELF ROAD, NORTH POLE 88888</Typography>
+          <Typography>124 ELF ROAD, NORTH POLE 88888</Typography>
           <Typography>+47 123 45 678</Typography>
           <Grid container>
             <Grid item>
