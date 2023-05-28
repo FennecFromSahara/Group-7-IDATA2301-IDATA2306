@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions, Snackbar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import imageMap from "../../components/ProductImageMapping";
+import { imageMap } from "../../components/ProductImageMapping";
 import { addToCartRequest } from "../../hooks/apiService";
 import Alert from "../../components/Alert";
 

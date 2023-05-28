@@ -13,7 +13,7 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { getProductById } from "../../hooks/apiService";
 import React from "react";
-import imageMap from "../../components/ProductImageMapping";
+import { imageMap } from "../../components/ProductImageMapping";
 import { useAuth } from "../../hooks/useAuth";
 import ReviewForm from "./ReviewForm";
 import { addToCartRequest } from "../../hooks/apiService";

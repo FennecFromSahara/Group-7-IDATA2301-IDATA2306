@@ -339,10 +339,11 @@ public class ProductController {
       @ApiResponse(responseCode = "400", description = "Image not provided"),
       @ApiResponse(responseCode = "404", description = "Product not found")
   })
-  public ResponseEntity<Product> updateProductImage(
+  public ResponseEntity<ProductDto> updateProductImage(
       @Parameter(description = "The ID of the product to update the image") @PathVariable int id,
       @Parameter(description = "The new image for the product as a map") @RequestBody Map<String, String> imageMap) {
     String image = imageMap.get("image");
+
     if (image == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not provided");
     }
@@ -353,6 +354,25 @@ public class ProductController {
     product.setImage(image);
     Product updatedProduct = productRepository.save(product);
 
-    return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    List<CategoryDto> categoryDtos = updatedProduct.getCategories().stream()
+        .map(category -> new CategoryDto(category.getId(), category.getName()))
+        .collect(Collectors.toList());
+
+    List<ReviewDto> reviewDtos = updatedProduct.getReviews().stream()
+        .map(review -> new ReviewDto(review.getId(), review.getReviewText(), review.getRating(),
+            review.getUser().getUsername()))
+        .collect(Collectors.toList());
+
+    ProductDto updatedProductDto = new ProductDto(
+        updatedProduct.getId(),
+        updatedProduct.getName(),
+        updatedProduct.getDescription(),
+        updatedProduct.getInventoryAmount(),
+        updatedProduct.getPrice(),
+        updatedProduct.getImage(),
+        categoryDtos,
+        reviewDtos);
+
+    return new ResponseEntity<>(updatedProductDto, HttpStatus.OK);
   }
 }

@@ -16,7 +16,7 @@ import { asyncApiRequest } from "../../../tools/requests";
 import { useTheme } from "@emotion/react";
 import { getCategories } from "../../../hooks/apiService";
 import React from "react";
-import imageMap from "../../../components/ProductImageMapping";
+import { imageMap } from "../../../components/ProductImageMapping";
 import Alert from "../../../components/Alert";
 
 /**

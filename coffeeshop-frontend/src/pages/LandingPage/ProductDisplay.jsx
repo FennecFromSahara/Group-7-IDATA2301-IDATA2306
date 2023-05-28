@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, CardMedia, Grid, Button } from "@mui/material";
 import { getProductById, getProductsCount } from "../../hooks/apiService";
-import imageMap from "../../components/ProductImageMapping";
+import { imageMap } from "../../components/ProductImageMapping";
 import { Link } from "react-router-dom";
 
 /**

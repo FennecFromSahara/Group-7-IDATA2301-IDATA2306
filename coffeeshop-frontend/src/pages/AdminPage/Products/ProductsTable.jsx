@@ -12,7 +12,7 @@ import {
 import { StyledTableCell, StyledTableRow } from "../Components/StyledTable";
 import ProductCreate from "./ProductCreate";
 import React from "react";
-import imageMap from "../../../components/ProductImageMapping";
+import { iconImageMap } from "../../../components/ProductImageMapping";
 
 /**
  * Displays a table of all products in the database.
@@ -89,9 +89,11 @@ const ProductsTable = ({ products, setProduct, addProduct }) => {
               <TableCell align="right">
                 {product.image && (
                   <img
-                    src={imageMap[product.image] || imageMap["placeholder"]}
+                    src={
+                      iconImageMap[product.image] || iconImageMap["placeholder"]
+                    }
                     alt={product.name}
-                    style={{ width: "50px", height: "50px" }}
+                    style={{ width: "75px", height: "75px" }}
                   />
                 )}
               </TableCell>

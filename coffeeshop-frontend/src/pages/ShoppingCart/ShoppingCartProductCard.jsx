@@ -3,13 +3,17 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions, Grid} from "@mui/material";
+import { Button, CardActions, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useState, useEffect } from "react";
-import { deleteProductFromShoppingCartRequest, getProductById, patchShoppingCartProductQuantity } from "../../hooks/apiService";
-import imageMap from "../../components/ProductImageMapping";
+import {
+  deleteProductFromShoppingCartRequest,
+  getProductById,
+  patchShoppingCartProductQuantity,
+} from "../../hooks/apiService";
+import { iconImageMap } from "../../components/ProductImageMapping";
 
 /**
  * A component representing a product card for the shoppingCart page
@@ -38,6 +42,12 @@ export default function ShoppingCartProductCard(props) {
 
     fetchData();
   }, [shoppingCartProduct.productId]);
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   const increaseAmount = async () => {
     try {
@@ -87,7 +97,6 @@ export default function ShoppingCartProductCard(props) {
         setAlertOpen(true);
         props.updateTotal(-product.price);
       }
-
     } catch (error) {
       console.error(error);
       setAlertState("error");
@@ -98,7 +107,7 @@ export default function ShoppingCartProductCard(props) {
 
   const deleteProductFromCart = async () => {
     try {
-      deleteProductFromShoppingCartRequest(product.id)
+      deleteProductFromShoppingCartRequest(product.id);
       props.deleteFunction(shoppingCartProduct.id);
       props.updateTotal(-product.price * quantity);
     } catch (error) {
@@ -117,9 +126,9 @@ export default function ShoppingCartProductCard(props) {
     >
       <CardMedia
         component="img"
-        image={imageMap[product.image] || imageMap["placeholder"]}
+        image={iconImageMap[product.image] || iconImageMap["placeholder"]}
         alt="Image of product"
-        sx={{ maxWidth: 100 }}
+        sx={{ width: "100px" }}
       />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="h2">

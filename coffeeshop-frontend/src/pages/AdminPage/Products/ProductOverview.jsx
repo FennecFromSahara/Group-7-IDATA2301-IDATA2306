@@ -16,12 +16,15 @@ import {
 } from "@mui/material";
 import { getCategories } from "../../../hooks/apiService";
 import React from "react";
-import imageMap from "../../../components/ProductImageMapping";
+import {
+  imageMap,
+  iconImageMap,
+} from "../../../components/ProductImageMapping";
 import Alert from "../../../components/Alert";
 
 /**
  * Displays an order in the database and functionality to edit and delete it.
- * 
+ *
  * @returns {JSX.Element} The rendered React component.
  */
 const ProductOverview = ({
@@ -66,11 +69,18 @@ const ProductOverview = ({
 
   const updateImage = async (image) => {
     try {
-      await asyncApiRequest("PATCH", `/products/${product.id}/image`, {
-        image,
-      });
+      const updatedProduct = await asyncApiRequest(
+        "PATCH",
+        `/products/${product.id}/image`,
+        {
+          image,
+        }
+      );
       setImage(image);
       setOpenDialog(false);
+
+      setProduct(updatedProduct);
+      updateProducts(updatedProduct);
 
       setAlertState("success");
       setAlertMessage("Image has been updated");
