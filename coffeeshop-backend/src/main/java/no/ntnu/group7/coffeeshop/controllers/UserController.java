@@ -20,6 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
@@ -50,15 +53,15 @@ public class UserController {
    * @return The profile information for the specified user.
    */
   @GetMapping("/{username}")
-  @Operation(
-    summary = "Get one user"
-  )
+  @Operation(summary = "Get one user")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "401", description = "Profile data accessible only to authenticated users"),
-    @ApiResponse(responseCode = "403", description = "Profile data for other users not accessible!"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = UserProfileDto.class))),
+      @ApiResponse(responseCode = "401", description = "Profile data accessible only to authenticated users"),
+      @ApiResponse(responseCode = "403", description = "Profile data for other users not accessible!"),
   })
-  public ResponseEntity<?> getProfile(@PathVariable String username) throws InterruptedException {
+  public ResponseEntity<?> getProfile(
+      @Parameter(description = "The username of the user whose profile is being requested") @PathVariable String username)
+      throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
     if (sessionUser != null && (sessionUser.getUsername().equals(username) || sessionUser.isAdmin())) {
@@ -94,12 +97,11 @@ public class UserController {
    *         operation.
    */
   @PutMapping("/{username}")
-  @Operation(
-    summary = "Update one user"
-  )
-  @ApiResponse(responseCode = "200", description = "Successful")
-  public ResponseEntity<UserProfileDto> updateProfile(@PathVariable String username,
-      @RequestBody UserProfileDto profileData)
+  @Operation(summary = "Update one user")
+  @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = UserProfileDto.class)))
+  public ResponseEntity<UserProfileDto> updateProfile(
+      @Parameter(description = "The username of the user whose profile is being updated") @PathVariable String username,
+      @Parameter(description = "The updated profile information") @RequestBody UserProfileDto profileData)
       throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
@@ -128,7 +130,8 @@ public class UserController {
 
       return new ResponseEntity<UserProfileDto>(responseProfile, HttpStatus.OK);
     } else {
-      logger.error("Profile data for other users not accessible!"); //TODO: return response entity?
+      logger.error("Profile data for other users not accessible!"); // TODO: return response entity? remember to update
+                                                                    // swaggerdocs if do
     }
     return null;
   }
@@ -142,15 +145,14 @@ public class UserController {
    * @return A list of user profile information for all users.
    */
   @GetMapping("")
-  @Operation(
-    summary = "Get all users"
-  )
+  @Operation(summary = "Get all users")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "401", description = "User data accessible only to authenticated users"),
-    @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Object.class))),
+      @ApiResponse(responseCode = "401", description = "User data accessible only to authenticated users"),
+      @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
   })
-  public ResponseEntity<Object> getAllUsers() throws InterruptedException {
+  public ResponseEntity<Object> getAllUsers() throws InterruptedException { // TODO: should be List<UserProfileDto>?
+                                                                            // remember to update the other stuff if do
     User sessionUser = userService.getSessionUser();
 
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -178,19 +180,19 @@ public class UserController {
    * Gives a user admin-priveliges.
    * TODO: Make Super-Admin Role that can remove and grant admin priveliges
    * 
-   * @param username username of account to give admin priveliges
+   * @param username username of account to give admin privileges
    * @return
    * @throws InterruptedException
    */
   @PutMapping("/{username}/make-admin")
-  @Operation(
-    summary = "Give user admin role"
-  )
+  @Operation(summary = "Give user admin role")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Map.class))),
+      @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
   })
-  public ResponseEntity<?> makeAdmin(@PathVariable String username) throws InterruptedException {
+  public ResponseEntity<?> makeAdmin(
+      @Parameter(description = "username of account to give admin privileges") @PathVariable String username)
+      throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -218,15 +220,22 @@ public class UserController {
    * @throws InterruptedException
    */
   @PutMapping("/{username}/remove-admin")
-  @Operation(
-    summary = "Remove admin role from user"
-  )
+  @Operation(summary = "Remove admin role from user")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "401", description = "Only authenticated users can remove admin privileges"),
-    @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Map.class))), // TODO:
+                                                                                                                                        // might
+                                                                                                                                        // be
+                                                                                                                                        // something
+                                                                                                                                        // else
+                                                                                                                                        // than
+                                                                                                                                        // just
+                                                                                                                                        // Map.class?
+      @ApiResponse(responseCode = "401", description = "Only authenticated users can remove admin privileges"),
+      @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
   })
-  public ResponseEntity<?> removeAdmin(@PathVariable String username) throws InterruptedException {
+  public ResponseEntity<?> removeAdmin(
+      @Parameter(description = "username of account to remove admin priveliges from") @PathVariable String username)
+      throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -259,16 +268,16 @@ public class UserController {
    * @throws InterruptedException
    */
   @DeleteMapping("/{username}")
-  @Operation(
-    summary = "Delete user"
-  )
+  @Operation(summary = "Delete user")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "404", description = "User not found in database"),
-    @ApiResponse(responseCode = "401", description = "User data accessible only to authenticated users"),
-    @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "404", description = "User not found in database"),
+      @ApiResponse(responseCode = "401", description = "User data accessible only to authenticated users"),
+      @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
   })
-  public ResponseEntity<String> deleteUser(@PathVariable String username) throws InterruptedException {
+  public ResponseEntity<String> deleteUser(
+      @Parameter(description = "The username of the user to delete") @PathVariable String username)
+      throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
     if (sessionUser != null && sessionUser.isAdmin()) {
