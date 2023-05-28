@@ -46,7 +46,7 @@ export default function ShoppingCartProductCard(props) {
         id: shoppingCartProduct.id,
         userId: shoppingCartProduct.userId,
         productId: shoppingCartProduct.productId,
-        quantity: shoppingCartProduct.quantity + 1,
+        quantity: quantity + 1,
       };
 
       await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
@@ -54,6 +54,8 @@ export default function ShoppingCartProductCard(props) {
       setQuantity(quantity + 1);
 
       alert("Product count increased in cart successfully.");
+      props.updateTotal(product.price);
+
     } catch (error) {
       alert("Error increasing product in cart.");
       console.error(error);
@@ -67,7 +69,7 @@ export default function ShoppingCartProductCard(props) {
         id: shoppingCartProduct.id,
         userId: shoppingCartProduct.userId,
         productId: shoppingCartProduct.productId,
-        quantity: shoppingCartProduct.quantity - 1,
+        quantity: quantity - 1,
       };
 
       await asyncApiRequest("PUT", "/shoppingCart", requestBody, true);
@@ -75,6 +77,8 @@ export default function ShoppingCartProductCard(props) {
       setQuantity(quantity - 1);
 
       alert("Product count decreased in cart successfully.");
+      props.updateTotal(-product.price);
+
     } catch (error) {
       alert("Error decreasing product in cart.");
       console.error(error);
@@ -87,6 +91,7 @@ export default function ShoppingCartProductCard(props) {
       await asyncApiRequest("DELETE", "/shoppingCart/" + product.id);
       alert("Product deleted from cart successfully.");
       props.deleteFunction(shoppingCartProduct.id);
+      props.updateTotal((-product.price)*(quantity));
     } catch (error) {
       alert("Error deleting product from cart.");
       console.error(error);
