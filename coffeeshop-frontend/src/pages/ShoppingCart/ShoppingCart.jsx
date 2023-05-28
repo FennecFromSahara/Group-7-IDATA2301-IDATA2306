@@ -10,7 +10,7 @@ import { getShoppingCart, getShoppingCartTotal } from "../../hooks/apiService";
 
 export default function ShoppingCart() {
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [total, setTotal] = useState([]);
+  const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -21,7 +21,6 @@ export default function ShoppingCart() {
 
         const totalData = await getShoppingCartTotal();
         setTotal(totalData);
-        
       } catch (err) {
         setError(`Error fetching data: ${err.message}`);
       }
@@ -29,6 +28,10 @@ export default function ShoppingCart() {
 
     fetchData();
   }, []);
+
+  const updateTotal = (priceChange) => {
+    setTotal(total+priceChange);
+  };
 
   const renderProducts = () => {
     console.log("shoppingcart" + shoppingCart);
@@ -41,6 +44,7 @@ export default function ShoppingCart() {
               key={shoppingCartProduct.productId}
               shoppingCartProduct={shoppingCartProduct}
               deleteFunction={deleteShoppingCartProduct}
+              updateTotal={updateTotal}
             />
           );
         })}
@@ -48,17 +52,17 @@ export default function ShoppingCart() {
     );
   };
 
-    /**
+  /**
    * Delete the product with given ID from the product list
    * @param shoppingCartProductId ID of the product to delete (ID, not index of the item in the array!)
    */
-    function deleteShoppingCartProduct(shoppingCartProductId) {
-      console.log("delete shoppingcart product " + shoppingCartProductId);
-      const filteredCart = shoppingCart.filter(
-        (shoppingCartProduct) => shoppingCartProduct.id !== shoppingCartProductId
-      );
-      setShoppingCart(filteredCart);
-    }
+  function deleteShoppingCartProduct(shoppingCartProductId) {
+    console.log("delete shoppingcart product " + shoppingCartProductId);
+    const filteredCart = shoppingCart.filter(
+      (shoppingCartProduct) => shoppingCartProduct.id !== shoppingCartProductId
+    );
+    setShoppingCart(filteredCart);
+  }
 
   return (
     <div>
