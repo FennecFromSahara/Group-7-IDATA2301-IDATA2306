@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import Checkout from "./Checkout";
 import React from "react";
@@ -13,6 +14,8 @@ function CheckoutPage() {
       <NavBar />
 
       <Checkout />
+
+      <Footer />
     </div>
   );
 }
