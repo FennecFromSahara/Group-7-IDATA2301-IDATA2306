@@ -2,6 +2,11 @@ import React from "react";
 import { useTheme } from "@emotion/react";
 import { Typography, Box } from "@mui/material";
 
+/**
+ * Displays an error page that displays a given error.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function ErrorPage({ error }) {
   const theme = useTheme();
 

@@ -16,6 +16,12 @@ import { useTheme } from "@emotion/react";
 import { asyncApiRequest } from "../../../tools/requests";
 import Alert from "../../../components/Alert";
 
+/**
+ * Displays an overview of an order, with functionality to change the status
+ * of the order
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const OrderOverview = ({ order, setOrder, updateOrders, removeOrder }) => {
   const theme = useTheme();
   const [orderStatus, setOrderStatus] = useState(order.orderStatus);

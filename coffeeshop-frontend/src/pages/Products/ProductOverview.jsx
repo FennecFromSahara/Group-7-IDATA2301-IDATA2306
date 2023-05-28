@@ -5,6 +5,11 @@ import ProductCard from "./ProductCard";
 import { getProducts } from "../../hooks/apiService";
 import { useTheme } from "@emotion/react";
 
+/**
+ * ProductOverview displays the products in the database
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function ProductOverview() {
   const [status, setStatus] = useState("loading");
   const [products, setProducts] = useState([]);

@@ -19,6 +19,11 @@ import React from "react";
 import imageMap from "../../../components/ProductImageMapping";
 import Alert from "../../../components/Alert";
 
+/**
+ * Displays an order in the database and functionality to edit and delete it.
+ * 
+ * @returns {JSX.Element} The rendered React component.
+ */
 const ProductOverview = ({
   product,
   setProduct,

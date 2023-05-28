@@ -1,5 +1,10 @@
-import React from "react";
-import { useState, useEffect, useContext, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 import { getAuthenticatedUser } from "../tools/authentication";
 
 const AuthContext = createContext();
@@ -21,22 +26,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    tryRestoreUserSession();
-  }, []);
-
-  const value = {
-    user,
-    loading,
-    setUser,
-    tryRestoreUserSession,
-  };
-
-  /**
-   * Attempts to restore a user session if one exists.
-   * If there is a user session, it's restored. If not, state remains null.
-   */
-  function tryRestoreUserSession() {
+  const tryRestoreUserSession = useCallback(() => {
     if (!user) {
       const loggedInUser = getAuthenticatedUser();
       if (loggedInUser) {
@@ -47,7 +37,18 @@ export function AuthProvider({ children }) {
       }
     }
     setLoading(false);
-  }
+  }, [user]);
+
+  useEffect(() => {
+    tryRestoreUserSession();
+  }, [tryRestoreUserSession]);
+
+  const value = {
+    user,
+    loading,
+    setUser,
+    tryRestoreUserSession,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

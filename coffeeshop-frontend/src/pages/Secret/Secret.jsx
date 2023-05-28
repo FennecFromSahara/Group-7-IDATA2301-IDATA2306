@@ -4,6 +4,11 @@ import Footer from "../../components/Footer";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
+/**
+ * Represents a secret page, used as a placeholder.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function Secret() {
   const theme = useTheme();
 

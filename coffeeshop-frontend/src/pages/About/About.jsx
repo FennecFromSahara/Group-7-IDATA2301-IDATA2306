@@ -5,6 +5,11 @@ import TestimonialSection from "./TestimonialSection";
 import { useTheme } from "@emotion/react";
 import React from "react";
 
+/**
+ * Displays an about us page.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function About() {
   const theme = useTheme();
 

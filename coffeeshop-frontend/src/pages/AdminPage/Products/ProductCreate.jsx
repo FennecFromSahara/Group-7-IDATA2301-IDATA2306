@@ -19,6 +19,12 @@ import React from "react";
 import imageMap from "../../../components/ProductImageMapping";
 import Alert from "../../../components/Alert";
 
+/**
+ * Displays a create product page, with functionality to add a product to
+ * the database.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const ProductCreate = ({ setCreatingProduct, addProduct }) => {
   const theme = useTheme();
 

@@ -21,6 +21,12 @@ import { asyncApiRequest } from "../../../tools/requests";
 import React from "react";
 import Alert from "../../../components/Alert";
 
+/**
+ * Displays a table of categories products can be in, and functionality
+ * to add and delte categories.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const CategoriesTable = ({ categories: initialCategories }) => {
   const theme = useTheme();
   const [creatingCategory, setCreatingCategory] = useState(false);

@@ -5,26 +5,35 @@ import { Box, Button, Typography } from "@mui/material";
 import heroImage1440 from "../../assets/img/landingPage/hero-image-1440.webp";
 import heroImage1080 from "../../assets/img/landingPage/hero-image-1080.webp";
 
+/**
+ * Displays the hero section of the landingpage, contains a background image
+ * and a short description of the website, and a button to the products page.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function HeroSection() {
   const theme = useTheme();
 
-  const [backgroundImage, setBackgroundImage] = useState(getBackgroundImage());
+  const [backgroundImage, setBackgroundImage] = useState(null);
 
   useEffect(() => {
+    const getBackgroundImage = () => {
+      return window.innerWidth <= theme.breakpoints.values.md
+        ? `url(${heroImage1080})`
+        : `url(${heroImage1440})`;
+    };
+
+    setBackgroundImage(getBackgroundImage());
+
     const handleResize = () => {
       setBackgroundImage(getBackgroundImage());
     };
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
-  function getBackgroundImage() {
-    return window.innerWidth <= theme.breakpoints.values.md
-      ? `url(${heroImage1080})`
-      : `url(${heroImage1440})`;
-  }
+  }, [theme]);
 
   const backgroundStyles = {
     display: "flex",

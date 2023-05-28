@@ -28,6 +28,11 @@ import React from "react";
 import { asyncApiRequest } from "../../tools/requests";
 import Alert from "../../components/Alert";
 
+/**
+ * Represents the profile page for a user.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function UserProfilePage() {
   const { user, loading } = useAuth();
   const { username } = useParams();

@@ -4,11 +4,16 @@ import NavBar from "../../components/NavBar";
 import { useTheme } from "@emotion/react";
 import React from "react";
 
+/**
+ * Displays a page telling the user it doesn't have acces to the page.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function NoAccessPage() {
   const theme = useTheme();
 
   return (
-    <div>
+    <>
       <NavBar />
 
       <Box
@@ -24,7 +29,7 @@ function NoAccessPage() {
       </Box>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

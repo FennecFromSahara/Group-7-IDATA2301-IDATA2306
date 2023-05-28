@@ -24,7 +24,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
  * Code adapted from
  * https://github.com/mui/material-ui/blob/v5.11.16/docs/data/material/getting-started/templates/sign-in/SignIn.js
  *
- * @returns
+ * Handles user input during when logging in.
+ *
+ * @returns {JSX.Element} The rendered React component.
  */
 export default function LoginForm(props) {
   const [username, setUsername] = useState("");

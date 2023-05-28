@@ -4,6 +4,11 @@ import { getProductById, getProductsCount } from "../../hooks/apiService";
 import imageMap from "../../components/ProductImageMapping";
 import { Link } from "react-router-dom";
 
+/**
+ * Displays 3 randomly products chosen from the inventory.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function ProductDisplay() {
   const [products, setProducts] = useState([]);
 

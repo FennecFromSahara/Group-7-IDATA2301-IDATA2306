@@ -20,7 +20,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
  * Code adapted from
  * https://github.com/mui/material-ui/blob/v5.11.16/docs/data/material/getting-started/templates/sign-up/SignUp.js
  *
- * @returns
+ *Handles user input during when creating a user.
+ *
+ * @returns {JSX.Element} The rendered React component.
  */
 export default function CreateUserForm() {
   const navigate = useNavigate();

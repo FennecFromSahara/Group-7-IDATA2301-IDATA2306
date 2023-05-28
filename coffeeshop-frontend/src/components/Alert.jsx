@@ -2,6 +2,9 @@ import { useTheme } from "@emotion/react";
 import MuiAlert from "@mui/material/Alert";
 import React from "react";
 
+/**
+ * Displays a custom alert component
+ */
 const Alert = React.forwardRef(function Alert({ alertState, ...other }, ref) {
   const theme = useTheme();
   let color;

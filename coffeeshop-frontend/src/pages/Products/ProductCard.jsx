@@ -9,11 +9,12 @@ import { useAuth } from "../../hooks/useAuth";
 import imageMap from "../../components/ProductImageMapping";
 import { addToCartRequest } from "../../hooks/apiService";
 import Alert from "../../components/Alert";
+
 /**
- * A component representing a product card
- * @param product the product to be displayed
+ * A component representing a product card. It displays information about
+ * a product.
+ *
  * @returns {JSX.Element}
- * @constructor
  */
 export default function ProductCard(props) {
   const { user } = useAuth();

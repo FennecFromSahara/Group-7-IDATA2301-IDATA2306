@@ -23,6 +23,13 @@ import UserOverview from "./Users/UserOverview";
 import CategoriesTable from "./Categories/CategoriesTable";
 import OrderOverview from "./Orders/OrderOverview";
 
+/**
+ * Displays an Admin page where a you get a simplified overview of the backend.
+ * It includes a product overview, user overview, order overview and
+ * category overview.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function AdminPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -117,7 +124,7 @@ function AdminPage() {
 
   if (loading) {
     return (
-      <div>
+      <>
         <NavBar />
 
         <Box
@@ -131,22 +138,22 @@ function AdminPage() {
         </Box>
 
         <Footer />
-      </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div>
+      <>
         <NavBar />
         <ErrorPage error={error} />
         <Footer />
-      </div>
+      </>
     );
   }
 
   return (
-    <div>
+    <>
       <NavBar />
 
       <Box minHeight="94vh" display="flex" flexDirection="column">
@@ -230,7 +237,7 @@ function AdminPage() {
       </Box>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

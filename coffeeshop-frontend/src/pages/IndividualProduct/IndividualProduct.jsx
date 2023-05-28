@@ -19,6 +19,15 @@ import ReviewForm from "./ReviewForm";
 import { addToCartRequest } from "../../hooks/apiService";
 import Alert from "../../components/Alert";
 
+/**
+ * Displays a single product and information about it, like name, description
+ * price, and reviews.
+ *
+ * Also includes an add-to-cart button where the product is added to the
+ * shopping cart of the user.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function IndividualProduct() {
   const theme = useTheme();
 

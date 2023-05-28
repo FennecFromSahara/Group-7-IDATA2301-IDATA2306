@@ -23,8 +23,7 @@ const pages = ["Home", "Products", "About Us"];
 const link = ["/", "/products", "/about"];
 
 /**
- * A responsive nav bar that includes a menu button for smaller resolutions.
- * @param props Properties, contains user
+ * Displays a responsive nav bar.
  *
  * @returns {JSX.Element} The JSX code for a nav bar for the coffeeshop
  */

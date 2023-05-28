@@ -13,6 +13,9 @@ import pancakes from "../assets/img/products/pancakes.webp";
 import coffeeMachine from "../assets/img/products/coffeeMachine.webp";
 import placeholder from "../assets/img/products/coffee placeholder.jpg";
 
+/**
+ * Used to map images to products.
+ */
 const imageMap = {
   brazillianCoffee,
   greenTea,

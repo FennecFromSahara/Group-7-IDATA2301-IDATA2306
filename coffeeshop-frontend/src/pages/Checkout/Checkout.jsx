@@ -15,6 +15,11 @@ import { postCheckout } from "../../hooks/apiService";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
+/**
+ * Displays a checkout process for the user.
+ * 
+ * @returns {JSX.Element} The rendered React component.
+ */
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [addressInfo, setAddressInfo] = React.useState({

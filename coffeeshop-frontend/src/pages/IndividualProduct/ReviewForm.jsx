@@ -11,6 +11,11 @@ import {
 import { asyncApiRequest } from "../../tools/requests";
 import { useAuth } from "../../hooks/useAuth";
 
+/**
+ * Represents the dialog where a user gives a review to a product.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function ReviewForm({ open, handleClose, handleSubmit, productId }) {
   const { user } = useAuth();
   const [newReviewText, setNewReviewText] = useState("");

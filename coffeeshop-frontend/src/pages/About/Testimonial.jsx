@@ -2,6 +2,11 @@ import PropTypes from "prop-types";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
+/**
+ * Represents a Testemonal component, where a comment and author is displayed.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function Testimonial({ name, comment }) {
   return (
     <Box>

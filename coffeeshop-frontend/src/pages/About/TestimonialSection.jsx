@@ -1,6 +1,12 @@
 import Testimonial from "./Testimonial";
 import React from "react";
 
+/**
+ * Displays very real testemonials from different customers
+ * about their experiences with the coffee shop.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function TestimonialSection() {
   const testimonials = [
     {
@@ -14,7 +20,7 @@ function TestimonialSection() {
         "I love coming to Mocha Nooka Cafe! It's the perfect spot to hang out with friends and enjoy something tasty and refreshing. The atmosphere is always chill and the staff are really friendly. Highly recommended!",
     },
     {
-      name: "John F. Kennedy (dead)",
+      name: "Jon F. Cannada (dead)",
       comment:
         "Mocha Nooka Cafe is a beacon of warmth and taste in the hustle and bustle of the city. Their coffee, true to its origin, offers a rich, complex flavor that seems to encapsulate the spirit of togetherness and community. The staff, too, are exceptional - knowledgeable, friendly, always eager to suggest a new blend to try. It's a place where you can feel at home while experiencing a cup of coffee that's far from ordinary. In times of change and challenge, Mocha Nooka Cafe is a testament to what passion, commitment, and a good cup of coffee can achieve.",
     },

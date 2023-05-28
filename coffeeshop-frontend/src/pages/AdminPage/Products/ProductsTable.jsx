@@ -14,6 +14,11 @@ import ProductCreate from "./ProductCreate";
 import React from "react";
 import imageMap from "../../../components/ProductImageMapping";
 
+/**
+ * Displays a table of all products in the database.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const ProductsTable = ({ products, setProduct, addProduct }) => {
   const theme = useTheme();
   const [creatingProduct, setCreatingProduct] = useState(false);

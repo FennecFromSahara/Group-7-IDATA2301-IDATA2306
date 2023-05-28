@@ -10,6 +10,11 @@ import {
   TableRow,
 } from "@mui/material";
 
+/**
+ * Displays a table of all the users in the database.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const UsersTable = ({ users, setUser }) => {
   const theme = useTheme();
 

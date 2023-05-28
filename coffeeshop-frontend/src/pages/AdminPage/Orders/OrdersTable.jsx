@@ -10,6 +10,11 @@ import {
   TableRow,
 } from "@mui/material";
 
+/**
+ * Displays a table of all orders in the database.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const OrdersTable = ({ orders, setOrder }) => {
   const theme = useTheme();
 

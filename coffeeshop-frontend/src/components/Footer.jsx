@@ -6,6 +6,12 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 
+/**
+ * Displays a Footer for the coffee shop, with a warning that this is not
+ * a real coffeeshop or website.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 function Footer() {
   const theme = useTheme();
 

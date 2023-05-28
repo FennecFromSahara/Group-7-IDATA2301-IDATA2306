@@ -4,11 +4,16 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useTheme } from "@emotion/react";
 
+/**
+ * Represents the 404 Not Found Page.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 export default function NotFoundPage() {
   const theme = useTheme();
 
   return (
-    <div>
+    <>
       <NavBar />
 
       <Box
@@ -29,6 +34,6 @@ export default function NotFoundPage() {
       </Box>
 
       <Footer />
-    </div>
+    </>
   );
 }

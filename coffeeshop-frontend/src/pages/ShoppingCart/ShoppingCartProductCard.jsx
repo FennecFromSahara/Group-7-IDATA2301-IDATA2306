@@ -15,9 +15,8 @@ import Alert from "../../components/Alert";
 
 /**
  * A component representing a product card for the shoppingCart page
- * @param product the product to be displayed
- * @returns {JSX.Element}
- * @constructor
+ *
+ * @returns {JSX.Element} The rendered React component.
  */
 export default function ShoppingCartProductCard(props) {
   const shoppingCartProduct = props.shoppingCartProduct;

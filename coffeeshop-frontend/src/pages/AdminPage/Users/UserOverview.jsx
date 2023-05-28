@@ -12,6 +12,12 @@ import { useTheme } from "@emotion/react";
 import React from "react";
 import Alert from "../../../components/Alert";
 
+/**
+ * Displays an overview of a user, and functionality to edit and delete the user,
+ * and give another user admin priveliges (DO AT YOUR OWN RISK).
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 const UserOverview = ({ user, setUser, updateUsers, removeUser }) => {
   const theme = useTheme();
   const [firstName, setFirstName] = useState(user.firstName);
