@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,28 +34,35 @@ import jakarta.persistence.JoinColumn;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "orders")
+@Schema(description = "Represents an order placed by user")
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Unique ID")
   private long id;
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
+  @Schema(description = "User who placed the order")
   private User user;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "order_status", nullable = false)
+  @Schema(description = "Status of order")
   private OrderStatus orderStatus;
 
   @Column(nullable = false)
+  @Schema(description = "Total cost of order")
   private BigDecimal total;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
+  @Schema(description = "When order was created")
   private Date createdAt;
 
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("order-orderProduct")
+  @Schema(description = "List of OrderProducts")
   private List<OrderProduct> orderProducts = new ArrayList<>();
 
   // Enum for order status
