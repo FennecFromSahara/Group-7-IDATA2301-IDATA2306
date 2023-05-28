@@ -37,9 +37,6 @@ function IndividualProduct() {
       .then((productData) => {
         setProduct(productData);
         setImage(imageMap[productData.image]);
-        if (productData.productSizes && productData.productSizes.length > 0) {
-          setSelectedSize(productData.productSizes[0].size);
-        }
         // Check if user has already reviewed the product
         const userReview = productData.reviews.find(
           (review) => review.username === user?.username
@@ -52,10 +49,6 @@ function IndividualProduct() {
         console.error(`Error fetching product: ${err.message}`);
       });
   }, [id, user]);
-
-  const handleChange = (event) => {
-    setSelectedSize(event.target.value);
-  };
 
   const handleShowReviews = () => {
     setShowReviews(!showReviews);
@@ -118,15 +111,6 @@ function IndividualProduct() {
                 <Typography variant="body1" sx={{ marginTop: 2 }}>
                   {product.description}
                 </Typography>
-                {product.productSizes && product.productSizes.length > 0 && (
-                  <Select value={selectedSize} onChange={handleChange}>
-                    {product.productSizes.map((size, index) => (
-                      <MenuItem key={index} value={size.size}>
-                        {size.size} - {size.weight}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
                 <Typography variant="h3" sx={{ marginTop: 2 }}>
                   {product.price} Kr
                 </Typography>
