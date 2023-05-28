@@ -58,6 +58,11 @@ public class SecurityConfiguration {
         .requestMatchers("/api/categories/**").permitAll()
         .requestMatchers("/api/products").permitAll()
         .requestMatchers("/api/products/**").permitAll()
+        // Swagger docs
+        .requestMatchers("/api-docs").permitAll()
+        .requestMatchers("/v3/api-docs/**").permitAll()
+        .requestMatchers("/swagger-ui").permitAll()
+        .requestMatchers("/swagger-ui/**").permitAll()
         .anyRequest().authenticated()
         .and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
