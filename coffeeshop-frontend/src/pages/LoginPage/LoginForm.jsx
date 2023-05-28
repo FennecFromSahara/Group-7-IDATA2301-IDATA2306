@@ -11,14 +11,13 @@ import {
   Link,
   Grid,
   Box,
-  Checkbox,
-  FormControlLabel,
   TextField,
   CssBaseline,
   Button,
   Avatar,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useTheme } from "@emotion/react";
 
 /**
  * Code adapted from
@@ -34,6 +33,7 @@ export default function LoginForm(props) {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const theme = useTheme();
 
   function submitForm(event) {
     event.preventDefault();
@@ -77,6 +77,7 @@ export default function LoginForm(props) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          minHeight: theme.boxSizes.full,
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -119,10 +120,6 @@ export default function LoginForm(props) {
                 </InputAdornment>
               ),
             }}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
           {errorMessage}
           <Button

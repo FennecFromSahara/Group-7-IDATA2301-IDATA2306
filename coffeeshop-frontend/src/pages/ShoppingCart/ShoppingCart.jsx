@@ -8,8 +8,10 @@ import { useState, useEffect } from "react";
 import ShoppingCartProductCard from "./ShoppingCartProductCard";
 import { getShoppingCart, getShoppingCartTotal } from "../../hooks/apiService";
 import Alert from "../../components/Alert";
+import { useTheme } from "@emotion/react";
 
 export default function ShoppingCart() {
+  const theme = useTheme();
   const [shoppingCart, setShoppingCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
@@ -87,8 +89,8 @@ export default function ShoppingCart() {
   }
 
   return (
-    <div>
-      <Container sx={{ py: 8 }}>
+    <>
+      <Container sx={{ py: 8, minHeight: theme.boxSizes.navSectionFooter }}>
         <Stack spacing={2}>
           {renderProducts()}
           <Box
@@ -118,6 +120,6 @@ export default function ShoppingCart() {
           </Alert>
         </Snackbar>
       </Container>
-    </div>
+    </>
   );
 }

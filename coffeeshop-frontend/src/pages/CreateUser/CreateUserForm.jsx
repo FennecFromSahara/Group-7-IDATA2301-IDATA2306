@@ -100,12 +100,12 @@ export default function CreateUserForm() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
-        minHeight={theme.boxSizes.full}
         sx={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          minHeight: theme.boxSizes.full,
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
