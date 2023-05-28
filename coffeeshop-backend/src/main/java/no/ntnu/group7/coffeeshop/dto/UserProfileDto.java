@@ -38,35 +38,60 @@ public class UserProfileDto {
     this.roles = roles;
   }
 
+  /**
+   * @return the id
+   */
   public long getId() {
     return id;
   }
 
+  /**
+   * @return the firstName
+   */
   public String getFirstName() {
     return firstName;
   }
 
+  /**
+   * @return the lastName
+   */
   public String getLastName() {
     return lastName;
   }
 
+  /**
+   * @return the email
+   */
   public String getEmail() {
     return email;
   }
 
+  /**
+   * @return the address
+   */
   public String getAddress() {
     return address;
   }
 
+  /**
+   * @return the username
+   */
   public String getUsername() {
     return username;
   }
 
+  /**
+   * @return the createdAt
+   */
   public String getCreatedAt() {
     return createdAt;
   }
 
+  /**
+   * @return the roles
+   */
   public String getRoles() {
     return roles;
   }
+
 }

@@ -98,8 +98,12 @@ public class UserController {
    */
   @PutMapping("/{username}")
   @Operation(summary = "Update one user")
-  @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = UserProfileDto.class)))
-  public ResponseEntity<UserProfileDto> updateProfile(
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = UserProfileDto.class))),
+      @ApiResponse(responseCode = "401", description = "User data accessible only to authenticated users"),
+      @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
+  })
+  public ResponseEntity<?> updateProfile(
       @Parameter(description = "The username of the user whose profile is being updated") @PathVariable String username,
       @Parameter(description = "The updated profile information") @RequestBody UserProfileDto profileData)
       throws InterruptedException {
@@ -129,11 +133,11 @@ public class UserController {
           updatedUser.getCreatedAt().toString(), String.join(", ", roleNames));
 
       return new ResponseEntity<UserProfileDto>(responseProfile, HttpStatus.OK);
+    } else if (sessionUser == null) {
+      return new ResponseEntity<>("User data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
     } else {
-      logger.error("Profile data for other users not accessible!"); // TODO: return response entity? remember to update
-                                                                    // swaggerdocs if do
+      return new ResponseEntity<>("User data accessible only to admin users", HttpStatus.FORBIDDEN);
     }
-    return null;
   }
 
   /**
@@ -147,12 +151,11 @@ public class UserController {
   @GetMapping("")
   @Operation(summary = "Get all users")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Object.class))),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = UserProfileDto.class))),
       @ApiResponse(responseCode = "401", description = "User data accessible only to authenticated users"),
       @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
   })
-  public ResponseEntity<Object> getAllUsers() throws InterruptedException { // TODO: should be List<UserProfileDto>?
-                                                                            // remember to update the other stuff if do
+  public ResponseEntity<?> getAllUsers() throws InterruptedException {
     User sessionUser = userService.getSessionUser();
 
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -168,7 +171,7 @@ public class UserController {
           })
           .collect(Collectors.toList());
 
-      return new ResponseEntity<>(allUserProfileDtos, HttpStatus.OK);
+      return new ResponseEntity<List<UserProfileDto>>(allUserProfileDtos, HttpStatus.OK);
     } else if (sessionUser == null) {
       return new ResponseEntity<>("User data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
     } else {
@@ -177,11 +180,14 @@ public class UserController {
   }
 
   /**
-   * Gives a user admin-priveliges.
-   * TODO: Make Super-Admin Role that can remove and grant admin priveliges
+   * Handles HTTP PUT requests to "/api/users/{username}/make-admin"
+   * and assigns the role of 'Admin' to the specified user.
+   * If the session user is not an admin or unauthenticated, appropriate
+   * HTTP status codes are returned to indicate unauthorized access.
    * 
-   * @param username username of account to give admin privileges
-   * @return
+   * @param username The username of the user to be promoted to an admin role.
+   * @return ResponseEntity containing a Map with updated roles of the user
+   *         or an error message with appropriate HTTP status code.
    * @throws InterruptedException
    */
   @PutMapping("/{username}/make-admin")
@@ -202,7 +208,7 @@ public class UserController {
 
       String newRoles = userService.convertRolesToString(newAdmin.getRoles());
 
-      Map<String, Object> response = new HashMap<>();
+      Map<String, String> response = new HashMap<>();
       response.put("roles", newRoles);
 
       return new ResponseEntity<>(response, HttpStatus.OK);
@@ -212,24 +218,21 @@ public class UserController {
   }
 
   /**
-   * Removes a user admin-priveliges.
-   * TODO: Make Super-Admin Role that can remove and grant admin priveliges
+   * Handles HTTP PUT requests to "/api/users/{username}/remove-admin"
+   * and removes the role of 'Admin' from the specified user.
+   * If the session user is not an admin or unauthenticated, appropriate
+   * HTTP status codes are returned to indicate unauthorized access.
    * 
-   * @param username username of account to remove admin priveliges from
-   * @return
+   * @param username The username of the user from which the admin role is to be
+   *                 removed.
+   * @return ResponseEntity containing a Map with updated roles of the user
+   *         or an error message with appropriate HTTP status code.
    * @throws InterruptedException
    */
   @PutMapping("/{username}/remove-admin")
   @Operation(summary = "Remove admin role from user")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Map.class))), // TODO:
-                                                                                                                                        // might
-                                                                                                                                        // be
-                                                                                                                                        // something
-                                                                                                                                        // else
-                                                                                                                                        // than
-                                                                                                                                        // just
-                                                                                                                                        // Map.class?
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Map.class))),
       @ApiResponse(responseCode = "401", description = "Only authenticated users can remove admin privileges"),
       @ApiResponse(responseCode = "403", description = "User data accessible only to admin users")
   })

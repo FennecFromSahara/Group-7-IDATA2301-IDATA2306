@@ -63,12 +63,6 @@ public class User {
   @JsonManagedReference("user-review")
   private List<Review> reviews = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "customer")
-  // private Set<Order> orders = new HashSet<>();
-
-  // @OneToMany(mappedBy = "customer")
-  // private Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
-
   /**
    * Empty constructor needed for JPA
    */
@@ -96,102 +90,131 @@ public class User {
     this.createdAt = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
   }
 
-  public Long getId() {
+  /**
+   * @return the id
+   */
+  public long getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  /**
+   * @param id the id to set
+   */
+  public void setId(long id) {
     this.id = id;
   }
 
+  /**
+   * @return the username
+   */
   public String getUsername() {
     return username;
   }
 
+  /**
+   * @param username the username to set
+   */
   public void setUsername(String username) {
     this.username = username;
   }
 
+  /**
+   * @return the password
+   */
   public String getPassword() {
     return password;
   }
 
+  /**
+   * @param password the password to set
+   */
   public void setPassword(String password) {
     this.password = password;
   }
 
+  /**
+   * @return the firstName
+   */
   public String getFirstName() {
     return firstName;
   }
 
+  /**
+   * @param firstName the firstName to set
+   */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
+  /**
+   * @return the lastName
+   */
   public String getLastName() {
     return lastName;
   }
 
+  /**
+   * @param lastName the lastName to set
+   */
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
+  /**
+   * @return the email
+   */
   public String getEmail() {
     return email;
   }
 
+  /**
+   * @param email the email to set
+   */
   public void setEmail(String email) {
     this.email = email;
   }
 
+  /**
+   * @return the address
+   */
   public String getAddress() {
     return address;
   }
 
+  /**
+   * @param address the address to set
+   */
   public void setAddress(String address) {
     this.address = address;
   }
 
-  public boolean isActive() {
-    return active;
-  }
-
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
+  /**
+   * @return the createdAt
+   */
   public Date getCreatedAt() {
     return createdAt;
   }
 
+  /**
+   * @param createdAt the createdAt to set
+   */
   public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
   }
 
+  /**
+   * @return the roles
+   */
   public Set<Role> getRoles() {
     return roles;
   }
 
+  /**
+   * @param roles the roles to set
+   */
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
   }
-
-  // public Set<Order> getOrders() {
-  // return orders;
-  // }
-
-  // public void setOrders(Set<Order> orders) {
-  // this.orders = orders;
-  // }
-
-  // public Set<ShoppingCartProduct> getShoppingCartProducts() {
-  // return shoppingCartProducts;
-  // }
-
-  // public void setShoppingCartProducts(Set<ShoppingCartProduct>
-  // shoppingCartProducts) {
-  // this.shoppingCartProducts = shoppingCartProducts;
-  // }
 
   /**
    * Add a role to the user
@@ -250,6 +273,20 @@ public class User {
    */
   public void setReviews(List<Review> reviews) {
     this.reviews = reviews;
+  }
+
+  /**
+   * @return the active
+   */
+  public boolean isActive() {
+    return active;
+  }
+
+  /**
+   * @param active the active to set
+   */
+  public void setActive(boolean active) {
+    this.active = active;
   }
 
 }

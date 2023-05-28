@@ -89,12 +89,12 @@ public class AuthenticationController {
   }
 
   /**
-   * HTTP POST request to change password of a user
+   * HTTP PATCH request to change password of a user
    * 
    * @param changePasswordData DTO containing details used for changing password
    * @return A response indicating success or failure of the operation.
    */
-  @PostMapping("/api/change_password") // TODO: should be PUT or the other one?
+  @PatchMapping("/api/change_password")
   @Operation(summary = "Change password")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Password updated successfully"),

@@ -99,7 +99,7 @@ function UserProfilePage() {
       }
 
       const response = await asyncApiRequest(
-        "POST",
+        "PATCH",
         "/change_password",
         {
           currentPassword,

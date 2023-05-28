@@ -32,7 +32,7 @@ export function asyncApiRequest(
     headers["Authorization"] = "Bearer " + jwtToken;
   }
 
-  console.log(body);
+  console.log("body: " + body);
   console.log(method + " " + fullUrl);
 
   return fetch(fullUrl, {

@@ -31,27 +31,46 @@ public class SignupDto {
     this.address = address;
   }
 
+  /**
+   * @return the username
+   */
   public String getUsername() {
     return username;
   }
 
+  /**
+   * @return the password
+   */
   public String getPassword() {
     return password;
   }
 
+  /**
+   * @return the firstName
+   */
   public String getFirstName() {
     return firstName;
   }
 
+  /**
+   * @return the lastName
+   */
   public String getLastName() {
     return lastName;
   }
 
+  /**
+   * @return the email
+   */
   public String getEmail() {
     return email;
   }
 
+  /**
+   * @return the address
+   */
   public String getAddress() {
     return address;
   }
+
 }

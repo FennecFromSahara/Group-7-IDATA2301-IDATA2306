@@ -26,35 +26,60 @@ public class ProductDto {
     this.reviews = reviews;
   }
 
+  /**
+   * @return the id
+   */
   public int getId() {
     return id;
   }
 
+  /**
+   * @return the name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * @return the description
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * @return the inventoryAmount
+   */
   public int getInventoryAmount() {
     return inventoryAmount;
   }
 
+  /**
+   * @return the price
+   */
   public BigDecimal getPrice() {
     return price;
   }
 
+  /**
+   * @return the image
+   */
   public String getImage() {
     return image;
   }
 
+  /**
+   * @return the categories
+   */
   public List<CategoryDto> getCategories() {
     return categories;
   }
 
+  /**
+   * @return the reviews
+   */
   public List<ReviewDto> getReviews() {
     return reviews;
   }
+
 }

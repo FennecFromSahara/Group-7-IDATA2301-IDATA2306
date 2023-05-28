@@ -16,7 +16,11 @@ public class AuthenticationResponse {
     this.jwt = jwt;
   }
 
+  /**
+   * @return the jwt
+   */
   public String getJwt() {
     return jwt;
   }
+
 }

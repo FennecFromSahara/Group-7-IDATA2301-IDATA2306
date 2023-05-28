@@ -111,7 +111,6 @@ public class CategoryController {
       @ApiResponse(responseCode = "204", description = "Item removed successfully"),
       @ApiResponse(responseCode = "404", description = "Category not found")
   })
-  // TODO: maybe not void?
   public ResponseEntity<Void> deleteCategory(
       @Parameter(description = "The ID of the Category object to delete") @PathVariable(value = "id") int categoryId) {
     if (categoryService.deleteCategory(categoryId)) {

@@ -25,19 +25,32 @@ public class ShoppingCartProductDto {
     this.quantity = quantity;
   }
 
+  /**
+   * @return the id
+   */
   public int getId() {
     return id;
   }
 
+  /**
+   * @return the userId
+   */
   public Long getUserId() {
     return userId;
   }
 
+  /**
+   * @return the productId
+   */
   public int getProductId() {
     return productId;
   }
 
+  /**
+   * @return the quantity
+   */
   public int getQuantity() {
     return quantity;
   }
+
 }

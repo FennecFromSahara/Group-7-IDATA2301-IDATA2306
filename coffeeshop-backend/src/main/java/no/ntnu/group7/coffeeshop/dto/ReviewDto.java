@@ -14,19 +14,32 @@ public class ReviewDto {
     this.username = username;
   }
 
+  /**
+   * @return the id
+   */
   public int getId() {
     return id;
   }
 
+  /**
+   * @return the reviewText
+   */
   public String getReviewText() {
     return reviewText;
   }
 
+  /**
+   * @return the rating
+   */
   public int getRating() {
     return rating;
   }
 
+  /**
+   * @return the username
+   */
   public String getUsername() {
     return username;
   }
+
 }
