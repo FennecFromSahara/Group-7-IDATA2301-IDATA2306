@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.group7.coffeeshop.dto.CategoryDto;
@@ -54,7 +58,7 @@ public class ProductController {
    */
   @GetMapping("")
   @Operation(summary = "Get all products")
-  @ApiResponse(responseCode = "200", description = "Success")
+  @ApiResponse(responseCode = "200", description = "Success", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ProductDto.class))))
   public ResponseEntity<List<ProductDto>> getAllProducts() {
     List<Product> products = productRepository.findAll();
 
@@ -75,7 +79,7 @@ public class ProductController {
           product.getInventoryAmount(),
           product.getPrice(),
           product.getImage(),
-          categoryDtos, 
+          categoryDtos,
           reviewDtos);
     }).collect(Collectors.toList());
 
@@ -93,10 +97,11 @@ public class ProductController {
   @GetMapping("/{id}")
   @Operation(summary = "Get one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = ProductDto.class))),
       @ApiResponse(responseCode = "404", description = "Product not found")
   })
-  public ResponseEntity<ProductDto> getProductById(@PathVariable int id) {
+  public ResponseEntity<ProductDto> getProductById(
+      @Parameter(description = "The ID of the Product object to retrieve") @PathVariable int id) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
@@ -133,10 +138,11 @@ public class ProductController {
   @PostMapping("")
   @Operation(summary = "Add one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "Created"),
+      @ApiResponse(responseCode = "201", description = "Created", content = @Content(schema = @Schema(implementation = Product.class))),
       @ApiResponse(responseCode = "404", description = "Category not found")
   })
-  public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto) {
+  public ResponseEntity<Product> createProduct(
+      @Parameter(description = "The product DTO with details about the object to add") @RequestBody ProductDto productDto) {
     Product product = new Product();
     product.setName(productDto.getName());
     product.setDescription(productDto.getDescription());
@@ -172,11 +178,13 @@ public class ProductController {
   @PutMapping("/{id}")
   @Operation(summary = "Update one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Product.class))),
       @ApiResponse(responseCode = "404", description = "Product not found"),
       @ApiResponse(responseCode = "404", description = "Category not found")
   })
-  public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody ProductDto productDto) {
+  public ResponseEntity<Product> updateProduct(
+      @Parameter(description = "The ID of the product to update") @PathVariable int id,
+      @Parameter(description = "The product DTO containing the updated details") @RequestBody ProductDto productDto) {
     Product currentProduct = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
@@ -215,7 +223,8 @@ public class ProductController {
       @ApiResponse(responseCode = "204", description = "Item removed successfully"),
       @ApiResponse(responseCode = "404", description = "Product not found")
   })
-  public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
+  public ResponseEntity<Void> deleteProduct(
+      @Parameter(description = "The ID of the product to delete") @PathVariable int id) {
     if (!productRepository.existsById(id)) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
     }
@@ -233,10 +242,11 @@ public class ProductController {
   @GetMapping("/{id}/categories")
   @Operation(summary = "Get categories of one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Category.class)))),
       @ApiResponse(responseCode = "404", description = "Product not found")
   })
-  public ResponseEntity<List<Category>> getCategoriesOfProduct(@PathVariable int id) {
+  public ResponseEntity<List<Category>> getCategoriesOfProduct(
+      @Parameter(description = "The ID of the Product object") @PathVariable int id) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
     return new ResponseEntity<List<Category>>(product.getCategories(), HttpStatus.OK);
@@ -252,20 +262,36 @@ public class ProductController {
   @GetMapping("/category/{categoryId}")
   @Operation(summary = "Get all products of one category")
   @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "Created"),
+      @ApiResponse(responseCode = "201", description = "Created", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class)))),
       @ApiResponse(responseCode = "404", description = "Category not found"),
       @ApiResponse(responseCode = "404", description = "Product not found"), // TODO: should maybe have different codes
                                                                              // or smthn idk
       @ApiResponse(responseCode = "404", description = "User not found")
   })
-  public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable int categoryId) {
+  public ResponseEntity<List<Product>> getProductsByCategory(
+      @Parameter(description = "The ID of the Category object") @PathVariable int categoryId) {
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
     return new ResponseEntity<List<Product>>(category.getProducts(), HttpStatus.OK);
   }
 
+  /**
+   * Adds a review to one product
+   * 
+   * @param id        The id of product to add review to
+   * @param reviewDto DTO containing the review
+   * @return The added review
+   */
   @PostMapping("/{id}/add-review")
-  public ResponseEntity<Review> addReview(@PathVariable int id, @RequestBody ReviewDto reviewDto) {
+  @Operation(summary = "Add one review to one product")
+  @ApiResponses({
+      @ApiResponse(responseCode = "201", description = "Created", content = @Content(schema = @Schema(implementation = Review.class))),
+      @ApiResponse(responseCode = "404", description = "Product not found"),
+      @ApiResponse(responseCode = "404", description = "User not found")
+  })
+  public ResponseEntity<Review> addReview(
+      @Parameter(description = "The id of product to add review to") @PathVariable int id,
+      @Parameter(description = "DTO containing the review") @RequestBody ReviewDto reviewDto) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
@@ -290,7 +316,7 @@ public class ProductController {
    */
   @GetMapping("/count")
   @Operation(summary = "Get number of products in database")
-  @ApiResponse(responseCode = "200", description = "Success")
+  @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Long.class)))
   public ResponseEntity<Long> getProductCount() {
     long count = productRepository.count();
     return new ResponseEntity<>(count, HttpStatus.OK);
@@ -309,11 +335,13 @@ public class ProductController {
   @PatchMapping("/{id}/image")
   @Operation(summary = "Update image of one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Product.class))),
       @ApiResponse(responseCode = "400", description = "Image not provided"),
       @ApiResponse(responseCode = "404", description = "Product not found")
   })
-  public ResponseEntity<Product> updateProductImage(@PathVariable int id, @RequestBody Map<String, String> imageMap) {
+  public ResponseEntity<Product> updateProductImage(
+      @Parameter(description = "The ID of the product to update the image") @PathVariable int id,
+      @Parameter(description = "The new image for the product as a map") @RequestBody Map<String, String> imageMap) {
     String image = imageMap.get("image");
     if (image == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not provided");

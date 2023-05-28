@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -37,7 +41,7 @@ public class OrderController {
    */
   @GetMapping("")
   @Operation(summary = "Get all orders")
-  @ApiResponse(responseCode = "200", description = "Success")
+  @ApiResponse(responseCode = "200", description = "Success", content = @Content(array = @ArraySchema(schema = @Schema(implementation = OrderDto.class))))
   public ResponseEntity<List<OrderDto>> getAllOrders() {
     List<Order> orders = orderRepository.findAll();
 
@@ -72,12 +76,13 @@ public class OrderController {
   @PutMapping("/{id}")
   @Operation(summary = "Update an order")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Order.class))),
       @ApiResponse(responseCode = "404", description = "Order not found"),
       @ApiResponse(responseCode = "400", description = "Invalid order status")
   })
-  public ResponseEntity<Order> updateOrderStatus(@PathVariable int id,
-      @RequestBody OrderDto orderDto) {
+  public ResponseEntity<Order> updateOrderStatus(
+      @Parameter(description = "The ID of the order to update") @PathVariable int id,
+      @Parameter(description = "The order DTO containing the updated details") @RequestBody OrderDto orderDto) {
 
     Order currentOrder = orderRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
@@ -110,7 +115,8 @@ public class OrderController {
       @ApiResponse(responseCode = "204", description = "Item removed successfully"),
       @ApiResponse(responseCode = "404", description = "Order not found")
   })
-  public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
+  public ResponseEntity<Void> deleteOrder(
+      @Parameter(description = "The ID of the order to delete") @PathVariable int id) {
     if (!orderRepository.existsById(id)) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
     }
@@ -120,14 +126,23 @@ public class OrderController {
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
+  /**
+   * Updates the status of an order
+   * 
+   * @param id     ID of order to update
+   * @param status new status
+   * @return DTO containing the updated order
+   */
   @PatchMapping("/{id}/{status}")
   @Operation(summary = "Update order status")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = OrderDto.class))),
       @ApiResponse(responseCode = "404", description = "Order not found"),
       @ApiResponse(responseCode = "400", description = "Invalid order status"),
   })
-  public ResponseEntity<OrderDto> updateOrderStatus(@PathVariable int id, @PathVariable String status) {
+  public ResponseEntity<OrderDto> updateOrderStatus(
+      @Parameter(description = "ID of order to update") @PathVariable int id,
+      @Parameter(description = "new status") @PathVariable String status) {
     Order currentOrder = orderRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 

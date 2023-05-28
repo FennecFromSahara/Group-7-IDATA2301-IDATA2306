@@ -17,6 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
@@ -41,14 +44,13 @@ public class AuthenticationController {
    * @return OK + JWT token; Or UNAUTHORIZED
    */
   @PostMapping("/api/authenticate")
-  @Operation(
-    summary = "Try to authenticate"
-  )
+  @Operation(summary = "Try to authenticate")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "401", description = "Invalid username or password")
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = AuthenticationResponse.class))),
+      @ApiResponse(responseCode = "401", description = "Invalid username or password")
   })
-  public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+  public ResponseEntity<?> authenticate(
+      @Parameter(description = "The request JSON object containing username and password") @RequestBody AuthenticationRequest authenticationRequest) {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
           authenticationRequest.getUsername(),
@@ -63,18 +65,18 @@ public class AuthenticationController {
 
   /**
    * This method processes data received from the sign-up form (HTTP POST)
-   *
-   * @return Name of the template for the result page
+   * 
+   * @param signupData DTO containing user details needed for signup
+   * @return A response indicating success or failure of the operation.
    */
   @PostMapping("/api/signup")
-  @Operation(
-    summary = "Try to signup"
-  )
+  @Operation(summary = "Try to signup")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Successful"),
-    @ApiResponse(responseCode = "400", description = "Error creating user")
+      @ApiResponse(responseCode = "200", description = "Successful"),
+      @ApiResponse(responseCode = "400", description = "Error creating user")
   })
-  public ResponseEntity<String> signupProcess(@RequestBody SignupDto signupData) {
+  public ResponseEntity<String> signupProcess(
+      @Parameter(description = "DTO containing user details needed for signup") @RequestBody SignupDto signupData) {
     String errorMessage = userService.tryCreateNewUser(signupData.getUsername(), signupData.getPassword(),
         signupData.getFirstName(), signupData.getLastName(), signupData.getEmail(), signupData.getAddress());
     ResponseEntity<String> response;
@@ -87,21 +89,20 @@ public class AuthenticationController {
   }
 
   /**
-   * HTTP POST requets to change password of a user
+   * HTTP POST request to change password of a user
    * 
-   * @param changePasswordData
-   * @return
+   * @param changePasswordData DTO containing details used for changing password
+   * @return A response indicating success or failure of the operation.
    */
-  @PostMapping("/api/change_password") //TODO: should be PUT or the other one?
-  @Operation(
-    summary = "Change password"
-  )
+  @PostMapping("/api/change_password") // TODO: should be PUT or the other one?
+  @Operation(summary = "Change password")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Password update successfully"),
-    @ApiResponse(responseCode = "404", description = "User not found"),
-    @ApiResponse(responseCode = "400", description = "Error updating password")
+      @ApiResponse(responseCode = "200", description = "Password updated successfully"),
+      @ApiResponse(responseCode = "404", description = "User not found"),
+      @ApiResponse(responseCode = "400", description = "Error updating password")
   })
-  public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordData) {
+  public ResponseEntity<String> changePassword(
+      @Parameter(description = "DTO containing details used for changing password") @RequestBody ChangePasswordDto changePasswordData) {
     User user = userService.getSessionUser();
     if (user == null) {
       return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
