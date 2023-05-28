@@ -14,28 +14,12 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { StyledTableCell, StyledTableRow } from "../Components/StyledTable";
 import { useState } from "react";
 import { asyncApiRequest } from "../../../tools/requests";
 import React from "react";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-  color: theme.palette.text.primary,
-  fontSize: "1.5rem",
-  fontWeight: 600,
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.primary.contrastText,
-  },
-  "&:hover": {
-    backgroundColor: theme.palette.background.hover,
-  },
-}));
-
-const Categories = ({ categories: initialCategories }) => {
+const CategoriesTable = ({ categories: initialCategories }) => {
   const theme = useTheme();
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -158,4 +142,4 @@ const Categories = ({ categories: initialCategories }) => {
   );
 };
 
-export default Categories;
+export default CategoriesTable;

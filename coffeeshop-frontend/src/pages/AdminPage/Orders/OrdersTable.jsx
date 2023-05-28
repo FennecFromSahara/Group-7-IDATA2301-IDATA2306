@@ -1,4 +1,6 @@
+import React from "react";
 import { useTheme } from "@emotion/react";
+import { StyledTableCell, StyledTableRow } from "../Components/StyledTable";
 import {
   Table,
   TableBody,
@@ -7,26 +9,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import React from "react";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-  color: theme.palette.text.primary,
-  fontSize: "1.5rem",
-  fontWeight: 600,
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.primary.contrastText,
-  },
-  "&:hover": {
-    backgroundColor: theme.palette.background.hover,
-  },
-}));
-
-const Orders = ({ orders, setOrder }) => {
+const OrdersTable = ({ orders, setOrder }) => {
   const theme = useTheme();
 
   return (
@@ -79,4 +63,4 @@ const Orders = ({ orders, setOrder }) => {
   );
 };
 
-export default Orders;
+export default OrdersTable;

@@ -1,7 +1,7 @@
-import { Box, AppBar, Tabs, Tab, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Box, AppBar, Tabs, Tab, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import {
   getProducts,
@@ -12,15 +12,15 @@ import {
 import { isAdmin } from "../../tools/authentication";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import TabPanel from "./TabPanel";
-import Orders from "./Orders/Orders";
-import Products from "./Products/Products";
-import Users from "./Users/Users";
+import TabPanel from "./Components/TabPanel";
+import OrdersTable from "./Orders/OrdersTable";
+import ProductsTable from "./Products/ProductsTable";
+import UsersTable from "./Users/UsersTable";
 import ErrorPage from "../../components/ErrorPage";
 import ProductOverview from "./Products/ProductOverview";
 import ProductCreate from "./Products/ProductCreate";
 import UserOverview from "./Users/UserOverview";
-import Categories from "./Categories/Categories";
+import CategoriesTable from "./Categories/CategoriesTable";
 import OrderOverview from "./Orders/OrderOverview";
 
 function AdminPage() {
@@ -193,7 +193,7 @@ function AdminPage() {
               removeProduct={removeProduct}
             />
           ) : (
-            <Products
+            <ProductsTable
               products={products}
               setProduct={setSelectedProduct}
               addProduct={addProduct}
@@ -209,7 +209,7 @@ function AdminPage() {
               removeUser={removeUser}
             />
           ) : (
-            <Users users={users} setUser={setSelectedUser} />
+            <UsersTable users={users} setUser={setSelectedUser} />
           )}
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -221,11 +221,11 @@ function AdminPage() {
               removeOrder={removeOrder}
             />
           ) : (
-            <Orders orders={orders} setOrder={setSelectedOrder} />
+            <OrdersTable orders={orders} setOrder={setSelectedOrder} />
           )}
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <Categories categories={categories} />
+          <CategoriesTable categories={categories} />
         </TabPanel>
       </Box>
 
