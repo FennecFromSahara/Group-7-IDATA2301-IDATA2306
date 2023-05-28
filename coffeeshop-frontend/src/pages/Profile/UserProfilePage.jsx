@@ -15,8 +15,6 @@ import {
   DialogActions,
   TextField,
   Snackbar,
-  Checkbox,
-  FormControlLabel,
   IconButton,
   InputAdornment,
 } from "@mui/material";
@@ -260,7 +258,6 @@ function UserProfilePage() {
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 fullWidth
                 InputProps={{
-                  // <-- This is where the toggle button is added
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton

@@ -1,20 +1,24 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sendAuthenticationRequest } from "../../tools/authentication";
-import { Alert } from "@mui/material";
+import {
+  Alert,
+  IconButton,
+  InputAdornment,
+  Typography,
+  Container,
+  Link,
+  Grid,
+  Box,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  CssBaseline,
+  Button,
+  Avatar,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 /**
  * Code adapted from
@@ -27,9 +31,10 @@ export default function LoginForm(props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     console.log("Submitting form");
     sendAuthenticationRequest(
       username,
@@ -96,10 +101,22 @@ export default function LoginForm(props) {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             autoComplete="current-password"
             onChange={handlePasswordChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

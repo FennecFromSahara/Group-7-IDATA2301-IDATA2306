@@ -12,8 +12,9 @@ import Container from "@mui/material/Container";
 import { asyncApiRequest } from "../../tools/requests";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Alert } from "@mui/material";
+import { Alert, IconButton, InputAdornment } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 /**
  * Code adapted from
@@ -25,6 +26,16 @@ export default function CreateUserForm() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const theme = useTheme();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   let errorMessage = null;
   if (error) {
@@ -160,9 +171,21 @@ export default function CreateUserForm() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="new-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={toggleShowPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -171,9 +194,25 @@ export default function CreateUserForm() {
                 fullWidth
                 name="confirmPassword"
                 label="Confirm Password"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 autoComplete="new-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle confirm password visibility"
+                        onClick={toggleShowConfirmPassword}
+                      >
+                        {showConfirmPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid item xs={12}>
