@@ -250,12 +250,12 @@ const ProductOverview = ({
           <DialogTitle>Select a new image</DialogTitle>
           <DialogContent>
             <Grid container spacing={2}>
-              {Object.keys(imageMap)
+              {Object.keys(iconImageMap)
                 .filter((img) => img !== image)
                 .map((img, index) => (
                   <Grid item key={index} onClick={() => updateImage(img)}>
                     <img
-                      src={imageMap[img]}
+                      src={iconImageMap[img]}
                       alt={img}
                       style={{
                         width: "120px",

@@ -88,13 +88,13 @@ function ProductOverview() {
         display="flex"
         justifyContent="flex-start"
         alignItems="flex-start"
-        sx={{ minHeight: theme.boxSizes.full, p: "1rem 3rem 3rem 3rem" }}
+        sx={{ minHeight: theme.boxSizes.full, pt: 3, pl: 3 }}
       >
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          sx={{ width: 185, mr: 8, ml: -3 }}
+          sx={{ width: 185, mr: 3, ml: -3 }}
         >
           <TextField
             label="Search for product"
@@ -107,6 +107,7 @@ function ProductOverview() {
             variant="contained"
             onClick={() => setSelectedCategory("")}
             sx={{
+              minWidth: 50,
               my: 1,
               backgroundColor:
                 selectedCategory === ""
@@ -122,6 +123,7 @@ function ProductOverview() {
               variant="contained"
               onClick={() => filterProductsByCategory(category)}
               sx={{
+                minWidth: 50,
                 my: 1,
                 backgroundColor:
                   selectedCategory === category
