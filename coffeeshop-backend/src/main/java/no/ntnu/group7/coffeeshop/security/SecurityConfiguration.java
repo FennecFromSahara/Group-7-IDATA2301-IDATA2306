@@ -3,6 +3,7 @@ package no.ntnu.group7.coffeeshop.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -52,17 +53,31 @@ public class SecurityConfiguration {
     // Allow JWT authentication
     http.cors().and().csrf().disable()
         .authorizeHttpRequests()
+        // Authentication
         .requestMatchers("/api/authenticate").permitAll()
         .requestMatchers("/api/signup").permitAll()
-        .requestMatchers("/api/categories").permitAll()
-        .requestMatchers("/api/categories/**").permitAll()
-        .requestMatchers("/api/products").permitAll()
-        .requestMatchers("/api/products/**").permitAll()
         // Swagger docs
         .requestMatchers("/api-docs").permitAll()
+        .requestMatchers("/v3/api-docs").permitAll()
         .requestMatchers("/v3/api-docs/**").permitAll()
         .requestMatchers("/swagger-ui").permitAll()
         .requestMatchers("/swagger-ui/**").permitAll()
+        // Products
+        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/products/*/add-review").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/products/*/categories").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/products/category/*").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/products/count").permitAll()
+        // Categories
+        .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/categories/*").permitAll()
+        // ShoppingCart
+        .requestMatchers(HttpMethod.GET, "/api/shoppingCart").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/shoppingCart/total").permitAll()
+        .requestMatchers(HttpMethod.DELETE, "/api/shoppingCart/*").permitAll()
+        .requestMatchers(HttpMethod.PATCH, "/api/shoppingCart/quantity").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/shoppingCart/add-to-cart").permitAll()
         .anyRequest().authenticated()
         .and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
