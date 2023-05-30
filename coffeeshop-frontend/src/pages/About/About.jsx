@@ -22,7 +22,7 @@ function About() {
         flexDirection="column"
         sx={{
           m: "3rem",
-          minHeight: theme.boxSizes.full3rem,
+          minHeight: theme.boxSizes.full,
         }}
       >
         <Box flex={1} overflow="auto">

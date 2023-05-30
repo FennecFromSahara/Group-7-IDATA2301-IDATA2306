@@ -126,7 +126,7 @@ function IndividualProduct() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            minHeight: theme.boxSizes.full3rem,
+            minHeight: theme.boxSizes.full,
             m: "3rem auto",
           }}
         >

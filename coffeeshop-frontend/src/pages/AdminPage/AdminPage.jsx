@@ -156,7 +156,13 @@ function AdminPage() {
     <>
       <NavBar />
 
-      <Box minHeight="94vh" display="flex" flexDirection="column">
+      <Box
+        sx={{
+          minHeight: theme.boxSizes.full,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <AppBar
           position="static"
           sx={{ backgroundColor: theme.palette.primary.light }}

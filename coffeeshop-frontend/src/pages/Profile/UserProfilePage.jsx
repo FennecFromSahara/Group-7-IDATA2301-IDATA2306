@@ -182,7 +182,7 @@ function UserProfilePage() {
       </Snackbar>
       <Box
         style={{
-          minHeight: theme.boxSizes.navSectionFooter,
+          minHeight: theme.boxSizes.full,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",

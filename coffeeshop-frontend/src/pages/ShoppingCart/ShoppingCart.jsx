@@ -90,7 +90,7 @@ export default function ShoppingCart() {
 
   return (
     <>
-      <Container sx={{ py: 8, minHeight: theme.boxSizes.navSectionFooter }}>
+      <Container sx={{ py: 8, minHeight: theme.boxSizes.full }}>
         <Stack spacing={2}>
           {renderProducts()}
           <Box

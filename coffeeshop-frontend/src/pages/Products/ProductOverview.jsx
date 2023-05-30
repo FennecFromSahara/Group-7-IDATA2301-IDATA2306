@@ -69,7 +69,7 @@ function ProductOverview() {
   return (
     <Box
       sx={{
-        minHeight: theme.boxSizes.navSection,
+        minHeight: theme.boxSizes.full,
         p: "1rem 3rem 3rem 3rem",
       }}
     >

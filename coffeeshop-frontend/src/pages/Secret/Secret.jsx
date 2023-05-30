@@ -19,7 +19,7 @@ function Secret() {
       <Box
         display="flex"
         flexDirection="column"
-        minHeight={theme.boxSizes.navSectionFooter}
+        minHeight={theme.boxSizes.full}
       >
         <Box
           display="flex"
