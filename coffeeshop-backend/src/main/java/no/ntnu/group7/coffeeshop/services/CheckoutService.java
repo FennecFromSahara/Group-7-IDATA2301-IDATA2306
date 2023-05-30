@@ -41,7 +41,7 @@ public class CheckoutService {
    * @param user the user to checkout
    */
   @Transactional
-  public void checkout(User user) {
+  public Order checkout(User user) {
     BigDecimal total = shoppingCartService.calculateShoppingCartTotal(user);
 
     Order order = new Order();
@@ -71,6 +71,8 @@ public class CheckoutService {
 
     // Updates the order status
     order.setOrderStatus(Order.OrderStatus.PROCESSING);
+
+    return order;
   }
 
   /**

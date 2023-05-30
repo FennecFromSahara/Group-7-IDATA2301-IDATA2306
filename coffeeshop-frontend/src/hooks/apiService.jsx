@@ -48,7 +48,7 @@ export async function addToCartRequest(requestBody) {
 }
 
 export async function postCheckout() {
-  return await asyncApiRequest("POST", "/checkout", "", true);
+  return await asyncApiRequest("POST", "/checkout");
 }
 
 export async function patchShoppingCartProductQuantity(requestBody) {

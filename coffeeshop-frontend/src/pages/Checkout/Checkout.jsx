@@ -12,15 +12,18 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { postCheckout } from "../../hooks/apiService";
+import { useTheme } from "@emotion/react";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
 /**
  * Displays a checkout process for the user.
- * 
+ *
  * @returns {JSX.Element} The rendered React component.
  */
 export default function Checkout() {
+  const theme = useTheme();
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [addressInfo, setAddressInfo] = React.useState({
     firstName: "",
@@ -41,11 +44,15 @@ export default function Checkout() {
     saveCard: false,
   });
 
-  const handleNext = () => {
+  const [order, setOrder] = React.useState(null);
+
+  const handleNext = async () => {
     setActiveStep(activeStep + 1);
 
     if (activeStep === steps.length - 1) {
-      postCheckout();
+      const orderData = await postCheckout();
+      setOrder(orderData);
+      console.log(orderData);
     }
   };
 
@@ -79,7 +86,11 @@ export default function Checkout() {
   return (
     <div>
       <CssBaseline />
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container
+        component="main"
+        maxWidth="sm"
+        sx={{ mb: 4, minHeight: theme.boxSizes.full }}
+      >
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
@@ -100,9 +111,7 @@ export default function Checkout() {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped. (thats a lie, we didn't actually email you)
+                {`Your order number is #${order?.id}. We have emailed your order confirmation, and will send you an update when your order has shipped. (thats a lie, we didn't actually email you)`}
               </Typography>
             </React.Fragment>
           ) : (
