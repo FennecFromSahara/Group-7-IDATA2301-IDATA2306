@@ -73,7 +73,7 @@ function ProductDisplay() {
             <Grid item xs={6}>
               <Box>
                 <Typography variant="h2">{product.name}</Typography>
-                <Typography variant="h4" sx={{ fontStyle: "italic", mb: 1 }}>
+                <Typography variant="body1" sx={{ fontStyle: "italic", mb: 1 }}>
                   {product.categories
                     .map((category) => category.name)
                     .join(", ")}
