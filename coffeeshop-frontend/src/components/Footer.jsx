@@ -36,20 +36,20 @@ function Footer() {
           <Grid container>
             <Grid item>
               <Box mr={2}>
-                <Link to="/veryRealURL">
+                <Link to="/veryRealURL" aria-label="Twitter">
                   <TwitterIcon />
                 </Link>
               </Box>
             </Grid>
             <Grid item>
               <Box mr={2}>
-                <Link to="/veryRealURL">
+                <Link to="/veryRealURL" aria-label="Instagram">
                   <InstagramIcon />
                 </Link>
               </Box>
             </Grid>
             <Grid item>
-              <Link to="/veryRealURL">
+              <Link to="/veryRealURL" aria-label="Facebook">
                 <FacebookIcon />
               </Link>
             </Grid>

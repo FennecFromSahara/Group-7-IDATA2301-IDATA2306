@@ -75,6 +75,7 @@ function NavBar() {
           aria-controls={open ? "composition-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
+          aria-label="Menu"
           onClick={handleToggle}
           sx={{
             ml: -3,
@@ -169,7 +170,11 @@ function NavBar() {
               },
             }}
           >
-            <Link to="/shoppingCart" style={{ textDecoration: "none" }}>
+            <Link
+              to="/shoppingCart"
+              style={{ textDecoration: "none" }}
+              aria-label="Shopping Cart"
+            >
               <Box
                 sx={{
                   display: "flex",
@@ -197,6 +202,7 @@ function NavBar() {
               <Link
                 to={`/u/${user.username}`}
                 style={{ textDecoration: "none" }}
+                aria-label="Profile Page"
               >
                 <Box
                   sx={{
