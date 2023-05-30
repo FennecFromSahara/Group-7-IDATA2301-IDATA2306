@@ -63,8 +63,8 @@ function ProductDisplay() {
                   image={image}
                   alt={`Image of ${product.name}`}
                   style={{
-                    maxWidth: "90%",
-                    height: "auto",
+                    width: "80%",
+                    height: "80%",
                     border: "3px solid",
                   }}
                 />
