@@ -23,7 +23,6 @@ public class ProductService {
     this.reviewRepository = reviewRepository;
   }
 
-
   @Transactional
   public void saveProductWithReviews(Product product, List<Review> reviews, User user) {
     reviews.forEach(review -> {

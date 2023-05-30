@@ -74,6 +74,11 @@ public class Product {
   @Schema(description = "List of reviews this product has")
   private List<Review> reviews = new ArrayList<>();
 
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference("product-orderProduct")
+  @Schema(description = "List of OrderProducts who represent this product")
+  private List<OrderProduct> orderProducts = new ArrayList<>();
+
   /**
    * Empty constructor needed for JPA
    */
@@ -224,4 +229,33 @@ public class Product {
     this.reviews = reviews;
   }
 
+  /**
+   * @return the orderProducts
+   */
+  public List<OrderProduct> getOrderProducts() {
+    return orderProducts;
+  }
+
+  /**
+   * @param orderProducts the orderProducts to set
+   */
+  public void setOrderProducts(List<OrderProduct> orderProducts) {
+    this.orderProducts = orderProducts;
+  }
+
+  /**
+   * @param shoppingCartProduct the ShoppingCartProduct to remove
+   */
+  public void removeShoppingCartProduct(ShoppingCartProduct shoppingCartProduct) {
+    shoppingCartProducts.remove(shoppingCartProduct);
+    shoppingCartProduct.setProduct(null);
+  }
+
+  /**
+   * @param orderProduct the OrderProduct to remove
+   */
+  public void removeOrderProduct(OrderProduct orderProduct) {
+    orderProducts.remove(orderProduct);
+    orderProduct.setProduct(null);
+  }
 }

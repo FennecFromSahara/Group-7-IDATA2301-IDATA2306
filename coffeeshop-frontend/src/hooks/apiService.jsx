@@ -37,6 +37,10 @@ export async function getProductsCount() {
   return await asyncApiRequest("GET", "/products/count");
 }
 
+export async function getProductIds() {
+  return await asyncApiRequest("GET", "/products/ids");
+}
+
 // POST
 export async function addToCartRequest(requestBody) {
   return await asyncApiRequest(

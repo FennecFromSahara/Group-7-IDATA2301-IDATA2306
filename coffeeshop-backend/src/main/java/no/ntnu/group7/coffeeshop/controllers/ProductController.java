@@ -22,8 +22,10 @@ import no.ntnu.group7.coffeeshop.dto.CategoryDto;
 import no.ntnu.group7.coffeeshop.dto.ProductDto;
 import no.ntnu.group7.coffeeshop.dto.ReviewDto;
 import no.ntnu.group7.coffeeshop.model.Category;
+import no.ntnu.group7.coffeeshop.model.OrderProduct;
 import no.ntnu.group7.coffeeshop.model.Product;
 import no.ntnu.group7.coffeeshop.model.Review;
+import no.ntnu.group7.coffeeshop.model.ShoppingCartProduct;
 import no.ntnu.group7.coffeeshop.model.User;
 import no.ntnu.group7.coffeeshop.repositories.CategoryRepository;
 import no.ntnu.group7.coffeeshop.repositories.ProductRepository;
@@ -235,9 +237,21 @@ public class ProductController {
   })
   public ResponseEntity<Void> deleteProduct(
       @Parameter(description = "The ID of the product to delete") @PathVariable int id) {
-    if (!productRepository.existsById(id)) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
+    if (!product.getShoppingCartProducts().isEmpty()) {
+      for (ShoppingCartProduct shoppingCartProduct : new ArrayList<>(product.getShoppingCartProducts())) {
+        product.removeShoppingCartProduct(shoppingCartProduct);
+      }
     }
+
+    if (!product.getOrderProducts().isEmpty()) {
+      for (OrderProduct orderProduct : new ArrayList<>(product.getOrderProducts())) {
+        product.removeOrderProduct(orderProduct);
+      }
+    }
+
     productRepository.deleteById(id);
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
@@ -418,5 +432,18 @@ public class ProductController {
         reviewDtos);
 
     return new ResponseEntity<>(updatedProductDto, HttpStatus.OK);
+  }
+
+  /**
+   * @return a list of the available product ids in the database.
+   */
+  @GetMapping("/ids")
+  @Operation(summary = "Get all product IDs")
+  @ApiResponse(responseCode = "200", description = "Success", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Integer.class))))
+  public ResponseEntity<List<Integer>> getAllProductIds() {
+    List<Integer> productIds = productRepository.findAll().stream()
+        .map(Product::getId)
+        .collect(Collectors.toList());
+    return new ResponseEntity<>(productIds, HttpStatus.OK);
   }
 }

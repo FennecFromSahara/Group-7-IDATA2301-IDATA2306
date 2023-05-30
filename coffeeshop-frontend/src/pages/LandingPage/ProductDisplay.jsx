@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, CardMedia, Grid, Button } from "@mui/material";
-import { getProductById, getProductsCount } from "../../hooks/apiService";
+import { getProductById, getProductIds } from "../../hooks/apiService";
 import { imageMap } from "../../components/ProductImageMapping";
 import { Link } from "react-router-dom";
 
@@ -14,11 +14,11 @@ function ProductDisplay() {
 
   useEffect(() => {
     async function fetchProducts() {
-      const count = await getProductsCount();
-      const productIds = getRandomProductIds(count, 3);
+      const productIds = await getProductIds();
+      const randomProductIds = getRandomProductIds(productIds, 3);
       const fetchedProducts = [];
 
-      for (const id of productIds) {
+      for (const id of randomProductIds) {
         const product = await getProductById(id);
         fetchedProducts.push(product);
       }
@@ -31,12 +31,14 @@ function ProductDisplay() {
     });
   }, []);
 
-  const getRandomProductIds = (count, num) => {
-    const ids = new Set();
-    while (ids.size < num) {
-      ids.add(Math.floor(Math.random() * count) + 1);
+  const getRandomProductIds = (ids, num) => {
+    const randomIds = [];
+    while (randomIds.length < num && ids.length > 0) {
+      const randomIndex = Math.floor(Math.random() * ids.length);
+      randomIds.push(ids[randomIndex]);
+      ids.splice(randomIndex, 1);
     }
-    return [...ids];
+    return randomIds;
   };
 
   const renderProducts = () => {

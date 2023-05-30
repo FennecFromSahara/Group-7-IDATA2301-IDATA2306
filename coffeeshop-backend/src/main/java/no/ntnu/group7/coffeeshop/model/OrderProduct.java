@@ -37,6 +37,7 @@ public class OrderProduct {
   private Order order;
 
   @ManyToOne
+  @JsonBackReference("product-orderProduct")
   @JoinColumn(name = "product_id", nullable = false)
   @Schema(description = "Which product the OrderProduct represents")
   private Product product;
