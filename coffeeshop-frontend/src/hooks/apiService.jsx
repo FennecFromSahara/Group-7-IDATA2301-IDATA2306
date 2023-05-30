@@ -13,6 +13,10 @@ export async function getOrders() {
   return await asyncApiRequest("GET", "/orders");
 }
 
+export async function getCategories() {
+  return await asyncApiRequest("GET", "/categories");
+}
+
 export async function getShoppingCart() {
   return await asyncApiRequest("GET", "/shoppingCart");
 }
@@ -23,10 +27,6 @@ export async function getProductById(id) {
 
 export async function getShoppingCartTotal() {
   return await asyncApiRequest("GET", "/shoppingCart/total");
-}
-
-export async function getCategories() {
-  return await asyncApiRequest("GET", "/categories");
 }
 
 export async function getProfileData(username) {
@@ -52,7 +52,12 @@ export async function postCheckout() {
 }
 
 export async function patchShoppingCartProductQuantity(requestBody) {
-  return await asyncApiRequest("PATCH", "/shoppingCart/quantity", requestBody, true);
+  return await asyncApiRequest(
+    "PATCH",
+    "/shoppingCart/quantity",
+    requestBody,
+    true
+  );
 }
 
 export async function deleteProductFromShoppingCartRequest(productId) {
