@@ -21,7 +21,7 @@ function About() {
         display="flex"
         flexDirection="column"
         sx={{
-          m: "3rem",
+          m: "1rem",
           minHeight: theme.boxSizes.full,
         }}
       >

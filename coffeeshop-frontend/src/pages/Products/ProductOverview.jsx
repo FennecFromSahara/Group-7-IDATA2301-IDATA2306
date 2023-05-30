@@ -70,7 +70,7 @@ function ProductOverview() {
     <Box
       sx={{
         minHeight: theme.boxSizes.full,
-        p: "1rem 3rem 3rem 3rem",
+        padding: "1rem",
       }}
     >
       <Typography variant="h1">

@@ -111,7 +111,7 @@ function ProductDisplay() {
   };
 
   return (
-    <Box sx={{ m: "3rem" }}>
+    <Box sx={{ m: "1rem" }}>
       <Typography variant="h1">
         Look at some of our amazing products!
       </Typography>
