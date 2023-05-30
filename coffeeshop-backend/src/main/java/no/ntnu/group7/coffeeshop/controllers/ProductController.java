@@ -264,8 +264,7 @@ public class ProductController {
   @ApiResponses({
       @ApiResponse(responseCode = "201", description = "Created", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class)))),
       @ApiResponse(responseCode = "404", description = "Category not found"),
-      @ApiResponse(responseCode = "404", description = "Product not found"), // TODO: should maybe have different codes
-                                                                             // or smthn idk
+      @ApiResponse(responseCode = "404", description = "Product not found"),
       @ApiResponse(responseCode = "404", description = "User not found")
   })
   public ResponseEntity<List<Product>> getProductsByCategory(
