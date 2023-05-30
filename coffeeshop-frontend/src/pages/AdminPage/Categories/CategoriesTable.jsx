@@ -107,7 +107,7 @@ const CategoriesTable = ({ categories: initialCategories }) => {
           variant="contained"
           color="primary"
           onClick={() => setCreatingCategory(true)}
-          sx={{ mx: 15, mt: 3 }}
+          sx={{ mx: 3, mt: 3 }}
         >
           Add Category
         </Button>
@@ -140,7 +140,7 @@ const CategoriesTable = ({ categories: initialCategories }) => {
 
         <Table
           sx={{
-            mx: 15,
+            mx: 3,
             my: 3,
             maxWidth: "1000px",
             backgroundColor: theme.palette.background.paper,
