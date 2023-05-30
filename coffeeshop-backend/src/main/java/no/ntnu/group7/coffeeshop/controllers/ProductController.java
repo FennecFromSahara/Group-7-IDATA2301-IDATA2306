@@ -178,11 +178,11 @@ public class ProductController {
   @PutMapping("/{id}")
   @Operation(summary = "Update one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Product.class))),
+      @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = ProductDto.class))),
       @ApiResponse(responseCode = "404", description = "Product not found"),
       @ApiResponse(responseCode = "404", description = "Category not found")
   })
-  public ResponseEntity<Product> updateProduct(
+  public ResponseEntity<ProductDto> updateProduct(
       @Parameter(description = "The ID of the product to update") @PathVariable int id,
       @Parameter(description = "The product DTO containing the updated details") @RequestBody ProductDto productDto) {
     Product currentProduct = productRepository.findById(id)
@@ -206,7 +206,17 @@ public class ProductController {
     currentProduct.setCategories(categories);
     Product updatedProduct = productRepository.save(currentProduct);
 
-    return new ResponseEntity<Product>(updatedProduct, HttpStatus.OK);
+    ProductDto updatedProductDto = new ProductDto(
+        updatedProduct.getId(),
+        updatedProduct.getName(),
+        updatedProduct.getDescription(),
+        updatedProduct.getInventoryAmount(),
+        updatedProduct.getPrice(),
+        updatedProduct.getImage(),
+        categoryDtos,
+        productDto.getReviews());
+
+    return new ResponseEntity<ProductDto>(updatedProductDto, HttpStatus.OK);
   }
 
   /**
@@ -262,16 +272,46 @@ public class ProductController {
   @GetMapping("/category/{categoryId}")
   @Operation(summary = "Get all products of one category")
   @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "Created", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class)))),
+      @ApiResponse(responseCode = "201", description = "Created", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ProductDto.class)))),
       @ApiResponse(responseCode = "404", description = "Category not found"),
       @ApiResponse(responseCode = "404", description = "Product not found"),
       @ApiResponse(responseCode = "404", description = "User not found")
   })
-  public ResponseEntity<List<Product>> getProductsByCategory(
+  public ResponseEntity<List<ProductDto>> getProductsByCategory(
       @Parameter(description = "The ID of the Category object") @PathVariable int categoryId) {
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
-    return new ResponseEntity<List<Product>>(category.getProducts(), HttpStatus.OK);
+
+    List<Product> products = category.getProducts();
+    List<ProductDto> productDtos = new ArrayList<>();
+
+    // Convert Product objects to ProductDto objects
+    for (Product product : products) {
+      List<CategoryDto> categoryDtos = new ArrayList<>();
+      for (Category productCategory : product.getCategories()) {
+        categoryDtos.add(new CategoryDto(productCategory.getId(), productCategory.getName()));
+      }
+
+      List<ReviewDto> reviewDtos = new ArrayList<>();
+      for (Review review : product.getReviews()) {
+        reviewDtos.add(
+            new ReviewDto(review.getId(), review.getReviewText(), review.getRating(), review.getUser().getUsername()));
+      }
+
+      ProductDto productDto = new ProductDto(
+          product.getId(),
+          product.getName(),
+          product.getDescription(),
+          product.getInventoryAmount(),
+          product.getPrice(),
+          product.getImage(),
+          categoryDtos,
+          reviewDtos);
+
+      productDtos.add(productDto);
+    }
+
+    return new ResponseEntity<List<ProductDto>>(productDtos, HttpStatus.OK);
   }
 
   /**
@@ -284,11 +324,11 @@ public class ProductController {
   @PostMapping("/{id}/add-review")
   @Operation(summary = "Add one review to one product")
   @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "Created", content = @Content(schema = @Schema(implementation = Review.class))),
+      @ApiResponse(responseCode = "201", description = "Created", content = @Content(schema = @Schema(implementation = ReviewDto.class))),
       @ApiResponse(responseCode = "404", description = "Product not found"),
       @ApiResponse(responseCode = "404", description = "User not found")
   })
-  public ResponseEntity<Review> addReview(
+  public ResponseEntity<ReviewDto> addReview(
       @Parameter(description = "The id of product to add review to") @PathVariable int id,
       @Parameter(description = "DTO containing the review") @RequestBody ReviewDto reviewDto) {
     Product product = productRepository.findById(id)
@@ -304,7 +344,13 @@ public class ProductController {
     review.setUser(user);
     Review newReview = reviewRepository.save(review);
 
-    return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+    ReviewDto newReviewDto = new ReviewDto(
+        newReview.getId(),
+        newReview.getReviewText(),
+        newReview.getRating(),
+        newReview.getUser().getUsername());
+
+    return new ResponseEntity<ReviewDto>(newReviewDto, HttpStatus.CREATED);
   }
 
   /**

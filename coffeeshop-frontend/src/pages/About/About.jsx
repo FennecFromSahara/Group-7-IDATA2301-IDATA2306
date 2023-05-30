@@ -27,7 +27,7 @@ function About() {
       >
         <Box flex={1} overflow="auto">
           <Typography variant="h2">About us</Typography>
-          <Typography variant="body1" sx={{ mx: 15, my: 3 }}>
+          <Typography variant="body1" sx={{ mx: 3, my: 3 }}>
             Mocha Nooka Cafe is the place to be for cool cats and urbanites
             alike. Located in the heart of the city, it's the go-to spot for the
             perfect cup of coffee or a tasty bite of food. Whether you're
@@ -40,7 +40,7 @@ function About() {
           </Typography>
           <br />
           <Typography variant="h2">Our values</Typography>
-          <Typography variant="body1" sx={{ mx: 15, my: 3 }}>
+          <Typography variant="body1" sx={{ mx: 3, my: 3 }}>
             At Mocha Nooka Cafe, we strive to create a peaceful, modern
             atmosphere for our guests to enjoy. Our carefully crafted menu of
             delicious treats and beverages is designed to please all palates.

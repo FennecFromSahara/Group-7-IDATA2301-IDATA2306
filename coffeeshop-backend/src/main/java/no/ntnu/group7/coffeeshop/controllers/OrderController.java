@@ -80,14 +80,14 @@ public class OrderController {
       @ApiResponse(responseCode = "404", description = "Order not found"),
       @ApiResponse(responseCode = "400", description = "Invalid order status")
   })
-  public ResponseEntity<Order> updateOrderStatus(
+  public ResponseEntity<OrderDto> updateOrderStatus(
       @Parameter(description = "The ID of the order to update") @PathVariable int id,
       @Parameter(description = "The order DTO containing the updated details") @RequestBody OrderDto orderDto) {
 
     Order currentOrder = orderRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
-    System.out.println(orderDto.getOrderStatus());
+    // System.out.println(orderDto.getOrderStatus());
 
     try {
       Order.OrderStatus status = Order.OrderStatus.valueOf(orderDto.getOrderStatus());
@@ -96,9 +96,9 @@ public class OrderController {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid order status");
     }
 
-    Order updatedOrder = orderRepository.save(currentOrder);
+    orderRepository.save(currentOrder);
 
-    return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
+    return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
   }
 
   /**

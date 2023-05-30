@@ -13,7 +13,7 @@ function Testimonial({ name, comment }) {
       <Typography
         variant="body1"
         sx={{
-          mx: 15,
+          mx: 3,
           my: 3,
         }}
       >
