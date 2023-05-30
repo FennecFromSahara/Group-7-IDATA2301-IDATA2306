@@ -1,6 +1,6 @@
 # IDATA2301 coffeeshop-frontend
 
-The frontend is a website built with React JS and Material UI.
+The frontend is a coffeeshop website built with React JS and Material UI that fetches and displays data from a backend server trough API calls. You do not have to run the backend server to view the frontend, just know that you will lose some functionality and it won't show a few pages that require certain permissions.
 
 ### Requirements
 - [Node.js](https://nodejs.org/)
