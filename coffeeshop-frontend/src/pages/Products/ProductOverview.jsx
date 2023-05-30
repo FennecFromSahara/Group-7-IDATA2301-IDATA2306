@@ -80,7 +80,7 @@ function ProductOverview() {
           : status === "error"
           ? ": Something went wrong loading the products..."
           : status === "loaded"
-          ? `: browse trough our ${products.length} products!`
+          ? `: browse through our ${products.length} products!`
           : ""}
       </Typography>
 
