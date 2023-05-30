@@ -1,0 +1,1233 @@
+{
+	"info": {
+		"_postman_id": "c7955223-dceb-40da-8be7-0561fe663bdb",
+		"name": "Coffeeshop - LOCAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25407546",
+		"_collection_link": "https://grey-desert-182240.postman.co/workspace/Appdev-2023~8f584d19-10c2-4c2d-9dfe-3b337525ea3e/collection/25407546-c7955223-dceb-40da-8be7-0561fe663bdb?action=share&creator=25407546&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "Invalid credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"user123\", \"password\": \"pass123\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/authenticate",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid credentials role = USER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jwtResponse = pm.response.json();\r",
+									"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"testUser\", \"password\": \"testPassword\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/authenticate",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid user level token to /api/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/users",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid admin credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jwtResponse = pm.response.json();\r",
+									"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"admin\", \"password\": \"password\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/authenticate",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid admin level token to /api/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/users",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buying product",
+			"item": [
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Parse the request body as JSON\r",
+									"const requestBody = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"// Extract the value of \"username\"\r",
+									"const username = requestBody.username;\r",
+									"\r",
+									"// Set the value of \"username\" as an environment variable\r",
+									"pm.environment.set(\"new_user_username\", username);\r",
+									"\r",
+									"\r",
+									"// pm.environment.set(\"new_user_password\", pm.request.body(\"password\"));\r",
+									"// pm.environment.set(\"new_user_firstName\", pm.request.body(\"firstName\"));\r",
+									"// pm.environment.set(\"new_user_lastName\", pm.request.body(\"lastName\"));\r",
+									"// pm.environment.set(\"new_user_email\", pm.request.body(\"email\"));\r",
+									"// pm.environment.set(\"new_user_address\", pm.request.body(\"address\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"usernamePostman\",\r\n    \"password\": \"passwordPostman\",\r\n    \"firstName\": \"firstNamePostman\",\r\n    \"lastName\": \"lastNamePostman\",\r\n    \"email\": \"emailPostman\",\r\n    \"address\": \"addressPostman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/signup",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid credentials role = USER (new user)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jwtResponse = pm.response.json();\r",
+									"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"usernamePostman\",\r\n    \"password\": \"passwordPostman\",\r\n    \"firstName\": \"firstNamePostman\",\r\n    \"lastName\": \"lastNamePostman\",\r\n    \"email\": \"emailPostman\",\r\n    \"address\": \"addressPostman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/authenticate",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/products",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add to cart - invalid product id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userId\": 1, \"productId\": -1, \"quantity\" : 1}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/shoppingCart/add-to-cart",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"shoppingCart",
+								"add-to-cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add to cart - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userId\": 1, \"productId\": 1, \"quantity\" : 1}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/shoppingCart/add-to-cart",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"shoppingCart",
+								"add-to-cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get shopping cart items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/shoppingCart",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"shoppingCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get shopping cart total",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/shoppingCart/total",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"shoppingCart",
+								"total"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Parse the response body as JSON\r",
+									"var responseBody = pm.response.json();\r",
+									"\r",
+									"// Extract the value of the 'id' field from the product object\r",
+									"var orderId = responseBody.id;\r",
+									"\r",
+									"// Store the 'id' value in an environment variable\r",
+									"pm.environment.set('new_order_id', orderId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/checkout",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid admin credentials - to delete stuff",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const jwtResponse = pm.response.json();\r",
+									"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"admin\", \"password\": \"password\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/authenticate",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete new order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/orders/{{new_order_id}}",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"{{new_order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{LOCAL_API_URL}}/api/users/{{new_user_username}}",
+							"host": [
+								"{{LOCAL_API_URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{new_user_username}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin stuff",
+			"item": [
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Valid admin credentials - to do admin stuff",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jwtResponse = pm.response.json();\r",
+											"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\": \"admin\", \"password\": \"password\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/authenticate",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add new product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"// Parse the response body as JSON\r",
+											"var responseBody = pm.response.json();\r",
+											"\r",
+											"// Extract the value of the 'id' field from the product object\r",
+											"var productId = responseBody.id;\r",
+											"\r",
+											"// Store the 'id' value in an environment variable\r",
+											"pm.environment.set('new_product_id', productId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"postmanProduct\",\r\n    \"description\": \"postmanDescription\",\r\n    \"inventoryAmount\": 5,\r\n    \"price\": 123,\r\n    \"image\": \"placeholder\",\r\n    \"categories\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/products",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get new product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/products/{{new_product_id}}",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"{{new_product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete new product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/products/{{new_product_id}}",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"{{new_product_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Valid admin credentials - to do admin stuff",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jwtResponse = pm.response.json();\r",
+											"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\": \"admin\", \"password\": \"password\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/authenticate",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/users",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "Valid admin credentials - to do admin stuff",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jwtResponse = pm.response.json();\r",
+											"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\": \"admin\", \"password\": \"password\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/authenticate",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get orders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/orders",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Valid admin credentials - to do admin stuff",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jwtResponse = pm.response.json();\r",
+											"pm.environment.set(\"jwt_token\", jwtResponse.jwt);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\": \"admin\", \"password\": \"password\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/authenticate",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add new category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"// Parse the response body as JSON\r",
+											"var responseBody = pm.response.json();\r",
+											"\r",
+											"// Extract the value of the 'id' field from the product object\r",
+											"var categoryId = responseBody.id;\r",
+											"\r",
+											"// Store the 'id' value in an environment variable\r",
+											"pm.environment.set('new_category_id', categoryId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"postmanCategory\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/categories",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get new category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/categories/{{new_category_id}}",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										"{{new_category_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete new category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{LOCAL_API_URL}}/api/categories/{{new_category_id}}",
+									"host": [
+										"{{LOCAL_API_URL}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										"{{new_category_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
