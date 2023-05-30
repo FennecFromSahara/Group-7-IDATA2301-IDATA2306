@@ -124,7 +124,7 @@ function NavBar() {
           )}
         </Popper>
         <Typography variant="h2">
-          {matches ? "MNK |" : "MOCHA NOKA KAFE |"}
+          {matches ? "MNC |" : "MOCHA NOOKA CAFE |"}
         </Typography>
 
         <Box
