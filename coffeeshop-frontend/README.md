@@ -1,6 +1,6 @@
 # IDATA2301 coffeeshop-frontend
 
-The frontend is a React JS application.
+The frontend is a website built with React JS and Material UI.
 
 ### Requirements
 - [Node.js](https://nodejs.org/)
