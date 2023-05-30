@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions, Grid } from "@mui/material";
+import { Button, CardActions, Grid, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -129,7 +129,7 @@ export default function ShoppingCartProductCard(props) {
         component="img"
         image={iconImageMap[product.image] || iconImageMap["placeholder"]}
         alt="Image of product"
-        sx={{ width: "100px", margin: 1}}
+        sx={{ width: "100px", margin: 1 }}
       />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="h2">
@@ -138,32 +138,28 @@ export default function ShoppingCartProductCard(props) {
         <Typography>{product.price} Kr</Typography>
       </CardContent>
       <CardActions>
-        <Grid container justifyContent="center" alignItems="center">
-          <Grid item xs="auto">
-            <Button size="small" onClick={decreaseAmount}>
-              <RemoveIcon />
-            </Button>
-          </Grid>
-          <Grid
-            item
-            xs={true}
-            style={{
-              textAlign: "center",
-              fontSize: "1.5rem",
-              fontWeight: 700,
-            }}
+        <Stack direction={{ xs: "column", sm: "row" }}>
+          <Button size="small" onClick={decreaseAmount}>
+            <RemoveIcon />
+          </Button>
+
+          <Typography
+            variant="body1"
+            textAlign={"center"}
+            fontSize={"1.5rem"}
+            fontWeight={700}
           >
             {quantity}
-          </Grid>
-          <Grid item xs="auto">
-            <Button size="small" onClick={increaseAmount}>
-              <AddIcon />
-            </Button>
-          </Grid>
-        </Grid>
-        <Button size="small" onClick={deleteProductFromCart}>
-          <HighlightOffIcon />
-        </Button>
+          </Typography>
+
+          <Button size="small" onClick={increaseAmount}>
+            <AddIcon />
+          </Button>
+
+          <Button size="small" onClick={deleteProductFromCart}>
+            <HighlightOffIcon />
+          </Button>
+        </Stack>
       </CardActions>
     </Card>
   );
