@@ -3,6 +3,9 @@ package no.ntnu.group7.coffeeshop.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/dto/AuthenticationResponse.java
+ * 
  * Data that we will send as a response to the user when the authentication is
  * successful.
  */

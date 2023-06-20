@@ -25,6 +25,9 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/services/AccessUserService.java
+ * 
  * AccessUserService is a service layer class that provides functionality
  * related to user authentication, management, and profile updates in the coffee
  * shop application. It implements the UserDetailsService interface for Spring

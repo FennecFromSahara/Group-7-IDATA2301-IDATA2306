@@ -19,6 +19,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/security/JwtRequestFilter.java
+ * 
  * JwtRequestFilter class is a filter that is applied to all HTTP requests and
  * checks for a valid JWT token in the 'Authorization: Bearer ...' header. It
  * extends OncePerRequestFilter provided by Spring Security.

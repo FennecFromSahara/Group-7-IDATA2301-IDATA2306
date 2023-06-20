@@ -24,6 +24,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/controllers/AuthenticationController.java
+ * 
  * Controller responsible for authentication.
  */
 @CrossOrigin(origins = "http://localhost:3000")

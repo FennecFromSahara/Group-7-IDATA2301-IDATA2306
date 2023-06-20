@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.function.Function;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/security/JwtUtil.java
+ * 
  * JwtUtil class is a utility class for handling JWT tokens.
  * It provides methods to generate, validate, and extract information from JWT
  * tokens.

@@ -10,6 +10,9 @@ import no.ntnu.group7.coffeeshop.model.User;
 import java.util.*;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/security/AccessUserDetails.java
+ * 
  * Contains authentication information, needed by UserDetailsService.
  */
 public class AccessUserDetails implements UserDetails {
