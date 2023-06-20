@@ -1,5 +1,5 @@
 /**
- * Code copied from https://github.com/strazdinsg/web-examples/tree/main/public_html/examples/react/15-react-jwt-auth
+ * Code copied from https://github.com/strazdinsg/web-examples/blob/main/public_html/examples/react/15-react-jwt-auth/src/tools/HttpResponseError.js
  * An exception to be used for HTTP error responses
  */
 export class HttpResponseError extends Error {

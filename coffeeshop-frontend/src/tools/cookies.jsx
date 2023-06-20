@@ -1,4 +1,4 @@
-// Code adapted from https://github.com/strazdinsg/web-examples/tree/main/public_html/examples/react/15-react-jwt-auth
+// Code adapted from https://github.com/strazdinsg/web-examples/blob/main/public_html/examples/react/15-react-jwt-auth/src/tools/cookies.js
 
 /**
  * Get value of a specific cookie.
