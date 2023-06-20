@@ -7,6 +7,9 @@ import java.util.Set;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/models/Role.java
+ * 
  * Represents a user role (admin, user, guest). This class is responsible
  * for storing the role's name and its associated users. It is mapped to the
  * "roles" table in the database.

@@ -23,6 +23,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/models/Product.java
+ * 
  * Represents a product in the coffee shop. This class is responsible for
  * storing the product's name, price, description, image, inventory amount, and
  * its associated category. It is mapped to the "products" table in the

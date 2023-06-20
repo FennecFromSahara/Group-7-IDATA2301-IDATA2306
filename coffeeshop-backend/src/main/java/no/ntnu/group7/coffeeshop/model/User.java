@@ -16,15 +16,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * Code adapted from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/models/User.java
+ * 
  * User model class that represents a user in the coffee shop system. This class
- * is responsible for
- * storing the user's basic information, such as username, password, first name,
- * last name, email,
- * address, and account status. It is also responsible for managing user roles
- * and associations
- * with other entities such as orders and shopping cart products. It is mapped
- * to the "users"
- * table in the database.
+ * is responsible for storing the user's basic information, such as username,
+ * password, first name, last name, email, address, and account status. It is
+ * also responsible for managing user roles and associations with other entities
+ * such as orders and shopping cart products. It is mapped to the "users" table
+ * in the database.
  */
 @Entity
 @Table(name = "users")

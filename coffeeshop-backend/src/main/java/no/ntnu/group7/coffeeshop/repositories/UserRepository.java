@@ -7,6 +7,9 @@ import no.ntnu.group7.coffeeshop.model.User;
 import java.util.Optional;
 
 /**
+ * Code copied from:
+ * https://github.com/strazdinsg/app-dev/blob/main/security-demos/07-backend-frontend-jwt-auth/backend/src/main/java/no/ntnu/repositories/UserRepository.java
+ * 
  * Repository interface for accessing User data in the database.
  * Spring will auto-generate necessary methods.
  */
