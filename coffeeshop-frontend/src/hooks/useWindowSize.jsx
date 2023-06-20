@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+/**
+ * @deprecated not in use
+ */
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
     width: undefined,

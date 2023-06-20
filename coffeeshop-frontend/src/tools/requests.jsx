@@ -1,3 +1,5 @@
+// Code adapted from https://github.com/strazdinsg/web-examples/tree/main/public_html/examples/react/15-react-jwt-auth
+
 // The base path where the API is running, loaded from the REACT_BASE_URL environment variable
 import { getCookie } from "./cookies";
 import { HttpResponseError } from "./HttpResponseError";

@@ -1,3 +1,4 @@
+// Code copied from https://github.com/strazdinsg/web-examples/tree/main/public_html/examples/react/15-react-jwt-auth
 import { deleteCookie, getCookie, setCookie } from "./cookies";
 import { asyncApiRequest } from "./requests";
 
@@ -51,7 +52,6 @@ export async function sendAuthenticationRequest(
       "/authenticate",
       postData
     );
-    // console.log("jwtResponse:", jwtResponse);
     if (jwtResponse && jwtResponse.jwt) {
       setCookie("jwt", jwtResponse.jwt);
       const userData = parseJwtUser(jwtResponse.jwt);

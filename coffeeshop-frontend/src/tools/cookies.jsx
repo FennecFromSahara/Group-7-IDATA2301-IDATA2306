@@ -1,3 +1,5 @@
+// Code adapted from https://github.com/strazdinsg/web-examples/tree/main/public_html/examples/react/15-react-jwt-auth
+
 /**
  * Get value of a specific cookie.
  * Code copied from https://www.w3schools.com/js/js_cookies.asp
