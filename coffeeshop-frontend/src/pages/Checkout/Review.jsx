@@ -12,6 +12,9 @@ import {
 } from "../../hooks/apiService";
 
 /**
+ * Code adapted from:
+ * https://github.com/mui/material-ui/blob/v5.13.3/docs/data/material/getting-started/templates/checkout/Review.js
+ * 
  * Represents the review-portion of the checkout.
  *
  * @returns {JSX.Element} The rendered React component.

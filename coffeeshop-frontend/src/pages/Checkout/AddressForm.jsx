@@ -6,6 +6,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 /**
+ * Code adapted from:
+ * https://github.com/mui/material-ui/blob/v5.13.3/docs/data/material/getting-started/templates/checkout/AddressForm.js
+ * 
  * Represents the address info part of the checkout.
  *
  * @returns {JSX.Element} The rendered React component.
