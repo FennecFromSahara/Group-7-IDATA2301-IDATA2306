@@ -17,6 +17,7 @@ function Footer() {
 
   return (
     <Box
+      component="footer"
       sx={{
         py: 3,
         px: 5,
@@ -29,7 +30,7 @@ function Footer() {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 8, sm: 8, md: 12 }}
       >
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid component="address" item xs={12} sm={6} md={4}>
           <Typography variant="h1">Contact</Typography>
           <Typography>124 ELF ROAD, NORTH POLE 88888</Typography>
           <Typography>+47 123 45 678</Typography>

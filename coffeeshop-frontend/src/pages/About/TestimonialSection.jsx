@@ -32,7 +32,7 @@ function TestimonialSection() {
     />
   ));
 
-  return <div>{testimonials}</div>;
+  return <>{testimonials}</>;
 }
 
 export default TestimonialSection;

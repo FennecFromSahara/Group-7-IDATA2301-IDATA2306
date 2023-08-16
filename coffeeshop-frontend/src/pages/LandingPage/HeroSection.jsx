@@ -48,7 +48,7 @@ function HeroSection() {
   };
 
   return (
-    <Box sx={backgroundStyles}>
+    <Box component="section" sx={backgroundStyles}>
       <Box
         sx={{
           position: "absolute",

@@ -64,6 +64,7 @@ function NavBar() {
 
   return (
     <AppBar
+      component="nav"
       position="sticky"
       elevation={0}
       sx={{ minHeight: "3rem", width: "100%" }}

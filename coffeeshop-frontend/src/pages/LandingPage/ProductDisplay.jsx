@@ -50,6 +50,7 @@ function ProductDisplay() {
         const image = imageMap[product.image] || imageMap["placeholder"];
         return (
           <Grid
+            component="article"
             container
             spacing={2}
             direction="row"
@@ -113,7 +114,7 @@ function ProductDisplay() {
   };
 
   return (
-    <Box sx={{ m: "1rem" }}>
+    <Box component="section" sx={{ m: "1rem" }}>
       <Typography variant="h1">
         Look at some of our amazing products!
       </Typography>

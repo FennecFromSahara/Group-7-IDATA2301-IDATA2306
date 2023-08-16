@@ -87,7 +87,7 @@ export default function Checkout() {
   }
 
   return (
-    <div>
+    <>
       <CssBaseline />
       <Container
         component="main"
@@ -139,6 +139,6 @@ export default function Checkout() {
           )}
         </Paper>
       </Container>
-    </div>
+    </>
   );
 }

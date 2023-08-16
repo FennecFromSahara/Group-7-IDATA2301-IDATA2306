@@ -14,10 +14,11 @@ function About() {
   const theme = useTheme();
 
   return (
-    <div>
+    <>
       <NavBar />
 
       <Box
+        component="article"
         display="flex"
         flexDirection="column"
         sx={{
@@ -25,7 +26,7 @@ function About() {
           minHeight: theme.boxSizes.full,
         }}
       >
-        <Box flex={1} overflow="auto">
+        <Box component="section">
           <Typography variant="h2">About us</Typography>
           <Typography variant="body1" sx={{ mx: 3, my: 3 }}>
             Mocha Nooka Cafe is the place to be for cool cats and urbanites
@@ -38,7 +39,9 @@ function About() {
             friendly staff is always on hand to offer up recommendations for the
             perfect pairing. Come check us out for an unforgettable experience.
           </Typography>
-          <br />
+        </Box>
+        <br />
+        <Box component="section">
           <Typography variant="h2">Our values</Typography>
           <Typography variant="body1" sx={{ mx: 3, my: 3 }}>
             At Mocha Nooka Cafe, we strive to create a peaceful, modern
@@ -52,15 +55,16 @@ function About() {
             recommendations. We believe in creating a calm, modern, and tasty
             space for our guests to enjoy.
           </Typography>
-          <br />
-
+        </Box>
+        <br />
+        <Box component="section">
           <Typography variant="h2">Hear what our customers say:</Typography>
           <TestimonialSection />
         </Box>
       </Box>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

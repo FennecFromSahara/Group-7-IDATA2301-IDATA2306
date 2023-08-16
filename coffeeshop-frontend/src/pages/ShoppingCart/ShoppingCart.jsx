@@ -10,6 +10,11 @@ import { getShoppingCart, getShoppingCartTotal } from "../../hooks/apiService";
 import Alert from "../../components/Alert";
 import { useTheme } from "@emotion/react";
 
+/**
+ * A component representing a ShoppingCart.
+ *
+ * @returns {JSX.Element} The rendered React component.
+ */
 export default function ShoppingCart() {
   const theme = useTheme();
   const [shoppingCart, setShoppingCart] = useState([]);
@@ -90,10 +95,11 @@ export default function ShoppingCart() {
 
   return (
     <>
-      <Container sx={{ py: 8, minHeight: theme.boxSizes.full }}>
+      <Container component="main" sx={{ py: 8, minHeight: theme.boxSizes.full }}>
         <Stack spacing={2}>
           {renderProducts()}
           <Box
+            component="footer"
             sx={{
               display: "flex",
               justifyContent: "flex-end",

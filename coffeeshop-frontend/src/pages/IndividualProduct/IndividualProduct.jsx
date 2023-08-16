@@ -121,6 +121,7 @@ function IndividualProduct() {
     } else {
       return (
         <Box
+          component="main"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -131,6 +132,7 @@ function IndividualProduct() {
           }}
         >
           <Box
+            component="section"
             sx={{
               display: "flex",
               flexDirection: "row",
@@ -198,6 +200,7 @@ function IndividualProduct() {
             </Box>
           </Box>
           <Box
+            component="aside"
             sx={{
               mt: 4,
               alignItems: "start",

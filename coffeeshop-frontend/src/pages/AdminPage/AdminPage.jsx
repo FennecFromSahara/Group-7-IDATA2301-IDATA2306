@@ -157,6 +157,7 @@ function AdminPage() {
       <NavBar />
 
       <Box
+        component="main"
         sx={{
           minHeight: theme.boxSizes.full,
           display: "flex",
@@ -164,6 +165,7 @@ function AdminPage() {
         }}
       >
         <AppBar
+          component="nav"
           position="static"
           sx={{ backgroundColor: theme.palette.primary.light }}
         >

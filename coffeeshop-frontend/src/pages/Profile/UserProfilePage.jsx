@@ -133,7 +133,7 @@ function UserProfilePage() {
 
   if (loading || profileLoading) {
     return (
-      <div>
+      <>
         <NavBar />
         <Box
           minHeight={theme.boxSizes.full}
@@ -147,22 +147,22 @@ function UserProfilePage() {
           </Typography>
         </Box>
         <Footer />
-      </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div>
+      <>
         <NavBar />
         <ErrorPage error={error} />
         <Footer />
-      </div>
+      </>
     );
   }
 
   return (
-    <div>
+    <>
       <NavBar />
 
       <Snackbar
@@ -181,6 +181,7 @@ function UserProfilePage() {
         </Alert>
       </Snackbar>
       <Box
+        component="main"
         style={{
           minHeight: theme.boxSizes.full,
           display: "flex",
@@ -198,7 +199,7 @@ function UserProfilePage() {
         >
           <Grid container>
             <Grid item>
-              <Typography variant="h1" component="div">
+              <Typography variant="h1">
                 {profile.username}
               </Typography>
               <Typography
@@ -349,7 +350,7 @@ function UserProfilePage() {
       </Box>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

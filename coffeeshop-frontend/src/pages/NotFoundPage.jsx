@@ -17,20 +17,16 @@ export default function NotFoundPage() {
       <NavBar />
 
       <Box
+        component="main"
         display="flex"
         flexDirection="column"
         minHeight={theme.boxSizes.full}
+        justifyContent="center"
+        alignItems="center"
+        flex={1}
+        overflow="auto"
       >
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          Box
-          flex={1}
-          overflow="auto"
-        >
-          <Typography variant="h1">404: Page not found</Typography>
-        </Box>
+        <Typography variant="h1">404: Page not found</Typography>
       </Box>
 
       <Footer />

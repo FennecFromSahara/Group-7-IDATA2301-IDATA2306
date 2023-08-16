@@ -12,6 +12,7 @@ function ErrorPage({ error }) {
 
   return (
     <Box
+      component="main"
       display="flex"
       flexDirection="column"
       justifyContent="center"

@@ -68,6 +68,7 @@ function ProductOverview() {
 
   return (
     <Box
+      component="main"
       sx={{
         minHeight: theme.boxSizes.full,
         padding: "1rem",
@@ -91,6 +92,7 @@ function ProductOverview() {
         sx={{ minHeight: theme.boxSizes.full, pt: 3, pl: 3 }}
       >
         <Box
+          component="nav"
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -135,24 +137,21 @@ function ProductOverview() {
             </Button>
           ))}
         </Box>
-        <Box flexGrow={1}>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ width: "100%" }}
-            >
-              <Grid
-                container
-                spacing={{ xs: 2, md: 3 }}
-                columns={{ xs: 1, sm: 2, md: 3, lg: 3 }}
-                maxWidth={"1000px"}
-              >
-                {renderProducts()}
-              </Grid>
-            </Box>
-          </Box>
+
+        <Box
+          flexGrow={1}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 1, sm: 2, md: 3, lg: 3 }}
+            maxWidth={"1000px"}
+          >
+            {renderProducts()}
+          </Grid>
         </Box>
       </Box>
     </Box>

@@ -81,7 +81,7 @@ export default function ProductCard(props) {
         </Link>
       </CardActionArea>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5"> 
           {product.name}
         </Typography>
         <Typography
